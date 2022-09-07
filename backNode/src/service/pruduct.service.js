@@ -1,29 +1,29 @@
-import vehiclesRepository from '../repository/vehicles.repository.js';
+import productsRepository from '../repository/products.repository.js';
 
-async function getVehicles(id) {
-    return await vehiclesRepository.getVehicles(id);
+async function getProducts(id) {
+  return await productsRepository.getProducts(id);
 }
 
-async function patchVehicles(id) {
-    return await vehiclesRepository.patchVehicles(id);
+async function patchProducts(body) {
+  return await productsRepository.patchProducts(body);
 }
 
-async function deleteVehicle(id) {
-    return await vehiclesRepository.deleteVehicle(id);
+async function deleteProduct(id) {
+  return await productsRepository.deleteProduct(id);
 }
 
-async function createVehicle(vehicle) {
-    return await vehiclesRepository.createVehicle(vehicle);
+async function createProduct(product) {
+  return await productsRepository.createProduct(product);
 }
 
-async function updateVehicle(vehicle) {
-    return await vehiclesRepository.updateVehicle(vehicle);
+async function updateProduct(product) {
+  return await productsRepository.updateProduct(product);
 }
 
 export default {
-    getVehicles,
-    patchVehicles,
-    deleteVehicle,
-    createVehicle,
-    updateVehicle,
+  getProducts,
+  patchProducts,
+  deleteProduct,
+  createProduct,
+  updateProduct,
 };

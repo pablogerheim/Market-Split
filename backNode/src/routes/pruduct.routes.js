@@ -1,13 +1,13 @@
 import express from 'express';
-import vehiclesController from '../controllers/pruduct.controller.js';
+import productsController from '../controllers/pruduct.controller.js';
 
 const router = express.Router();
 
-router.get('/', vehiclesController.getVehicles);
-router.get('/:id', vehiclesController.getVehicles);
-router.patch('/', vehiclesController.patchVehicles);
-router.delete('/:id', vehiclesController.deleteVehicle);
-router.post('/', vehiclesController.createVehicle);
-router.put('/', vehiclesController.updateVehicle);
+router.get('/', productsController.getProducts);
+router.get('/:id', productsController.getProducts);
+router.patch('/', productsController.patchProducts);
+router.delete('/:id', productsController.deleteProduct);
+router.post('/', productsController.createProduct);
+router.put('/', productsController.updateProduct);
 
 export default router;

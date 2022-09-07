@@ -13,7 +13,7 @@ module.exports = {
         'arrow-parens': 'off',
         eqeqeq: 'error',
         'function-paren-newline': 'off',
-        indent: ['error', 4],
+        indent: ['error', 2],
         'linebreak-style': [2, 'unix'],
         'no-console': [
             'error',
