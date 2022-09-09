@@ -7,7 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "npx nodemon --inspect src/index.js",
         "prettier": "npx prettier --write --ignore-unknown",
-        "eslint": "npx eslint --fix src --ext .js"
+        "eslint": "npx eslint --fix src --ext .js",
+        "migration": "npx sequelize-cli db:migrate --url 'postgres://qjqhbozw:dAFi40hn2dlq2aaZGFuUeTGuePNKVwLP@kesavan.db.elephantsql.com/qjqhbozw'"
     },
     "keywords": [],
     "author": "",
@@ -18,7 +19,9 @@
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
         "nodemon": "^2.0.19",
+        "pg": "^8.8.0",
         "prettier": "^2.7.1",
+        "sequelize": "^6.21.6",
         "swagger-ui-express": "^4.3.0",
         "winston": "^3.3.3"
     },
