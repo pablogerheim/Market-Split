@@ -1,22 +1,17 @@
-'use strict';
-
 module.exports = {
-    up: async(queryInterface, Sequelize) => {
-        await queryInterface.createTable('user', {
-            id: {
-                type: Sequelize.INTEGER,
-                autoIncrement: true,
-                allowNull: false,
-                primaryKey: true
-            },
-            name: {
-                type: Sequelize.STRING(150),
-                allowNull: false
-            }
-        })
-    },
+        up: async(queryInterface, Sequelize) => {
+            await queryInterface.createTable('Person', {
+                name: Sequelize.STRING,
+                isBetaMember: {
+                    type: Sequelize.BOOLEAN,
+                    defaultValue: false,
+                    allowNull: false
+                }
+            });
+        },
 
-    down: async(queryInterface, Sequelize) => {
-        await queryInterface.dropTable('user');
+        down: async(queryInterface, Sequelize) => {
+            await queryInterface.dropTable('user');
+        }
     }
-}
+    //verificar problema verção do ES
