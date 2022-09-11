@@ -3,7 +3,7 @@ import connect from '../config/Postgreconnect.js';
 
 const User = connect.define(
   'users', {
-    user_id: {
+    userId: {
       type: sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
