@@ -1,54 +1,68 @@
 import '../css/helper.css';
-import { People } from "../componentes/People";
-import { Product } from "../componentes/Product";
+import { People } from '../componentes/People';
+import { Product } from '../componentes/Product';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Session() {
-   const navegat = useNavigate()
-const [page, setPage] = useState<boolean>(true)
+  const navegat = useNavigate();
+  const [page, setPage] = useState<boolean>(true);
 
-    function toglePage() {
-        setPage(!page)
-    }
-    function EndSession() {
-        navegat('/')
-    }
-    function addProd() {
-        navegat('/c')
-    }
+  const toglePage = () => {
+    setPage(!page);
+  };
+  function EndSession(): void {
+    navegat('/');
+  }
+  function addProd() {
+    navegat('/c');
+  }
 
-    return (
-        <div className="shadowScreen p-5 bg-white mt-1 w-[90%] border-8 ">
-            <div className='flex gap-4 p-3'>
-
-            <label>
-            Session
-            <input
-            className='bg-white p-2 shadow-bot '
-            placeholder='Name Session '
-            />
-            </label>
-            </div>
-         <button onClick={addProd} className='start px-8 py-2 rounded-md mt-3 text-3xl "border-gray-300 border-solid border-b-4 bg-sky-300' >
-           Add Product
-         </button>
-         <div className='flex justify-evenly'>
-         <button className={`start px-4 py-2 rounded-md mt-2 text-sm ${ page? "border-gray-300 border-solid border-b-4 bg-emerald-300":""}`} onClick={toglePage} disabled={page}>
-           By People
-         </button>
-         <button className={`start px-4 py-2 rounded-md mt-2 text-sm ${ !page? "border-gray-300 border-solid border-b-4 bg-emerald-300":""}`} onClick={toglePage} disabled={!page}>
-           By Product
-         </button>
-            </div>
-         <div className='show p-2 mt-4 h-[65%]'>
-           {page? <People/> : <Product/>}
-         </div>
-         <button className='start px-8 py-2 rounded-md mt-3 text-3xl "border-gray-300 border-solid border-b-4 bg-red-400' onClick={EndSession} >
-          End Session
-         </button>
-        </div>
-    );
+  return (
+    <div className="p-5 bg-white mt-1 w-[90%] border-8 ">
+      <div className="flex justify-around gap-4 px-3 h-14 pb-1">
+        <input
+          className="bg-white shadow-bot h-12 w-40 pb-1"
+          placeholder="Name Session "
+        />
+        <button
+          className='start px-2 py-2 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-red-400'
+          onClick={EndSession}
+        >
+          Finish
+        </button>
+      </div>
+      <button
+        onClick={addProd}
+        className='start px-8 py-1 rounded-md mt-1 text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
+      >
+        Add Product
+      </button>
+      <div className="flex justify-evenly">
+        <button
+          className={`start px-4 py-1 rounded-md mt-2 text-sm ${
+            page ? 'border-gray-300 border-solid border-b-4 bg-emerald-300' : ''
+          }`}
+          onClick={toglePage}
+          disabled={page}
+        >
+          By People
+        </button>
+        <button
+          className={`start px-4 py-1 rounded-md mt-2 text-sm ${
+            !page
+              ? 'border-gray-300 border-solid border-b-4 bg-emerald-300'
+              : ''
+          }`}
+          onClick={toglePage}
+          disabled={!page}
+        >
+          By Product
+        </button>
+      </div>
+      <div className="p-2 mt-4">{page ? <People /> : <Product />}</div>
+    </div>
+  );
 }
 
 export { Session };

@@ -1,28 +1,44 @@
-import { participants, products } from "../data/mock";
-
+import { participants, products } from '../data/mock';
 
 function People() {
-    function comper(name:string) {
-        return products.map(p => p.participants.includes(name)? p.value/p.participants.length:0 ).reduce((pv, cv)=> pv + cv, 0)
-    }
+  function comper(name: string) {
+    return products
+      .map(p =>
+        p.participants.includes(name)
+          ? parseInt(p.price) / p.participants.length
+          : 0,
+      )
+      .reduce((pv, cv) => pv + cv, 0);
+  }
 
-    function print() {
-        return participants.map(p =>
-            <div key={p.id + "p"} className="flex justify-between shadow-bot">
-                <p className='text-xl m-3 '>{p.name}</p>
-                <p className='text-xl m-3 border-l-2 border-solid border-gray-400 pl-2'>R$: {comper(p.name).toFixed(2).replace(".", ",")}</p>
-            </div>)
-    }
+  function print() {
+    return participants.map(p => (
+      <div key={p.id + 'p'} className="flex justify-between shadow-bot">
+        <p className="text-xl m-3 ">{p.name}</p>
+        <p className="text-xl m-3 border-l-2 border-solid border-gray-400 pl-2">
+          R$: {comper(p.name).toFixed(2).replace('.', ',')}
+        </p>
+      </div>
+    ));
+  }
 
-    return (
-        <div className=" ">
-            <div className='grid grid-cols-2 gap-1 mt-1 '>
-                <p className='text-xl m-2 p-2 show-sm'> Participants: {participants.length}</p>
-                <p className='text-xl m-2 p-2 show-sm'> Total: R$ {products.reduce((pv, cv)=> pv + cv.value, 0 ).toFixed(2).replace('.',',')}</p>
-            </div>
-            {print()}
-        </div>
-    );
+  return (
+    <div className=" ">
+      <div className="grid grid-cols-2 gap-1 mt-1 ">
+        <p className="text-xl m-2 p-2 show-sm">
+          Participants: {participants.length}
+        </p>
+        <p className="text-xl m-2 p-2 show-sm">
+          Total: R$
+          {products
+            .reduce((pv, cv) => pv + parseInt(cv.price), 0)
+            .toFixed(2)
+            .replace('.', ',')}
+        </p>
+      </div>
+      {print()}
+    </div>
+  );
 }
 
 export { People };
