@@ -6,7 +6,7 @@ export interface participant {
 }
 
 export interface product {
-  id: number;
+  productId: number;
   name: string;
   price: string;
   participants: string[];
@@ -57,6 +57,11 @@ async function deleteProduct(id:number) {
   return data.data;
 }
 
+async function clearTable() {
+  const data = await apiProduct.delete('/clear');
+  return data.data;
+}
+
 export {
   getUser,
   getProduct,
@@ -65,4 +70,5 @@ export {
   updateProduct,
   updateQuantity,
   deleteProduct,
+  clearTable
 };

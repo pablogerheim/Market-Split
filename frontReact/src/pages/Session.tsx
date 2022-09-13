@@ -3,6 +3,7 @@ import { People } from '../componentes/People';
 import { Product } from '../componentes/Product';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { clearTable } from "../data/api";
 
 function Session() {
   const navegat = useNavigate();
@@ -11,11 +12,10 @@ function Session() {
   const toglePage = () => {
     setPage(!page);
   };
-  function EndSession(): void {
+
+  function Finish(): void {
+    clearTable()
     navegat('/');
-  }
-  function addProd() {
-    navegat('/c');
   }
 
   return (
@@ -27,33 +27,31 @@ function Session() {
         />
         <button
           className='start px-2 py-2 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-red-400'
-          onClick={EndSession}
+          onClick={Finish}
         >
           Finish
         </button>
       </div>
       <button
-        onClick={addProd}
+        onClick={() => navegat('/c')}
         className='start px-8 py-1 rounded-md mt-1 text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
       >
         Add Product
       </button>
       <div className="flex justify-evenly">
         <button
-          className={`start px-4 py-1 rounded-md mt-2 text-sm ${
-            page ? 'border-gray-300 border-solid border-b-4 bg-emerald-300' : ''
-          }`}
+          className={`start px-4 py-1 rounded-md mt-2 text-sm ${page ? 'border-gray-300 border-solid border-b-4 bg-emerald-300' : ''
+            }`}
           onClick={toglePage}
           disabled={page}
         >
           By People
         </button>
         <button
-          className={`start px-4 py-1 rounded-md mt-2 text-sm ${
-            !page
+          className={`start px-4 py-1 rounded-md mt-2 text-sm ${!page
               ? 'border-gray-300 border-solid border-b-4 bg-emerald-300'
               : ''
-          }`}
+            }`}
           onClick={toglePage}
           disabled={!page}
         >

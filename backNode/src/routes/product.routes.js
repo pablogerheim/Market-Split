@@ -9,5 +9,6 @@ router.patch('/', productsController.patchProducts);
 router.delete('/:id', productsController.deleteProduct);
 router.post('/', productsController.createProduct);
 router.put('/', productsController.updateProduct);
+router.delete('/clear', productsController.clearProduct);
 
 export default router;
