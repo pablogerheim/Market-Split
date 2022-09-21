@@ -8,14 +8,13 @@ async function patchProducts(body) {
     return await productRepository.patchProduct(body);
 }
 
-async function deleteProduct() {
-    return await productRepository.clearProduct();
-}
-
-async function clearProduct(id) {
+async function deleteProduct(id) {
     return await productRepository.deleteProduct(id);
 }
 
+async function clearProduct() {
+    return await productRepository.clearProduct();
+}
 
 async function createProduct(product) {
     return await productRepository.createProduct(product);

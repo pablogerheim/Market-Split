@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { product, participant, getUser, getProduct } from '../data/api';
+import { isEquivalent } from "../helper/helperFunctions";
 import { v4 } from 'uuid';
 
 function People() {
@@ -8,12 +9,16 @@ function People() {
 
   useEffect(() => {
     fetchUser();
-    fetchProdutc();
+    fetchProduct();
     activeMembers();
   }, [])
 
+  useEffect(() => {
+    (async () => { const helper = await getProduct(); if (isEquivalent(products, helper)) { fetchProduct() } })()
+  });
+
   const fetchUser = async () => setParticipants(await getUser());
-  const fetchProdutc = async () => setProduct(await getProduct());
+  const fetchProduct = async () => setProduct(await getProduct());
   const activeMembers = () => {
     let arrMembers: string[] = []
     products.forEach(prod => prod.participants.forEach(name => {
@@ -35,7 +40,7 @@ function People() {
   }
 
   if (!participants || !products) {
-    return <p>Loading</p>
+    return <p>Loading...</p>
   }
   return (
     <div className=" ">

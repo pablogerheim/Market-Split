@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
 import EventBus from '../helper/EventBus';
+import {v4} from 'uuid'
 
 function UpdadeProd() {
   const navegat = useNavigate();
@@ -102,7 +103,7 @@ function UpdadeProd() {
       <div className="p-2">
         {participants.map(p =>
             <div
-              key={p.id + 'p'}
+              key={v4()}
               className="flex justify-between items-center shadow-bot"
             >
               <p className="text-xl m-3 ml-5 ">{p.name}</p>
@@ -111,7 +112,7 @@ function UpdadeProd() {
                   className="m-2 h-5 w-5 text-fuchsia-400"
                   type="checkbox"
                   checked={part.includes(p.name)}
-                  onClick={() => handlePart(p.name)}
+                  onChange={() => handlePart(p.name)}
                 />
                 Will Partcipate
               </label>

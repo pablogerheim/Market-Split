@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import EventBus from '../helper/EventBus';
 
+
 function Product() {
   const [prods, setProds] = useState<product[]>();
   const navegat = useNavigate();
@@ -17,7 +18,6 @@ function Product() {
   function updadeProd(id: number) {
     setTimeout(() => {
       EventBus.dispatch('setId', id);
-      console.log("id1", id)
     }, 0);
     navegat('/u');
   }

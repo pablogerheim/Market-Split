@@ -26,7 +26,7 @@ function CreateProd() {
       quantity: quantity,
       productId: 0
     })
-    navegat('/s', { replace: true });
+    navegat('/s');
   }
 
   const handlePart = (p: string) => {
@@ -108,7 +108,7 @@ function CreateProd() {
               className='m-2 h-5 w-5 text-fuchsia-400'
               type="checkbox"
               checked={part.includes(p.name)}
-              onClick={() => handlePart(p.name)}
+              onChange={() => handlePart(p.name)}
             />
             Will Partcipate
           </label>
