@@ -26,7 +26,7 @@ function Login() {
           <label className="flex flex-col mt-10 items-start p-1 m-1 ">
             Nome
             <input
-            className="bg-white p-2 w-50 shadow-bot m-1"
+            className="bg-white p-2 w-0 shadow-bot m-1"
               placeholder="Nome"
               required
               type="text"
