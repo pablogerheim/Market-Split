@@ -15,7 +15,7 @@ function Session() {
 
   function Finish(): void {
     clearTable()
-    navegat('/');
+    navegat('/home');
   }
 
   return (
@@ -33,7 +33,7 @@ function Session() {
         </button>
       </div>
       <button
-        onClick={() => navegat('/c')}
+        onClick={() => navegat('/create')}
         className='start px-8 py-1 rounded-md mt-1 text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
       >
         Add Product

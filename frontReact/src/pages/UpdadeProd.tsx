@@ -41,7 +41,7 @@ function UpdadeProd() {
       participants: part,
       quantity: quantity
     })
-    navegat('/s', { replace: true });
+    navegat('/session');
   }
 
   const handlePart = (p: string) => {
@@ -56,7 +56,7 @@ function UpdadeProd() {
     <div className="p-5 bg-white mt-1 w-[90%] border-8 ">
       <div className=" flex items-center justify-center gap-6 p-3">
         <button
-          onClick={() => navegat('/s')}
+          onClick={() => navegat('/session')}
           className='start px-4 py-2 rounded-md text-3xl "border-gray-300 border-solid border-b-4 bg-orange-300'
         >
           <BiArrowBack />

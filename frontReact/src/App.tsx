@@ -3,12 +3,13 @@ import { Toolbar } from './componentes/Toolbar';
 import './css/App.css'
 import Router from './Router';
 
-function App() {
 
+function App() {
+  
   return (<>
-  <Toolbar/>
+    <Toolbar />
     <Router />
-    </>
+  </>
   )
 }
 

@@ -19,6 +19,7 @@ function People() {
 
   const fetchUser = async () => setParticipants(await getUser());
   const fetchProduct = async () => setProduct(await getProduct());
+  const findTotal = () => products.reduce((pv, cv) => pv + parseInt(cv.price) * parseInt(cv.quantity), 0).toFixed(2).replace('.', ',')
   const activeMembers = () => {
     let arrMembers: string[] = []
     products.forEach(prod => prod.participants.forEach(name => {
@@ -49,8 +50,7 @@ function People() {
           Participants: {activeMembers()}
         </p>
         <p className="text-xl m-2 p-2 show-sm">
-          Total: R$
-          {products.reduce((pv, cv) => pv + parseInt(cv.price) * parseInt(cv.quantity), 0).toFixed(2).replace('.', ',')}
+          Total: R${findTotal()}
         </p>
       </div>
       {participants.map(p => {

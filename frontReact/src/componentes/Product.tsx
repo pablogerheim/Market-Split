@@ -4,14 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import EventBus from '../helper/EventBus';
 
-
 function Product() {
   const [prods, setProds] = useState<product[]>();
   const navegat = useNavigate();
 
-  useEffect(() => {
-    fetchProduct();
-  }, []);
+  useEffect(() => { fetchProduct() }, []);
 
   const fetchProduct = async () => setProds(await getProduct());
 
@@ -19,14 +16,12 @@ function Product() {
     setTimeout(() => {
       EventBus.dispatch('setId', id);
     }, 0);
-    navegat('/u');
+    navegat('/update');
   }
 
   const deleteProd = async (id: number) => { await deleteProduct(id); fetchProduct(); }
 
-  if (!prods) {
-    return <p>Loading...</p>
-  }
+  if (!prods) { return <p>Loading...</p> }
   return (
     <div className="">
       <div className="grid grid-cols-2 gap-1 mt-1 ">

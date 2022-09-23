@@ -26,7 +26,7 @@ function CreateProd() {
       quantity: quantity,
       productId: 0
     })
-    navegat('/s');
+    navegat('/session');
   }
 
   const handlePart = (p: string) => {
@@ -47,7 +47,7 @@ function CreateProd() {
     <div className="p-5 bg-white mt-1 w-[90%] border-8 ">
       <div className=" flex items-center justify-around gap-6 p-3">
         <button
-          onClick={() => navegat('/s')}
+          onClick={() => navegat('/session')}
           className='start px-6 py-2 rounded-md text-3xl "border-gray-300 border-solid border-b-4 bg-orange-300'
         >
           <BiArrowBack />
