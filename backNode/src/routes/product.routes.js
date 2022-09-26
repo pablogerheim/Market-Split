@@ -6,9 +6,9 @@ const router = express.Router();
 router.get('/', productsController.getProducts);
 router.get('/:id', productsController.getProducts);
 router.patch('/', productsController.patchProducts);
+router.delete('/clear', productsController.clearProduct);
 router.delete('/:id', productsController.deleteProduct);
 router.post('/', productsController.createProduct);
 router.put('/', productsController.updateProduct);
-router.delete('/clear', productsController.clearProduct);
 
 export default router;

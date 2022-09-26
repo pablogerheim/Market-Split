@@ -1,8 +1,13 @@
 import { product } from "../data/api";
 function isEquivalent(a:product[], b:product[]) {
+
     // Create arrays of property names
     const aProps = Object.getOwnPropertyNames(a);
     const bProps = Object.getOwnPropertyNames(b);
+
+   if (aProps.length === 1) {
+    return false
+   }
 
     // If number of properties is different,
     // objects are not equivalent

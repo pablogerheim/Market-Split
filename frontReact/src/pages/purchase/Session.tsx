@@ -1,9 +1,9 @@
-import '../css/helper.css';
-import { People } from '../componentes/People';
-import { Product } from '../componentes/Product';
+import '../../css/helper.css';
+import { People } from '../../componentes/People';
+import { Product } from '../../componentes/Product';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearTable } from "../data/api";
+import { clearTable } from "../../data/api";
 
 function Session() {
   const navegat = useNavigate();

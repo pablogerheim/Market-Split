@@ -38,7 +38,8 @@ async function deleteProduct(id) {
 async function clearProduct() {
     try {
         return await Products.destroy({
-            truncate: true
+            truncate: true,
+            cascade: false
         })
     } catch (err) {
         throw err;

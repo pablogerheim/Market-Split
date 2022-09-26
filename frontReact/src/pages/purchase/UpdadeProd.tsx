@@ -1,9 +1,9 @@
-import '../css/helper.css';
-import { participant, getUser, updateProduct, getbyid } from '../data/api';
+import '../../css/helper.css';
+import { participant, getUser, updateProduct, getbyid } from '../../data/api';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
-import EventBus from '../helper/EventBus';
+import EventBus from '../../helper/EventBus';
 import {v4} from 'uuid'
 
 function UpdadeProd() {

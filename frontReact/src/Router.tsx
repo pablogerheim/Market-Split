@@ -5,9 +5,10 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { Home } from "./pages/Home";
-import { Session } from "./pages/Session";
-import { CreateProd } from "./pages/CreateProd";
-import { UpdadeProd } from "./pages/UpdadeProd";
+import { Session } from "./pages/purchase/Session";
+import { CreateProd } from "./pages/purchase/CreateProd";
+import { UpdadeProd } from "./pages/purchase/UpdadeProd";
+import { ControlUser } from "./pages/users/ControlUser"
 import { Login } from './pages/Login'
 import { useEffect, useState } from 'react';
 import { verify } from "./data/api";
@@ -20,13 +21,13 @@ function Router() {
       setUser(await verify().then(e => e.data));
     })()
   }, [])
-  
-  
+
+
   if (!user) {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login setUser ={setUser}/>} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       </BrowserRouter>
@@ -39,6 +40,7 @@ function Router() {
         <Route path='/session' element={<Session />} />
         <Route path='/create' element={<CreateProd />} />
         <Route path='/update' element={<UpdadeProd />} />
+        <Route path='/user' element={<ControlUser />} />
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     </BrowserRouter>

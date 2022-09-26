@@ -1,5 +1,5 @@
-import '../css/helper.css';
-import { participant, getUser, createProduct } from "../data/api";
+import '../../css/helper.css';
+import { participant, getUser, createProduct } from "../../data/api";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';

@@ -21,7 +21,6 @@ async function register(req, res, next) {
 }
 
 async function login(req, res, next) {
-    console.log(req.body)
     try {
         const { name, password } = req.body;
         if (!name || !password) {
