@@ -9,18 +9,28 @@ import { Session } from "./pages/Session";
 import { CreateProd } from "./pages/CreateProd";
 import { UpdadeProd } from "./pages/UpdadeProd";
 import { Login } from './pages/Login'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { verify } from "./data/api";
 
 function Router() {
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useState()
 
+  useEffect(() => {
+    (async () => {
+      setUser(await verify().then(e => e.data));
+    })()
+  }, [])
+  
+  
   if (!user) {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path='/home' element={<Login />} />
+          <Route path="/login" element={<Login setUser ={setUser}/>} />
+          <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
-      </BrowserRouter>)
+      </BrowserRouter>
+    );
   }
   return (
     <BrowserRouter>

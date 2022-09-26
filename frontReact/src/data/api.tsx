@@ -27,12 +27,48 @@ async function loggedToken() {
   return false;
 }
 
-async function Login(user:user) {
-  const userinfo = await axios.post('http://localhost:3001/login/', user);
+async function login(user:user) {
+  
+  const userinfo = await axios.post('http://localhost:3002/login', user, {
+    headers: {
+      'Content-Type': 'application/json; charset = utf-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  })
+  
+  userinfo && localStorage.setItem('userToken', userinfo.data.token);
   return userinfo;
 }
 
-let auth
+async function verify() {
+  const store = localStorage.getItem('userToken');
+  const userinfo = await axios.get('http://localhost:3002/checkToken',{
+    headers: {
+      Authorization: `Bearer ${store}`,
+      'Content-Type': 'application/json; charset = utf-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  });
+  
+  return userinfo;
+}
+
+let auth: any;
+
+async function logout() {
+  // const userinfo = await axios.post('http://localhost:3002/logout', {
+  //   headers: {
+  //     Authorization: `Bearer ${auth}`,
+  //     'Content-Type': 'application/json; charset = utf-8',
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Access-Control-Allow-Credentials': 'true',
+  //   },
+  // });
+
+  localStorage.removeItem('userToken')
+}
 
 const apiUser = axios.create({
   baseURL: 'http://localhost:3002/user',
@@ -113,5 +149,7 @@ export {
   updateQuantity,
   deleteProduct,
   clearTable,
-  Login
+  login,
+  verify,
+  logout
 };
