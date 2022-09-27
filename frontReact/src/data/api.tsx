@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export interface participant {
-  id: number;
+  userId: number;
   name: string;
   access:string;
 }
@@ -16,7 +16,8 @@ export interface product {
 
 export interface user {
   name:string;
-  password:string
+  password:string;
+  access:string;
 }
 
 async function loggedToken() {
@@ -71,6 +72,21 @@ async function logout() {
   localStorage.removeItem('userToken')
 }
 
+async function createUser(user:user) {
+  // auth = await loggedToken();
+  const userinfo = await axios.post('http://localhost:3002/login/register', user, {
+    headers: {
+       //  Authorization: `Bearer ${auth}`,
+      'Content-Type': 'application/json; charset = utf-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  })
+  
+  userinfo && localStorage.setItem('userToken', userinfo.data.token);
+  return userinfo;
+}
+
 const apiUser = axios.create({
   baseURL: 'http://localhost:3002/user',
   timeout: 1000,
@@ -98,6 +114,19 @@ async function getUser() {
   const user = await apiUser.get('/');
   return user.data;
 }
+
+async function updateUser(participant:participant) {
+  // auth = await loggedToken();
+   const data = await apiUser.put('/', participant);
+   return data.data;
+ }
+
+ async function deleteUser(id:number) {
+  
+  // auth = await loggedToken();
+   const user = await apiUser.delete(`/${id}`);
+   return user.data;
+ }
 
 async function getProduct() {
   //auth = await loggedToken();
@@ -152,5 +181,8 @@ export {
   clearTable,
   login,
   verify,
-  logout
+  logout,
+  createUser,
+  updateUser,
+  deleteUser
 };

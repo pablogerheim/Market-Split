@@ -45,10 +45,8 @@ app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/login', loginRoute);
-
 app.use('/user', userRoute);
 app.use('/product', productRoute);
-
 app.use('/checkToken', checkToken, (req, res) => { res.send(true) });
 app.use('/logout', async(req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -83,7 +81,6 @@ app.use('/logout', async(req, res, next) => {
 
 async function checkToken(req, res, next) {
     const authHeader = req.headers.authorization;
-    console.log("first", authHeader)
     if (!authHeader) { return res.status(401).json({ msg: 'Acesso negado!' }, false); }
 
     const token = authHeader && authHeader.split(' ')[1];

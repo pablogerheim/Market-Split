@@ -17,7 +17,7 @@ function Home() {
         </button>
         <div className='flex flex-col items-center justify-between h-[70vh]'> 
         <button
-          onClick={() => navegat('/user')}
+          onClick={() => navegat('/user/control')}
           className='start max-w-[275px] w-[90%] "border-gray-300 border-solid border-b-4 bg-stone-300 px-10 py-4 rounded-md mt-5 text-3xl'
         >
           Add Users

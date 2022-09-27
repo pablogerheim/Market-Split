@@ -8,7 +8,8 @@ import { Home } from "./pages/Home";
 import { Session } from "./pages/purchase/Session";
 import { CreateProd } from "./pages/purchase/CreateProd";
 import { UpdadeProd } from "./pages/purchase/UpdadeProd";
-import { ControlUser } from "./pages/users/ControlUser"
+import { ControlUser } from "./pages/users/ControlUser";
+import { CreateUser } from "./pages/users/CreateUser";
 import { Login } from './pages/Login'
 import { useEffect, useState } from 'react';
 import { verify } from "./data/api";
@@ -40,7 +41,8 @@ function Router() {
         <Route path='/session' element={<Session />} />
         <Route path='/create' element={<CreateProd />} />
         <Route path='/update' element={<UpdadeProd />} />
-        <Route path='/user' element={<ControlUser />} />
+        <Route path='/user/control' element={<ControlUser />} />
+        <Route path='/user/create' element={<CreateUser />} />
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     </BrowserRouter>

@@ -55,6 +55,34 @@
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.4);
 }
 
+.dialogStyles {
+    height: 80%;
+    width: 500px;
+    max-Width: 80%;
+    margin: 0 auto;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background-color: #fff;
+    padding: 10px 20px 40px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dialogCloseButtonStyles {
+    margin-bottom: 15px;
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    align-self: flex-end;
+}
 
 @media screen and (min-width: 800px) {
     .product {

@@ -2,17 +2,16 @@ import loginService from '../service/login.service.js';
 
 async function register(req, res, next) {
     try {
-        const { name, email, password } = req.body;
-
-        if (!email || !password || !name) {
-            return res.status(422).json({ msg: "O Email, Password e Nome são obrigatórios!" });
+        const { name, password, access } = req.body;
+        if (!access || !password || !name) {
+            return res.status(422).json({ msg: "The Assess, Password and Name are required!" });
         }
-        const user = await loginService.findUser(email);
+        const user = await loginService.findUser(name);
         if (user) {
-            return res.status(422).json({ msg: "Por favor, utilize outro e-mail!" });
+            return res.status(422).json({ msg: "This name is already being used" });
         }
-        const criatedUser = await loginService.createUser(name, email, password)
-        res.status(201).json({ msg: "Usuário criado com sucesso!" });
+        const criatedUser = await loginService.createUser(req.body)
+        res.status(200).json({ msg: "User created successfully!" });
 
         logger.info(`POST /creat account - ${JSON.stringify(criatedUser)}`);
     } catch (err) {
@@ -26,19 +25,19 @@ async function login(req, res, next) {
         if (!name || !password) {
             return res
                 .status(422)
-                .json({ msg: 'O Email e Password são obrigatórios!' });
+                .json({ msg: 'The Password and Name are required!' });
         }
 
         const user = await loginService.findUser(name);
         const { id } = user;
         if (!user) {
-            return res.status(404).json({ msg: 'Usuário não encontrado!' });
+            return res.status(404).json({ msg: 'User not found!' });
         }
         console.log(user)
         const checkPassword = loginService.compareUser(user, password);
 
         if (!checkPassword) {
-            return res.status(422).json({ msg: 'password inválida' });
+            return res.status(422).json({ msg: 'password invalid' });
         }
 
         const token = await loginService.createToken(user);

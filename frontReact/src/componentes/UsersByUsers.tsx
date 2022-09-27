@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {  participant, getUser } from '../data/api';
+import { participant, getUser } from '../data/api';
 import { v4 } from 'uuid';
 
 function UsersByUsers() {

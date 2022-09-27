@@ -24,13 +24,13 @@ function ControlUser() {
     <div className="p-5 bg-white mt-1 w-[90%] border-8 ">
       <div className=" flex items-center justify-center gap-6 p-3">
         <button
-          onClick={() => navegat('/session')}
+          onClick={() => navegat('/home')}
           className='start px-4 py-2 rounded-md text-3xl "border-gray-300 border-solid border-b-4 bg-orange-300'
         >
           <BiArrowBack />
         </button>
         <button
-          onClick={() => navegat('/create')}
+          onClick={() => navegat('/user/create')}
           className='start px-8 py-1 rounded-md mt-1 text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
         >
           Add User

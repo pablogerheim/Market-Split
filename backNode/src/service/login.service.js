@@ -1,38 +1,33 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { promises } from 'fs';
-import loginRepository from '../repository/login.repository.js';
+//import loginRepository from '../repository/login.repository.js';
+import userRepository from "../repository/user.repository.js";
 
-const { readFile, writeFile } = promises;
+const { readFile } = promises;
 
 async function findUser(name) {
-    const userdb = await loginRepository.printUser();
+    const users = await userRepository.getUsers()
 
-    return userdb.find(user => user.dataValues.name === name);
+    return users.find(user => user.dataValues.name === name);
 }
 
-async function createUser(name, email, password) {
-  //  let userdb = await baseRepository.readFileUser()
+async function createUser(user) {
+
     const salt = await bcrypt.genSalt(12);
-    const passwordHash = await bcrypt.hash(password, salt);
+    const passwordHash = await bcrypt.hash(user.password, salt);
 
-    let user = {
-        "user_id": userdb.nextId,
-        "name": name,
-        "email": email,
-        "password": passwordHash,
-        "timestamp": new Date
-    }
-    userdb.nextId++
-        userdb.users.push(user)
+    const newUser = user
+    newUser.password = passwordHash
+    newUser.timestamp = new Date
 
-  //  await baseRepository.writeFileUser(userdb)
-    return user
+    await userRepository.createUser(newUser)
+    return newUser
 }
 
 async function compareUser(user, password) {
     return password == user.password
-    // await bcrypt.compare(password, user.password);
+        //await bcrypt.compare(password, user.password);
 }
 
 async function createToken(user) {
