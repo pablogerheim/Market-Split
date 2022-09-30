@@ -36,7 +36,7 @@ function CreateUser() {
           className='start px-6 py-2 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-green-400'
           onClick={createNewUser}
         >
-          Add Product
+          Add User
         </button>
       </div>
       <div>

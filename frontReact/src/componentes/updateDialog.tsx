@@ -1,10 +1,11 @@
 import '../css/helper.css';
-import { participant, getUser, createProduct } from "../data/api";
+import { getUserById, updateUser } from "../data/api";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
 
 function UpdateDialog({
+  userId,
     setClose
 }:any) {
     const navegat = useNavigate()
@@ -13,16 +14,23 @@ function UpdateDialog({
     const [access, setAccess] = useState<string>('');
   
     useEffect(() => {
-  
+      startUpdate()
     }, [])
+
+    const startUpdate = async () => {
+      let prod = await getUserById(userId)
+      setName(prod?.name)
+      setAccess(prod?.access)
+    } 
   
-    function createUser(): void {
-      // createUser({
-      //   name: name,
-      //   password: password,
-      //   access: access,
-      // })
-      navegat('/user');
+    const update = async () => {
+    await updateUser({
+        userId: userId,
+        password: password,
+        name: name,
+        access: access,
+      })
+      navegat('/user/s')
     }
 
     return (
@@ -36,7 +44,7 @@ function UpdateDialog({
         </button>
         <button
           className='start px-6 py-2 rounded-md text-2xl "border-gray-300 border-solid border-b-4  bg-blue-400'
-          onClick={createUser}
+          onClick={update}
         >
         Update User
         </button>

@@ -7,13 +7,14 @@ import { UpdateDialog } from "../componentes/updateDialog";
 function UsersByAdm() {
   const [participants, setParticipants] = useState<participant[]>([])
   const [close, setClose] = useState(true)
+  const [id, setId] = useState<number>()
 
   useEffect(() => {
     fetchUser();
   }, [])
 
   const fetchUser = async () => setParticipants(await getUser());
-  const updateUser = () => {    setClose(false)  }
+  const updateUser = (idu:number) => { setId(idu); setClose(false)  }
   const deleteUserFunc = (id:number) => {deleteUser(id)}
 
   if (!participants) {
@@ -29,7 +30,7 @@ function UsersByAdm() {
           Adms: 1
         </p>
       </div>
-      {close || <UpdateDialog setClose = {setClose} /> }
+      {close || <UpdateDialog setClose = {setClose} userId={id} /> }
       <div className="p-2">
         {participants.map(p =>
           <div
@@ -39,7 +40,7 @@ function UsersByAdm() {
             <p className="text-xl m-3 ml-5 ">{p.name}</p>
             <p className="text-xl m-3 ml-5 ">{p.access}</p>
             <button
-              onClick={updateUser}
+              onClick={()=>updateUser(p.userId)}
               className="bg-yellow-300 p-1 m-1 rounded shadow-hover"
             >
               <AiOutlineEdit className="h-6 w-6" />

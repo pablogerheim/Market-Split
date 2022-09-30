@@ -19,6 +19,12 @@ export interface user {
   password:string;
   access:string;
 }
+export interface useru {
+  userId: number;
+  name:string;
+  password:string;
+  access:string;
+}
 
 async function loggedToken() {
   const loggedInUser = localStorage.getItem('userToken');
@@ -115,9 +121,15 @@ async function getUser() {
   return user.data;
 }
 
-async function updateUser(participant:participant) {
+async function getUserById(id:number) {
   // auth = await loggedToken();
-   const data = await apiUser.put('/', participant);
+   const user = await apiUser.get(`/${id}`);
+   return user.data;
+ }
+
+async function updateUser(useru:useru) {
+  // auth = await loggedToken();
+   const data = await apiUser.put('/', useru);
    return data.data;
  }
 
@@ -184,5 +196,6 @@ export {
   logout,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getUserById
 };

@@ -12,7 +12,7 @@ async function findUser(name) {
     return users.find(user => user.dataValues.name === name);
 }
 
-async function createUser(user) {
+async function createUser(user, bool = true) {
 
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(user.password, salt);
@@ -21,7 +21,9 @@ async function createUser(user) {
     newUser.password = passwordHash
     newUser.timestamp = new Date
 
-    await userRepository.createUser(newUser)
+    console.log(bool)
+    bool && await userRepository.createUser(newUser)
+
     return newUser
 }
 

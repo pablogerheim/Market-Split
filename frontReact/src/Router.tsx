@@ -19,6 +19,7 @@ function Router() {
 
   useEffect(() => {
     (async () => {
+      console.log("test")
       setUser(await verify().then(e => e.data));
     })()
   }, [])
@@ -43,6 +44,7 @@ function Router() {
         <Route path='/update' element={<UpdadeProd />} />
         <Route path='/user/control' element={<ControlUser />} />
         <Route path='/user/create' element={<CreateUser />} />
+        <Route path="/user/*" element={<Navigate to="/user/control" />} />
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     </BrowserRouter>

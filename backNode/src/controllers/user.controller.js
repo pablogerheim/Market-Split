@@ -12,9 +12,9 @@ async function getUsers(req, res, next) {
 
 async function updateUser(req, res, next) {
     try {
-        const { name, password, access, userId } = req.body;
+        const { name, access, userId } = req.body;
 
-        if (!access || !password || !name || !userId) {
+        if (!access || !name || !userId) {
             return res.status(422).json({ msg: "The Id, Assess, Password and Name are required!" });
         }
         const data = await usersService.updateUser(req.body);
@@ -30,7 +30,6 @@ async function deleteUser(req, res, next) {
     console.log("delete", req.params.id)
     try {
         const data = await usersService.deleteUser(req.params.id);
-        console.log(data)
         res.status(200).send({ msg: "deleted sussesfull" });
         logger.info(` DELETE / User - ${JSON.stringify(data)}`);
     } catch (err) {
