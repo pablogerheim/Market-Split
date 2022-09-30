@@ -28,6 +28,7 @@ export interface useru {
 
 async function loggedToken() {
   const loggedInUser = localStorage.getItem('userToken');
+//  return loggedInUser
   if (loggedInUser) {
     const foundUser = await JSON.parse(loggedInUser);
     return foundUser;
@@ -37,7 +38,7 @@ async function loggedToken() {
 
 async function login(user:user) {
   
-  const userinfo = await axios.post('http://localhost:3002/login', user, {
+  const userinfo = await axios.post('http://localhost:3002/access/login', user, {
     headers: {
       'Content-Type': 'application/json; charset = utf-8',
       'Access-Control-Allow-Origin': '*',
@@ -66,16 +67,18 @@ async function verify() {
 let auth: any;
 
 async function logout() {
-  // const userinfo = await axios.post('http://localhost:3002/logout', {
-  //   headers: {
-  //     Authorization: `Bearer ${auth}`,
-  //     'Content-Type': 'application/json; charset = utf-8',
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Access-Control-Allow-Credentials': 'true',
-  //   },
-  // });
-
+  auth = await loggedToken();
+  await axios.post('http://localhost:3002/access/logout',{}, {
+    headers: {
+      'Authorization': `Bearer ${auth}`,
+      'Content-Type': 'application/json; charset = utf-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  });
   localStorage.removeItem('userToken')
+  return auth
+ 
 }
 
 async function createUser(user:user) {

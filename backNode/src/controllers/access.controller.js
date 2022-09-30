@@ -1,4 +1,5 @@
-import loginService from '../service/login.service.js';
+import accessService from '../service/access.service.js';
+
 
 async function register(req, res, next) {
     try {
@@ -6,11 +7,11 @@ async function register(req, res, next) {
         if (!access || !password || !name) {
             return res.status(422).json({ msg: "The Assess, Password and Name are required!" });
         }
-        const user = await loginService.findUser(name);
+        const user = await accessService.findUser(name);
         if (user) {
             return res.status(422).json({ msg: "This name is already being used" });
         }
-        const criatedUser = await loginService.createUser(req.body)
+        const criatedUser = await accessService.createUser(req.body)
         res.status(200).json({ msg: "User created successfully!" });
 
         logger.info(`POST /creat account - ${JSON.stringify(criatedUser)}`);
@@ -28,19 +29,18 @@ async function login(req, res, next) {
                 .json({ msg: 'The Password and Name are required!' });
         }
 
-        const user = await loginService.findUser(name);
+        const user = await accessService.findUser(name);
         const { id } = user;
         if (!user) {
             return res.status(404).json({ msg: 'User not found!' });
         }
-        console.log(user)
-        const checkPassword = loginService.compareUser(user, password);
+        const checkPassword = accessService.compareUser(user, password);
 
         if (!checkPassword) {
             return res.status(422).json({ msg: 'password invalid' });
         }
 
-        const token = await loginService.createToken(user);
+        const token = await accessService.createToken(user);
         const account = { id, name, token };
         res.status(200).send({ id, name, token });
 
@@ -50,7 +50,24 @@ async function login(req, res, next) {
     }
 }
 
+async function logout(req, res, next) {
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+    try {
+        if (!token) {
+            throw new Error('token missing');
+        }
+        await accessService.logout(token)
+
+        res.status(200).json({ sg: ' successfully logged out ' });
+        logger.info(' Logout ');
+    } catch (err) {
+        next(err);
+    }
+}
+
 export default {
     register,
-    login
+    login,
+    logout
 };

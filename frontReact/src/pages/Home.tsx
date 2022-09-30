@@ -5,7 +5,11 @@ import { logout } from "../data/api";
 function Home() {
     const navegat = useNavigate()
 
-    const logoutApp = () => {logout(); document.location.reload()}
+    const logoutApp = async() => {
+      console.log("token == ",localStorage.getItem('userToken'))
+ await logout();
+  //      document.location.reload()
+      }
 
     return (
       <div className=" p-5 bg-white mt-1 w-[90%] h-[87vh] border-8 border-solid= ">

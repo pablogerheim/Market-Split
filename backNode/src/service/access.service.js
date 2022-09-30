@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { promises } from 'fs';
-//import loginRepository from '../repository/login.repository.js';
+import accessRepository from "../repository/access.repository.js"
 import userRepository from "../repository/user.repository.js";
+import validate from "../helper/helperList.js";
 
 const { readFile } = promises;
 
@@ -21,7 +22,6 @@ async function createUser(user, bool = true) {
     newUser.password = passwordHash
     newUser.timestamp = new Date
 
-    console.log(bool)
     bool && await userRepository.createUser(newUser)
 
     return newUser
@@ -42,9 +42,34 @@ async function createToken(user) {
     return token;
 }
 
+async function logout(token) {
+
+    const blackList = await accessRepository.getBlackList();
+    let dateTime = new Date();
+    dateTime = JSON.parse(JSON.stringify(dateTime));
+    const blacktoken = { token, dateT: dateTime };
+    const currentTokens = [];
+
+    blackList.blacktokens.forEach(e => {
+        if (validate(e.dateT)) {
+            currentTokens.push(e);
+        }
+    });
+
+    blackList.blacktokens = currentTokens;
+    blackList.blacktokens.push(blacktoken);
+
+    console.log('blackList', blackList)
+
+    await accessRepository.updateBlackList(blackList);
+
+}
+
+
 export default {
     findUser,
     createUser,
     compareUser,
     createToken,
+    logout
 };

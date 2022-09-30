@@ -1,5 +1,5 @@
 import userRepository from '../repository/user.repository.js';
-import loginService from "./login.service.js";
+import loginService from "./access.service.js";
 
 
 async function getUsers(id) {

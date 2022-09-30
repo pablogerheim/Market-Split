@@ -5,12 +5,11 @@ import swaggerUi from 'swagger-ui-express';
 import { swaggerDocument } from './doc.js';
 import userRoute from './routes/user.routes.js';
 import productRoute from './routes/product.routes.js';
-import loginRoute from './routes/login.routes.js';
+import accessRoute from './routes/access.routes.js';
 import jwt from 'jsonwebtoken';
 import { promises } from 'fs';
-//import loginRepository from "./repository/user.repository.js";
-//import validate from './helper/helperList.js';
-const { readFile, writeFile } = promises;
+
+const { readFile } = promises;
 
 const {
     combine,
@@ -44,40 +43,10 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/login', loginRoute);
+app.use('/access', accessRoute);
 app.use('/user', userRoute);
 app.use('/product', productRoute);
 app.use('/checkToken', checkToken, (req, res) => { res.send(true) });
-app.use('/logout', async(req, res, next) => {
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1];
-    try {
-        if (!token) {
-            throw new Error('token missing');
-        }
-        // const blackList = await loginRepository.getBlackList();
-        // let dateTime = new Date();
-        // dateTime = JSON.parse(JSON.stringify(dateTime));
-        // const blacktoken = { token, dateT: dateTime };
-        // const currentTokens = [];
-
-        // blackList.blacktokens.forEach(e => {
-        //   if (validate(e.dateT)) {
-        //     currentTokens.push(e);
-        //   }
-        // });
-
-        // blackList.blacktokens = currentTokens;
-        // blackList.blacktokens.push(blacktoken);
-
-        // await loginRepository.updateBlackList(blackList);
-
-        res.status(200).json({ msg: 'Deslogado com susseso' });
-        logger.info(' Logout ');
-    } catch (err) {
-        next(err);
-    }
-});
 
 async function checkToken(req, res, next) {
     const authHeader = req.headers.authorization;
