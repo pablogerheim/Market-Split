@@ -14,13 +14,13 @@ function CreateUser() {
 
   }, [])
 
-  function createNewUser(): void {
-    createUser({
+ async function createNewUser(){
+  await  createUser({
       name: name,
       password: password,
       access: access,
     })
-    navegat('/user/control');
+    navegat('/user/');
   }
 
   return (

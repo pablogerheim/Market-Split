@@ -6,6 +6,8 @@ function difTime(p1, p2) {
     return p1 - p2;
 }
 
+let radix = 2
+
 function validate(blackDate) {
     let date = new Date();
     date = JSON.parse(JSON.stringify(date));

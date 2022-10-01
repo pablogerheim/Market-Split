@@ -15,7 +15,7 @@ function UsersByAdm() {
 
   const fetchUser = async () => setParticipants(await getUser());
   const updateUser = (idu:number) => { setId(idu); setClose(false)  }
-  const deleteUserFunc = (id:number) => {deleteUser(id)}
+  const deleteUserFunc = async (id:number) => {await deleteUser(id),await fetchUser(); }
 
   if (!participants) {
     return <p>Loading...</p>

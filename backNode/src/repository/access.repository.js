@@ -1,24 +1,38 @@
 import User from '../models/user.model.js';
-import BlackList from "../models/blackList.model.js";
-
+import mongconnect from '../config/MongoDBconnect.js';
 
 async function getBlackList() {
+    const conn = mongconnect();
     try {
-        return await BlackList.findAll();
+        await conn.connect();
+        const data = await conn
+            .db('market')
+            .collection('blacklist')
+            .findOne({ blackList: 'BlackList' });
+        return data;
     } catch (err) {
         throw err;
+    } finally {
+        await conn.close();
     }
 }
 
-async function updateBlackList(tokens) {
+async function updateBlackList(props) {
+    const conn = mongconnect();
     try {
-        await BlackList.update(tokens, {
-            where: {
-                tokenId: 1,
-            },
-        });
+        await conn.connect();
+        const data = await conn
+            .db('market')
+            .collection('blacklist')
+            .findOneAndUpdate(
+                { blackList: 'BlackList' },
+                { $set: { ...props } },
+            );
+        return data;
     } catch (err) {
         throw err;
+    } finally {
+        await conn.close();
     }
 }
 

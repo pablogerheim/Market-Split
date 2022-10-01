@@ -3,7 +3,7 @@ import axios from 'axios';
 export interface participant {
   userId: number;
   name: string;
-  access:string;
+  access: string;
 }
 
 export interface product {
@@ -15,44 +15,47 @@ export interface product {
 }
 
 export interface user {
-  name:string;
-  password:string;
-  access:string;
+  name: string;
+  password: string;
+  access: string;
 }
 export interface useru {
   userId: number;
-  name:string;
-  password:string;
-  access:string;
+  name: string;
+  password: string;
+  access: string;
 }
 
 async function loggedToken() {
   const loggedInUser = localStorage.getItem('userToken');
-//  return loggedInUser
+  //  return loggedInUser
   if (loggedInUser) {
-    const foundUser = await JSON.parse(loggedInUser);
-    return foundUser;
+    // const foundUser = await JSON.parse(loggedInUser);
+    return loggedInUser;
   }
   return false;
 }
 
-async function login(user:user) {
-  
-  const userinfo = await axios.post('http://localhost:3002/access/login', user, {
-    headers: {
-      'Content-Type': 'application/json; charset = utf-8',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
+async function login(user: user) {
+  const userinfo = await axios.post(
+    'http://localhost:3002/access/login',
+    user,
+    {
+      headers: {
+        'Content-Type': 'application/json; charset = utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+      },
     },
-  })
-  
+  );
+
   userinfo && localStorage.setItem('userToken', userinfo.data.token);
   return userinfo;
 }
 
 async function verify() {
   const store = localStorage.getItem('userToken');
-  const userinfo = await axios.get('http://localhost:3002/checkToken',{
+  const userinfo = await axios.get('http://localhost:3002/checkToken', {
     headers: {
       Authorization: `Bearer ${store}`,
       'Content-Type': 'application/json; charset = utf-8',
@@ -60,7 +63,7 @@ async function verify() {
       'Access-Control-Allow-Credentials': 'true',
     },
   });
-  
+
   return userinfo;
 }
 
@@ -68,30 +71,37 @@ let auth: any;
 
 async function logout() {
   auth = await loggedToken();
-  await axios.post('http://localhost:3002/access/logout',{}, {
-    headers: {
-      'Authorization': `Bearer ${auth}`,
-      'Content-Type': 'application/json; charset = utf-8',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
+  await axios.post(
+    'http://localhost:3002/access/logout',
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${auth}`,
+        'Content-Type': 'application/json; charset = utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+      },
     },
-  });
-  localStorage.removeItem('userToken')
-  return auth
- 
+  );
+  localStorage.removeItem('userToken');
+  return auth;
 }
 
-async function createUser(user:user) {
+async function createUser(user: user) {
   // auth = await loggedToken();
-  const userinfo = await axios.post('http://localhost:3002/login/register', user, {
-    headers: {
-       //  Authorization: `Bearer ${auth}`,
-      'Content-Type': 'application/json; charset = utf-8',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
+  const userinfo = await axios.post(
+    'http://localhost:3002/access/register',
+    user,
+    {
+      headers: {
+        //  Authorization: `Bearer ${auth}`,
+        'Content-Type': 'application/json; charset = utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+      },
     },
-  })
-  
+  );
+
   userinfo && localStorage.setItem('userToken', userinfo.data.token);
   return userinfo;
 }
@@ -100,48 +110,47 @@ const apiUser = axios.create({
   baseURL: 'http://localhost:3002/user',
   timeout: 1000,
   headers: {
-  //  Authorization: `Bearer ${auth}`,
+    //  Authorization: `Bearer ${auth}`,
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
-  }
+  },
 });
 
 const apiProduct = axios.create({
   baseURL: 'http://localhost:3002/product',
   timeout: 1000,
   headers: {
-   // Authorization: `Bearer ${auth}`,
+    // Authorization: `Bearer ${auth}`,
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
-  }
+  },
 });
 
 async function getUser() {
- // auth = await loggedToken();
+  // auth = await loggedToken();
   const user = await apiUser.get('/');
   return user.data;
 }
 
-async function getUserById(id:number) {
+async function getUserById(id: number) {
   // auth = await loggedToken();
-   const user = await apiUser.get(`/${id}`);
-   return user.data;
- }
+  const user = await apiUser.get(`/${id}`);
+  return user.data;
+}
 
-async function updateUser(useru:useru) {
+async function updateUser(useru: useru) {
   // auth = await loggedToken();
-   const data = await apiUser.put('/', useru);
-   return data.data;
- }
+  const data = await apiUser.put('/', useru);
+  return data.data;
+}
 
- async function deleteUser(id:number) {
-  
+async function deleteUser(id: number) {
   // auth = await loggedToken();
-   const user = await apiUser.delete(`/${id}`);
-   return user.data;
- }
+  const user = await apiUser.delete(`/${id}`);
+  return user.data;
+}
 
 async function getProduct() {
   //auth = await loggedToken();
@@ -173,7 +182,7 @@ async function updateQuantity(product: product) {
   return data.data;
 }
 
-async function deleteProduct(id:number) {
+async function deleteProduct(id: number) {
   //auth = await loggedToken();
   const data = await apiProduct.delete(`/${id}`);
   return data.data;
@@ -182,7 +191,7 @@ async function deleteProduct(id:number) {
 async function clearTable() {
   //auth = await loggedToken();
   const data = await apiProduct.delete('/clear');
-  return data
+  return data;
 }
 
 export {
@@ -200,5 +209,5 @@ export {
   createUser,
   updateUser,
   deleteUser,
-  getUserById
+  getUserById,
 };

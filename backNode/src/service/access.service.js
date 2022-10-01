@@ -49,20 +49,17 @@ async function logout(token) {
     dateTime = JSON.parse(JSON.stringify(dateTime));
     const blacktoken = { token, dateT: dateTime };
     const currentTokens = [];
-
+    if(blackList){
     blackList.blacktokens.forEach(e => {
         if (validate(e.dateT)) {
             currentTokens.push(e);
         }
-    });
+    });}
 
     blackList.blacktokens = currentTokens;
     blackList.blacktokens.push(blacktoken);
 
-    console.log('blackList', blackList)
-
     await accessRepository.updateBlackList(blackList);
-
 }
 
 

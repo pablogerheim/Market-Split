@@ -51,6 +51,7 @@ async function login(req, res, next) {
 }
 
 async function logout(req, res, next) {
+    console.log(req.headers)
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
     try {
@@ -59,7 +60,7 @@ async function logout(req, res, next) {
         }
         await accessService.logout(token)
 
-        res.status(200).json({ sg: ' successfully logged out ' });
+        res.status(200).json({ msg: ' successfully logged out ' });
         logger.info(' Logout ');
     } catch (err) {
         next(err);
