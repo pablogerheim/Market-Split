@@ -57,14 +57,14 @@ async function checkToken(req, res, next) {
         return res.status(401).json({ msg: 'Acesso negado!' }, token);
     }
 
-    // const blackList = await loginRepository.getBlackList();
+    const blackList = await loginRepository.getBlackList();
 
-    // const blacktoken = blackList.blacktokens.find(t => t.token === token);
-    // if (blacktoken) {
-    //   if (blacktoken.token === token) {
-    //     return res.status(401).json({ msg: 'Acesso negado!' });
-    //   }
-    // }
+    const blacktoken = blackList.blacktokens.find(t => t.token === token);
+    if (blacktoken) {
+        if (blacktoken.token === token) {
+            return res.status(401).json({ msg: 'Acesso negado!' });
+        }
+    }
 
     try {
         const publicKey = await readFile('./public.key', 'utf-8');

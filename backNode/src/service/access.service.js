@@ -13,7 +13,7 @@ async function findUser(name) {
     return users.find(user => user.dataValues.name === name);
 }
 
-async function createUser(user, bool = true) {
+async function controlUser(user, bool = true) {
 
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(user.password, salt);
@@ -28,8 +28,7 @@ async function createUser(user, bool = true) {
 }
 
 async function compareUser(user, password) {
-    return password == user.password
-        //await bcrypt.compare(password, user.password);
+    return await bcrypt.compare(password, user.password);
 }
 
 async function createToken(user) {
@@ -49,12 +48,13 @@ async function logout(token) {
     dateTime = JSON.parse(JSON.stringify(dateTime));
     const blacktoken = { token, dateT: dateTime };
     const currentTokens = [];
-    if(blackList){
-    blackList.blacktokens.forEach(e => {
-        if (validate(e.dateT)) {
-            currentTokens.push(e);
-        }
-    });}
+    if (blackList) {
+        blackList.blacktokens.forEach(e => {
+            if (validate(e.dateT)) {
+                currentTokens.push(e);
+            }
+        });
+    }
 
     blackList.blacktokens = currentTokens;
     blackList.blacktokens.push(blacktoken);
@@ -65,7 +65,7 @@ async function logout(token) {
 
 export default {
     findUser,
-    createUser,
+    controlUser,
     compareUser,
     createToken,
     logout

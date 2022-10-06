@@ -17,7 +17,7 @@ export interface product {
 export interface user {
   name: string;
   password: string;
-  access: string;
+  access?: string;
 }
 export interface useru {
   userId: number;

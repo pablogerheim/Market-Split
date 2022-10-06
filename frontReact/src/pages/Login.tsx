@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../css/helper.css';
 import { login } from "../data/api";
 
-function Login({ setUser }:any) {
-  const navigate = useNavigate();
+interface login {
+  setUser: Function
+}
+
+function Login({ setUser }:login) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
@@ -12,17 +14,12 @@ function Login({ setUser }:any) {
   async function submit() {
     event?.preventDefault();
     const userInfo = await login({ name, password });
-    console.log(userInfo);
-
-   
 
     if (!(userInfo.status == 200)) {
       setErr(true);
-    } else {
+    } else {  
       setErr(false);
       setUser(true)
-     //login(userInfo.data.token);
-      //navigate('/home');
     }
   }
 
@@ -61,14 +58,6 @@ function Login({ setUser }:any) {
           >
             Submit
           </button>
-        <button
-          className='start px-8 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-red-400'
-          onClick={() =>
-            console.log('storage', localStorage.getItem('userToken'))
-          }
-        >
-          storage
-        </button>
         </form>
       </div>
     </div>

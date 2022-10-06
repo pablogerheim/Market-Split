@@ -11,7 +11,7 @@ async function register(req, res, next) {
         if (user) {
             return res.status(422).json({ msg: "This name is already being used" });
         }
-        const criatedUser = await accessService.createUser(req.body)
+        const criatedUser = await accessService.controlUser(req.body)
         res.status(200).json({ msg: "User created successfully!" });
 
         logger.info(`POST /creat account - ${JSON.stringify(criatedUser)}`);
@@ -51,7 +51,7 @@ async function login(req, res, next) {
 }
 
 async function logout(req, res, next) {
-    console.log(req.headers)
+
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
     try {

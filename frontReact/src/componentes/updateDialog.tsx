@@ -6,7 +6,7 @@ import { BiArrowBack } from 'react-icons/Bi';
 
 function UpdateDialog({
   userId,
-    setClose
+  setClose
 }:any) {
     const navegat = useNavigate()
     const [name, setName] = useState<string>('');

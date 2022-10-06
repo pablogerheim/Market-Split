@@ -19,7 +19,6 @@ function Router() {
 
   useEffect(() => {
     (async () => {
-      console.log("test")
       setUser(await verify().then(e => e.data));
     })()
   }, [])
