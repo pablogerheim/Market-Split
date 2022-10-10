@@ -1,11 +1,13 @@
 import '../../css/helper.css';
-import { participant, getUser, createProduct } from "../../data/api";
+import { useApi} from "../../data/api";
+import {  participant} from "../../types/types";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
 
 function CreateProd() {
   const navegat = useNavigate()
+  const api = useApi()
   const [participants, setParticipants] = useState<participant[]>([])
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
@@ -16,10 +18,10 @@ function CreateProd() {
     fetchUser();
   }, [])
 
-  const fetchUser = async () => setParticipants(await getUser());
+  const fetchUser = async () => setParticipants(await api.getUser());
 
   function createProd(): void {
-    createProduct({
+    api.createProduct({
       name: name,
       price: price,
       participants: part,

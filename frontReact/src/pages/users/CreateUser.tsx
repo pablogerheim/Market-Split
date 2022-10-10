@@ -1,25 +1,27 @@
 import '../../css/helper.css';
-import { createUser} from "../../data/api";
+import { useApi} from "../../data/api";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
+
 
 function CreateUser() {
   const navegat = useNavigate()
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [access, setAccess] = useState<string>('User');
+  const api = useApi();
 
   useEffect(() => {
 
   }, [])
 
  async function createNewUser(){
-  await  createUser({
-      name: name,
-      password: password,
-      access: access,
-    })
+  await api.createUser({
+    name: name,
+    password: password,
+    access: access,
+  });
     navegat('/user/');
   }
 

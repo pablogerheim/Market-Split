@@ -30,19 +30,20 @@ async function login(req, res, next) {
         }
 
         const user = await accessService.findUser(name);
-        const { id } = user;
+        const { id, access } = user;
+
         if (!user) {
             return res.status(404).json({ msg: 'User not found!' });
         }
-        const checkPassword = accessService.compareUser(user, password);
+        const checkPassword = await accessService.compareUser(user, password);
 
         if (!checkPassword) {
-            return res.status(422).json({ msg: 'password invalid' });
+            return res.status(401).json({ msg: 'password invalid' });
         }
 
         const token = await accessService.createToken(user);
-        const account = { id, name, token };
-        res.status(200).send({ id, name, token });
+        const account = { id, name, token, access };
+        res.status(200).send({ id, name, token, access });
 
         logger.info(`POST /login ADM - ${JSON.stringify(account)}`);
     } catch (err) {

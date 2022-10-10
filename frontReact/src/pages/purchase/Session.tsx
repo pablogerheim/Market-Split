@@ -3,10 +3,11 @@ import { People } from '../../componentes/People';
 import { Product } from '../../componentes/Product';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearTable } from "../../data/api";
+import { useApi } from '../../data/api';
 
 function Session() {
   const navegat = useNavigate();
+    const api = useApi();
   const [page, setPage] = useState<boolean>(true);
 
   const toglePage = () => {
@@ -14,7 +15,7 @@ function Session() {
   };
 
   function Finish(): void {
-    clearTable()
+   api.clearTable()
     navegat('/home');
   }
 

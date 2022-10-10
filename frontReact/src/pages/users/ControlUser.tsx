@@ -9,15 +9,9 @@ function ControlUser() {
   const navegat = useNavigate();
   const [page, setPage] = useState<boolean>(true);
 
-
   useEffect(() => {
 
   }, []);
-
-
-  const toglePage = () => {
-    setPage(!page);
-  };
 
 
   return (

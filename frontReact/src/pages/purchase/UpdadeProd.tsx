@@ -1,5 +1,6 @@
 import '../../css/helper.css';
-import { participant, getUser, updateProduct, getbyid } from '../../data/api';
+import { useApi} from '../../data/api';
+import { participant } from '../../types/types';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
@@ -8,6 +9,7 @@ import {v4} from 'uuid'
 
 function UpdadeProd() {
   const navegat = useNavigate();
+    const api = useApi();
   const [participants, setParticipants] = useState<participant[]>();
   const [id, setId] = useState<number>(0);
   const [name, setName] = useState<string>('');
@@ -18,7 +20,7 @@ function UpdadeProd() {
   useEffect(() => {
     fetchUser();
     EventBus.on('setId', async (id) => {
-      let prod = await getbyid(id)
+      let prod = await api.getbyid(id)
       setId(id)
       setName(prod?.name)
       setPrice(prod?.price)
@@ -31,10 +33,10 @@ function UpdadeProd() {
     EventBus.remove('setId', () => { });
   }, []);
 
-  const fetchUser = async () => setParticipants(await getUser());
+  const fetchUser = async () => setParticipants(await api.getUser());
 
   const updateProd = () => {
-    updateProduct({
+    api.updateProduct({
       productId: id,
       name: name,
       price: price,

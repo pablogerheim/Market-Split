@@ -1,25 +1,21 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../css/helper.css';
-import { login } from "../data/api";
+import { AuthContext } from '../contexts/Auth/AuthContext';
 
-interface login {
-  setUser: Function
-}
-
-function Login({ setUser }:login) {
+function Login() {
+  const auth = useContext(AuthContext);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
 
   async function submit() {
     event?.preventDefault();
-    const userInfo = await login({ name, password });
+    const userInfo = await auth.login(name, password);
 
-    if (!(userInfo.status == 200)) {
+    if (!userInfo) {
       setErr(true);
-    } else {  
+    } else {
       setErr(false);
-      setUser(true)
     }
   }
 

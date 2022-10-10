@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/helper.css';
-import { logout } from '../data/api';
+import {AuthContext  } from "../contexts/Auth/AuthContext";
+import { useContext } from 'react';
 
 function Home() {
   const navegat = useNavigate();
-
+ const auth = useContext(AuthContext)
   const logoutApp = async () => {
-    await logout();
-    document.location.reload();
+    await auth.signout();
+ window.location.href = window.location.href;
   };
 
   return (

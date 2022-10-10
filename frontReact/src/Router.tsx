@@ -11,24 +11,18 @@ import { UpdadeProd } from "./pages/purchase/UpdadeProd";
 import { ControlUser } from "./pages/users/ControlUser";
 import { CreateUser } from "./pages/users/CreateUser";
 import { Login } from './pages/Login'
-import { useEffect, useState } from 'react';
-import { verify } from "./data/api";
+import { useContext } from 'react';
+import { AuthContext } from './contexts/Auth/AuthContext';
 
 function Router() {
-  const [user, setUser] = useState()
+ const auth = useContext(AuthContext);
 
-  useEffect(() => {
-    (async () => {
-      setUser(await verify().then(e => e.data));
-    })()
-  }, [])
+  if (!auth.user) {
 
-
-  if (!user) {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       </BrowserRouter>
