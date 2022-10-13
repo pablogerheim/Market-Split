@@ -7,6 +7,7 @@ function Home() {
   const navegat = useNavigate();
  const auth = useContext(AuthContext)
   const logoutApp = async () => {
+
     await auth.signout();
  window.location.href = window.location.href;
   };
@@ -25,7 +26,7 @@ function Home() {
           className='start max-w-[275px] w-[90%] "border-gray-300 border-solid border-b-4 bg-stone-300 px-10 py-4 rounded-md mt-5 text-3xl'
         >
           Add Users
-        </button>
+        </button> 
         <button
           type="submit"
           onClick={logoutApp}

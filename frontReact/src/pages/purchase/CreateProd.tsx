@@ -1,5 +1,5 @@
 import '../../css/helper.css';
-import { useApi} from "../../data/api";
+import { useApi,loggedToken} from "../../data/api";
 import {  participant} from "../../types/types";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,8 @@ import { BiArrowBack } from 'react-icons/Bi';
 
 function CreateProd() {
   const navegat = useNavigate()
-  const api = useApi()
+  const token = loggedToken()
+  const api = useApi(token.toString())
   const [participants, setParticipants] = useState<participant[]>([])
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<string>('');

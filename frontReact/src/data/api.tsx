@@ -1,21 +1,18 @@
 import axios from 'axios';
 import { user, product } from '../types/types';
 
-async function loggedToken() {
-  const loggedInUser = localStorage.getItem('authToken');
+export async function loggedToken() {
+  const loggedInUser = await localStorage.getItem('authToken');
   if (loggedInUser) {
     return loggedInUser;
   }
-  return false;
+  return undefined;
 }
-
-let auth: any;
 
 const apiUser = axios.create({
   baseURL: 'http://localhost:3002/user',
   timeout: 1000,
   headers: {
-    Authorization: `Bearer ${auth}`,
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
@@ -36,7 +33,6 @@ const apiAccessOut = axios.create({
   baseURL: 'http://localhost:3002',
   timeout: 1000,
   headers: {
-    Authorization: `Bearer ${auth}`,
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
@@ -47,17 +43,17 @@ const apiProduct = axios.create({
   baseURL: 'http://localhost:3002/product',
   timeout: 1000,
   headers: {
-    Authorization: `Bearer ${auth}`,
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
   },
 });
 
-export const useApi = () => ({
-  validateToken: async () => {
-    auth = await loggedToken();
-    const response = await apiAccessOut.get('/checkToken');
+export const useApi = (storeToken?: string) => ({
+  validateToken: async (storeToken: string) => {
+    const response = await apiAccessOut.get('/checkToken', {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
     return response.data;
   },
   login: async (name: string, password: string) => {
@@ -65,63 +61,76 @@ export const useApi = () => ({
       name,
       password,
     });
-    return response.data;
+    return response;
   },
-  logout: async () => {
-    auth = await loggedToken();
-    const response = await apiAccessOut.post('/access/logout');
+  logout: async (storeToken: string) => {
+    const response = await apiAccessOut.post('/access/logout', {}, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
     return response.data;
   },
   createUser: async (user: user) => {
-    auth = await loggedToken();
-    await apiAccessOut.post('/access/register', user);
+    await apiAccessOut.post('/access/register', user, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
   getUser: async () => {
-    auth = await loggedToken();
-    const user = await apiUser.get('/');
+    const user = await apiUser.get('/', {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
     return user.data;
   },
   getUserById: async (id: number) => {
-    auth = await loggedToken();
-    const user = await apiUser.get(`/${id}`);
+    const user = await apiUser.get(`/${id}`, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
     return user.data;
   },
   updateUser: async (user: user) => {
-    auth = await loggedToken();
-    await apiUser.put('/', user);
+    await apiUser.put('/', user, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
   deleteUser: async (id: number) => {
-    auth = await loggedToken();
-    await apiUser.delete(`/${id}`);
+    await apiUser.delete(`/${id}`, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
   getProduct: async () => {
-    auth = await loggedToken();
-    const data = await apiProduct.get('/');
+    const data = await apiProduct.get('/', {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
     return data.data;
   },
   getbyid: async (id: number) => {
-    auth = await loggedToken();
-    const data = await apiProduct.get(`/${id}`);
+    const data = await apiProduct.get(`/${id}`, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
     return data.data;
   },
   updateProduct: async (product: product) => {
-    auth = await loggedToken();
-    await apiProduct.put('/', product);
+    await apiProduct.put('/', product, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
   deleteProduct: async (id: number) => {
-    auth = await loggedToken();
-    await apiProduct.delete(`/${id}`);
+    await apiProduct.delete(`/${id}`, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
   createProduct: async (product: product) => {
-    auth = await loggedToken();
-    await apiProduct.post('/', product);
+    await apiProduct.post('/', product, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
   updateQuantity: async (product: product) => {
-    auth = await loggedToken();
-    await apiProduct.patch('/', product);
+    await apiProduct.patch('/', product, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
   clearTable: async () => {
-    auth = await loggedToken();
-    await apiProduct.delete('/clear');
+    await apiProduct.delete('/clear', {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
   },
 });

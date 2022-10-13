@@ -4,15 +4,16 @@ import { UsersByAdm } from '../../componentes/UsersByAdm';
 import { UsersByUsers } from '../../componentes/UsersByUsers';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { User } from '../../types/types';
 
 function ControlUser() {
   const navegat = useNavigate();
-  const [page, setPage] = useState<boolean>(true);
+  const auth = useContext(AuthContext)
+  const [user, ] = useState<User|null>(auth.user);
 
-  useEffect(() => {
-
-  }, []);
-
+if(!user){return <p> "Loading"</p>}
 
   return (
     <div className="p-5 bg-white mt-1 w-[90%] border-8 ">
@@ -29,9 +30,10 @@ function ControlUser() {
         >
           Add User
         </button>
+       
       </div>
 
-      <div className="p-2 mt-4">{page ? <UsersByAdm /> : <UsersByUsers />}</div>
+      <div className="p-2 mt-4">{user.access === "Adm"? <UsersByAdm /> : <UsersByUsers />}</div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import '../css/helper.css';
-import { getUserById, updateUser } from "../data/api";
+import { useApi,loggedToken} from '../data/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
@@ -9,22 +9,24 @@ function UpdateDialog({
   setClose
 }:any) {
     const navegat = useNavigate()
+    const token = loggedToken()
+    const api = useApi(token.toString())
     const [name, setName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [access, setAccess] = useState<string>('');
-  
+
     useEffect(() => {
       startUpdate()
     }, [])
 
     const startUpdate = async () => {
-      let prod = await getUserById(userId)
+      let prod = await api.getUserById(userId)
       setName(prod?.name)
       setAccess(prod?.access)
     } 
   
     const update = async () => {
-    await updateUser({
+    await api.updateUser({
         userId: userId,
         password: password,
         name: name,

@@ -3,11 +3,12 @@ import { People } from '../../componentes/People';
 import { Product } from '../../componentes/Product';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApi } from '../../data/api';
+import { useApi ,loggedToken} from '../../data/api';
 
 function Session() {
   const navegat = useNavigate();
-    const api = useApi();
+  const token = loggedToken()
+  const api = useApi(token.toString())
   const [page, setPage] = useState<boolean>(true);
 
   const toglePage = () => {

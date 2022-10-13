@@ -38,6 +38,7 @@ async function createToken(user) {
         expiresIn: 3600,
         algorithm: 'RS256',
     });
+
     return token;
 }
 
@@ -60,6 +61,19 @@ async function logout(token) {
     blackList.blacktokens.push(blacktoken);
 
     await accessRepository.updateBlackList(blackList);
+    console.log("sevice LOgout -token-deslogado", token)
+}
+
+async function getWhiteLists(token) {
+    return await accessRepository.getWhiteLists(token)
+}
+
+async function createWhiteList(whiteUser) {
+    await accessRepository.createWhiteList(whiteUser)
+}
+
+async function deleteWhiteList(token) {
+    await accessRepository.deleteWhiteList(token)
 }
 
 
@@ -68,5 +82,8 @@ export default {
     controlUser,
     compareUser,
     createToken,
-    logout
+    logout,
+    getWhiteLists,
+    createWhiteList,
+    deleteWhiteList
 };

@@ -1,5 +1,7 @@
 import User from '../models/user.model.js';
+import WhiteList from '../models/whiteList.model.js';
 import mongconnect from '../config/MongoDBconnect.js';
+import connect from '../config/Postgreconnect.js';
 
 async function getBlackList() {
     const conn = mongconnect();
@@ -24,10 +26,7 @@ async function updateBlackList(props) {
         const data = await conn
             .db('market')
             .collection('blacklist')
-            .findOneAndUpdate(
-                { blackList: 'BlackList' },
-                { $set: { ...props } },
-            );
+            .findOneAndUpdate({ blackList: 'BlackList' }, { $set: {...props } }, );
         return data;
     } catch (err) {
         throw err;
@@ -44,8 +43,39 @@ async function printUser() {
     }
 }
 
+async function getWhiteLists(token) {
+    try {
+        return await connect.query(`SELECT * FROM whitelists AS w INNER JOIN users as u ON w.user_id = u.user_id AND w.token = '${token}'`, { raw: true })
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function createWhiteList(whiteUser) {
+    try {
+        return await WhiteList.create(whiteUser)
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function deleteWhiteList(token) {
+    try {
+        return await WhiteList.destroy({
+            where: {
+                token: token,
+            },
+        });
+    } catch (err) {
+        throw err;
+    }
+}
+
 export default {
     printUser,
     getBlackList,
     updateBlackList,
+    getWhiteLists,
+    createWhiteList,
+    deleteWhiteList
 };

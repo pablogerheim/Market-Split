@@ -1,5 +1,5 @@
 import userRepository from '../repository/user.repository.js';
-import loginService from "./access.service.js";
+import accessService from "./access.service.js";
 
 
 async function getUsers(id) {
@@ -7,10 +7,9 @@ async function getUsers(id) {
 }
 
 async function updateUser(user) {
-    console.log(user)
     if (user.password !== '') {
-        const upUser = await loginService.createUser(user, false)
-        console.log('upUseru   ', upUser)
+        const upUser = await accessService.controlUser(user, false)
+
         return await userRepository.updateUser(upUser);
     } else {
         user.password = undefined

@@ -1,16 +1,19 @@
-import { product, deleteProduct, getProduct } from '../data/api';
+import { useApi, loggedToken} from '../data/api';
+import {  product } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import EventBus from '../helper/EventBus';
 
 function Product() {
-  const [prods, setProds] = useState<product[]>();
   const navegat = useNavigate();
+  const token = loggedToken()
+  const api = useApi(token.toString())
+  const [prods, setProds] = useState<product[]>();
 
   useEffect(() => { fetchProduct() }, []);
 
-  const fetchProduct = async () => setProds(await getProduct());
+  const fetchProduct = async () => setProds(await api.getProduct());
 
   function updadeProd(id: number) {
     setTimeout(() => {
@@ -19,7 +22,7 @@ function Product() {
     navegat('/update');
   }
 
-  const deleteProd = async (id: number) => { await deleteProduct(id); fetchProduct(); }
+  const deleteProd = async (id: number) => { await api.deleteProduct(id); fetchProduct(); }
 
   if (!prods) { return <p>Loading...</p> }
   return (

@@ -1,5 +1,5 @@
 import '../../css/helper.css';
-import { useApi} from '../../data/api';
+import { useApi,loggedToken} from '../../data/api';
 import { participant } from '../../types/types';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,8 @@ import {v4} from 'uuid'
 
 function UpdadeProd() {
   const navegat = useNavigate();
-    const api = useApi();
+  const token = loggedToken()
+  const api = useApi(token.toString())
   const [participants, setParticipants] = useState<participant[]>();
   const [id, setId] = useState<number>(0);
   const [name, setName] = useState<string>('');

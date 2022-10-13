@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { participant, getUser, deleteUser } from '../data/api';
+import { useApi,loggedToken} from '../data/api';
+import { participant } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { v4 } from 'uuid';
 import { UpdateDialog } from "../componentes/updateDialog";
 
 function UsersByAdm() {
+  const token = loggedToken()
+  const api = useApi(token.toString())
   const [participants, setParticipants] = useState<participant[]>([])
   const [close, setClose] = useState(true)
   const [id, setId] = useState<number>()
@@ -13,9 +16,9 @@ function UsersByAdm() {
     fetchUser();
   }, [])
 
-  const fetchUser = async () => setParticipants(await getUser());
+  const fetchUser = async () => setParticipants(await api.getUser());
   const updateUser = (idu:number) => { setId(idu); setClose(false)  }
-  const deleteUserFunc = async (id:number) => {await deleteUser(id),await fetchUser(); }
+  const deleteUserFunc = async (id:number) => {await api.deleteUser(id),await fetchUser(); }
 
   if (!participants) {
     return <p>Loading...</p>

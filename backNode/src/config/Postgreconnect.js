@@ -5,10 +5,10 @@ dotenv.config();
 
 const uri = process.env.POSTGRESKEY;
 const sequelize = new Sequelize(uri, {
-  dialect: 'postgres',
-  define: {
-    timestamps: false,
-  },
+    dialect: 'postgres',
+    define: {
+        timestamps: false,
+    },
 });
 
 export default sequelize;

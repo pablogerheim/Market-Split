@@ -1,8 +1,7 @@
 export type User = {
-    id: number;
-    name: string;
-    access: string;
-    password?: string;
+access: string;
+token: string;
+user: user;
 }
 
 export interface participant {
@@ -22,6 +21,7 @@ export interface product {
 export interface user {
   userId?: number;
   name: string;
-  password: string;
+  password?: string;
   access?: string;
+  timestamp?:string;
 }

@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { product, participant, getUser, getProduct } from '../data/api';
+import { useApi, loggedToken } from '../data/api';
+import { participant, product } from "../types/types";
 import { isEquivalent } from "../helper/helperFunctions";
 import { v4 } from 'uuid';
 
 function People() {
+  const token = loggedToken()
+  const api = useApi(token.toString())
   const [products, setProduct] = useState<product[]>([])
   const [participants, setParticipants] = useState<participant[]>([])
 
@@ -14,11 +17,11 @@ function People() {
   }, [])
 
   useEffect(() => {
-    (async () => { const helper = await getProduct(); if (isEquivalent(products, helper)) { fetchProduct() } })()
+    (async () => { const helper = await api.getProduct(); if (isEquivalent(products, helper)) { fetchProduct() } })()
   });
 
-  const fetchUser = async () => setParticipants(await getUser());
-  const fetchProduct = async () => setProduct(await getProduct());
+  const fetchUser = async () => setParticipants(await api.getUser());
+  const fetchProduct = async () => setProduct(await api.getProduct());
   const findTotal = () => products.reduce((pv, cv) => pv + parseInt(cv.price) * parseInt(cv.quantity), 0).toFixed(2).replace('.', ',')
   const activeMembers = () => {
     let arrMembers: string[] = []

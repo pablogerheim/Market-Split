@@ -7,7 +7,8 @@ import userRoute from './routes/user.routes.js';
 import productRoute from './routes/product.routes.js';
 import accessRoute from './routes/access.routes.js';
 import jwt from 'jsonwebtoken';
-import accessRepository from './repository/access.repository.js'; 
+import accessRepository from './repository/access.repository.js';
+import accessController from "./controllers/access.controller.js";
 import { promises } from 'fs';
 
 
@@ -48,7 +49,7 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/access', accessRoute);
 app.use('/user', userRoute);
 app.use('/product', productRoute);
-app.use('/checkToken', checkToken, (req, res) => { res.send(true) });
+app.use('/checkToken', checkToken, accessController.checkToken);
 
 async function checkToken(req, res, next) {
     const authHeader = req.headers.authorization;

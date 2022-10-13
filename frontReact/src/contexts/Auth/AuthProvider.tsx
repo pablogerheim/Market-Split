@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useApi } from '../../data/api';
 import { User } from '../../types/types';
 import { AuthContext } from './AuthContext';
+import { loggedToken } from "../../data/api";
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -9,24 +10,23 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     const validateToken = async () => {
-      const storageData = localStorage.getItem('authToken');
-      if (storageData) {
-        const data = await api.validateToken();
+      const storeToken = await localStorage.getItem('authToken');
+      if (storeToken) {
+        const data = await api.validateToken(storeToken);
         if (!data) {
           setUser(null);
-        }
+        } else {setUser(data.user)}
       }
     };
     validateToken();
-  }, [api]);
+  }, []);
 
   const login = async (name: string, password: string) => {
     const data = await api.login(name, password);
     
-    if (data.name && data.token) {
-      // fazer white list para a verificação do token voltar com as informções corretas
-      setUser(data.name);
-      setToken(data.token);
+    if (data.data.token && data.data.user) {
+      setUser(data.data.user);
+      setToken(data.data.token);
       return true;
     }
     return false;
@@ -34,9 +34,10 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   const signout = async () => {
     console.log('signout está sendo executada.');
-    setUser(null);
+    const storeToken = await loggedToken()
+    storeToken && await api.logout(storeToken);
     setToken('');
-    await api.logout();
+    setUser(null);
   };
 
   const setToken = (token: string) => {

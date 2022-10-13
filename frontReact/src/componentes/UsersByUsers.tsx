@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import { participant, getUser } from '../data/api';
+import { useApi,loggedToken} from '../data/api';
+import { participant } from "../types/types";
 import { v4 } from 'uuid';
 
 function UsersByUsers() {
+  const token = loggedToken()
+  const api = useApi(token.toString())
   const [participants, setParticipants] = useState<participant[]>([])
 
   useEffect(() => {
     fetchUser();
   }, [])
 
-  const fetchUser = async () => setParticipants(await getUser());
+  const fetchUser = async () => setParticipants(await api.getUser());
   
   if (!participants ) {
     return <p>Loading...</p>
