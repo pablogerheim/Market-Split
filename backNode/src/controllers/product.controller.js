@@ -2,7 +2,10 @@ import productsService from '../service/product.service.js';
 
 async function getProducts(req, res, next) {
     try {
-        const data = await productsService.getProducts(req.params.id);
+        if (!req.params.purchase) {
+            res.status(200).json({ msg: 'purchase is requered!' });
+        }
+        const data = await productsService.getProducts(req.params);
         res.status(200).send(data);
         logger.info('GET /Products - All products');
     } catch (err) {
@@ -25,7 +28,10 @@ async function patchProducts(req, res, next) {
 
 async function deleteProduct(req, res, next) {
     try {
-        await productsService.deleteProduct(req.params.id);
+        if (!req.params.purchase) {
+            res.status(200).json({ msg: 'purchase is requered!' });
+        }
+        await productsService.deleteProduct(req.params);
         res.status(200).json({ msg: 'Deletion performed successfully!' });
         logger.info(`DELETE /Product- ID ${req.params.id}`);
     } catch (err) {
@@ -35,7 +41,10 @@ async function deleteProduct(req, res, next) {
 
 async function clearProduct(req, res, next) {
     try {
-        await productsService.clearProduct();
+        if (!req.params.purchase) {
+            res.status(200).json({ msg: 'purchase is requered!' });
+        }
+        await productsService.clearProduct(req.params.purchase);
         res.status(200).json({ msg: 'Clear performed successfully!' });
         logger.info(`DELETE /Clear DB`);
     } catch (err) {
@@ -45,33 +54,12 @@ async function clearProduct(req, res, next) {
 
 async function createProduct(req, res, next) {
     try {
-        const {
-            name,
-            participants,
-            quantity,
-            price,
-        } = req.body;
-        if (name == null ||
-            participants == null ||
-            quantity == null ||
-            price == null
-        ) {
-            return res
-                .status(422)
-                .json({
-                    msg: 'The Name, Participants, Quantity and Price are required!',
-                });
+        const { name, participants, quantity, price, purchase } = req.body;
+        if (name == null || participants == null || quantity == null || price == null || purchase == null) {
+            res.status(422).json({ msg: 'The Name, Participants, Quantity and Price are required!' });
         }
-        const product = await productsService.createProduct({
-            name,
-            participants,
-            quantity,
-            price,
-        });
-        res.status(200).json({
-            msg: 'Creation successful!',
-            product,
-        });
+        const product = await productsService.createProduct(req.body);
+        res.status(200).json({ msg: 'Creation successful!', product, });
         logger.info(`POST /creat Product - ${JSON.stringify(product)}`);
     } catch (err) {
         next(err);
@@ -80,30 +68,14 @@ async function createProduct(req, res, next) {
 
 async function updateProduct(req, res, next) {
     try {
-        const {
-            name,
-            participants,
-            quantity,
-            price,
-            productId,
-        } = req.body;
-        if (name == null ||
-            participants == null ||
-            quantity == null ||
-            price == null ||
-            productId == null
-        ) {
-            return res
-                .status(422)
-                .json({
-                    msg: 'The Name, Participants, Quantity, Price and id are required!',
-                });
+        const { name, participants, quantity, price, productId, purchase } = req.body;
+        if (name == null || participants == null || quantity == null || price == null || productId == null || purchase == null) {
+            return res.status(422).json({
+                msg: 'The Name, Participants, Quantity, Price and id are required!',
+            });
         }
         const product = await productsService.updateProduct(req.body);
-        res.status(200).json({
-            msg: 'Update successful!',
-            product,
-        });
+        res.status(200).json({ msg: 'Update successful!', product, });
         logger.info(`PUT /update Product - ${JSON.stringify(product)}`);
     } catch (err) {
         next(err);

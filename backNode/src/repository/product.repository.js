@@ -1,11 +1,11 @@
 import Products from '../models/product.model.js';
 
-async function getProducts(id) {
+async function getProducts(params) {
     try {
-        if (id) {
-            return await Products.findByPk(id);
+        if (params.id) {
+            return await Products.findByPk(params.id);
         }
-        return await Products.findAll();
+        return await Products.findAll({ where: { purchase: params.purchase } });
     } catch (err) {
         throw err;
     }
@@ -23,11 +23,11 @@ async function patchProduct({ productId, quantity }) {
     }
 }
 
-async function deleteProduct(id) {
+async function deleteProduct(params) {
     try {
         return await Products.destroy({
             where: {
-                productId: id,
+                productId: params.id,
             },
         });
     } catch (err) {
@@ -35,11 +35,12 @@ async function deleteProduct(id) {
     }
 }
 
-async function clearProduct() {
+async function clearProduct(purchase) {
     try {
         return await Products.destroy({
-            truncate: true,
-            cascade: false
+            where: {
+                purchase: purchase,
+            },
         })
     } catch (err) {
         throw err;

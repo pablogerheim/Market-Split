@@ -1,9 +1,9 @@
 import sequelize from 'sequelize';
 import connect from '../config/Postgreconnect.js';
 
-const Product = connect.define(
-    'products', {
-        productId: {
+const Purchase = connect.define(
+    'purchases', {
+        purchaseId: {
             type: sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
@@ -13,23 +13,18 @@ const Product = connect.define(
             type: sequelize.STRING,
             allowNull: false,
         },
-        participants: {
+        timestamp: {
+            type: sequelize.DATE,
+            allowNull: false,
+        },
+        active: {
+            type: sequelize.BOOLEAN,
+            allowNull: false,
+        },
+        summary: {
             type: sequelize.ABSTRACT,
-            allowNull: false,
-        },
-        quantity: {
-            type: sequelize.STRING,
-            allowNull: false,
-        },
-        price: {
-            type: sequelize.STRING,
-            allowNull: false,
-        },
-        purchase: {
-            type: sequelize.STRING,
-            allowNull: false,
         },
     }, { underscored: true },
 );
 
-export default Product;
+export default Purchase;

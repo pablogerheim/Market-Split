@@ -1,19 +1,19 @@
 import productRepository from '../repository/product.repository.js';
 
-async function getProducts(id) {
-    return await productRepository.getProducts(id);
+async function getProducts(params) {
+    return await productRepository.getProducts(params);
 }
 
 async function patchProducts(body) {
     return await productRepository.patchProduct(body);
 }
 
-async function deleteProduct(id) {
-    return await productRepository.deleteProduct(id);
+async function deleteProduct(params) {
+    return await productRepository.deleteProduct(params);
 }
 
-async function clearProduct() {
-    return await productRepository.clearProduct();
+async function clearProduct(purchase) {
+    return await productRepository.clearProduct(purchase);
 }
 
 async function createProduct(product) {
