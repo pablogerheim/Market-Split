@@ -16,14 +16,14 @@ function UpdateDialog({
     const [access, setAccess] = useState<string>('');
 
     useEffect(() => {
+      const startUpdate = async () => {
+        let prod = await api.getUserById(userId)
+        setName(prod?.name)
+        setAccess(prod?.access)
+      } 
       startUpdate()
     }, [])
 
-    const startUpdate = async () => {
-      let prod = await api.getUserById(userId)
-      setName(prod?.name)
-      setAccess(prod?.access)
-    } 
   
     const update = async () => {
     await api.updateUser({

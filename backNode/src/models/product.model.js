@@ -14,7 +14,7 @@ const Product = connect.define(
             allowNull: false,
         },
         participants: {
-            type: sequelize.ABSTRACT,
+            type: sequelize.STRING,
             allowNull: false,
         },
         quantity: {

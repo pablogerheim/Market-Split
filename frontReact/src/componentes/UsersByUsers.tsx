@@ -9,10 +9,9 @@ function UsersByUsers() {
   const [participants, setParticipants] = useState<participant[]>([])
 
   useEffect(() => {
+    const fetchUser = async () => setParticipants(await api.getUser());
     fetchUser();
   }, [])
-
-  const fetchUser = async () => setParticipants(await api.getUser());
   
   if (!participants ) {
     return <p>Loading...</p>

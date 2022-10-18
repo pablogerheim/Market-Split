@@ -18,13 +18,14 @@ function UsersByAdm() {
 
   const fetchUser = async () => setParticipants(await api.getUser());
   const updateUser = (idu:number) => { setId(idu); setClose(false)  }
-  const deleteUserFunc = async (id:number) => {await api.deleteUser(id),await fetchUser(); }
+  const deleteUserFunc = async (id:number) => {await api.deleteUser(id), await fetchUser()}
 
   if (!participants) {
     return <p>Loading...</p>
   }
-  return (
-    <div className=" ">
+  return (<>
+      {close || <UpdateDialog setClose = {setClose} userId={id} /> }
+    <div className={` ${close || 'opacity-20'}`}>
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 show-sm">
           Users: 2
@@ -33,7 +34,6 @@ function UsersByAdm() {
           Adms: 1
         </p>
       </div>
-      {close || <UpdateDialog setClose = {setClose} userId={id} /> }
       <div className="p-2">
         {participants.map(p =>
           <div
@@ -58,7 +58,7 @@ function UsersByAdm() {
         )}
       </div>
     </div>
-  );
+    </>);
 }
 
 export { UsersByAdm };

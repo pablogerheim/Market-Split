@@ -9,12 +9,13 @@ async function getPurchases(req, res, next) {
         next(err);
     }
 }
+
 async function createPurchase(req, res, next) {
     try {
-        const { name, access, purchaseId } = req.body;
+        const { name } = req.body;
 
-        if (!access || !name || !purchaseId) {
-            return res.status(422).json({ msg: "The Id, Assess, Password and Name are required!" });
+        if (!name) {
+            return res.status(422).json({ msg: "The Id and Name are required!" });
         }
         const data = await purchasesService.createPurchase(req.body);
         res.status(200).send(data);
@@ -26,10 +27,9 @@ async function createPurchase(req, res, next) {
 
 async function updatePurchase(req, res, next) {
     try {
-        const { name, access, purchaseId } = req.body;
-
-        if (!access || !name || !purchaseId) {
-            return res.status(422).json({ msg: "The Id, Assess, Password and Name are required!" });
+        const { purchaseId } = req.body;
+        if (!purchaseId) {
+            return res.status(422).json({ msg: "The Id are required!" });
         }
         const data = await purchasesService.updatePurchase(req.body);
         res.status(200).send(data);
@@ -39,9 +39,7 @@ async function updatePurchase(req, res, next) {
     }
 }
 
-
 async function deletePurchase(req, res, next) {
-    console.log("delete", req.params.id)
     try {
         const data = await purchasesService.deletePurchase(req.params.id);
         res.status(200).send({ msg: "deleted sussesfull" });
@@ -50,8 +48,6 @@ async function deletePurchase(req, res, next) {
         next(err);
     }
 }
-
-
 
 export default {
     getPurchases,

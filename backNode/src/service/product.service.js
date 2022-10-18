@@ -8,8 +8,8 @@ async function patchProducts(body) {
     return await productRepository.patchProduct(body);
 }
 
-async function deleteProduct(params) {
-    return await productRepository.deleteProduct(params);
+async function deleteProduct(id) {
+    return await productRepository.deleteProduct(id);
 }
 
 async function clearProduct(purchase) {

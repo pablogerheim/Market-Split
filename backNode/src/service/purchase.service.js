@@ -6,23 +6,24 @@ async function getPurchases(id) {
     return await purchaseRepository.getPurchases(id);
 }
 
-async function updatePurchase(purchase) {
-    if (purchase.password !== '') {
-        const upPurchase = await accessService.controlPurchase(purchase, false)
-
-        return await purchaseRepository.updatePurchase(upPurchase);
-    } else {
-        purchase.password = undefined
-        return await purchaseRepository.updatePurchase(purchase);
+async function createPurchase(body) {
+    let dateTime = new Date();
+    dateTime = JSON.parse(JSON.stringify(dateTime));
+    const purchase = {
+        name: body.name,
+        timestamp: dateTime,
+        active: false,
+        summary: {}
     }
+    return await purchaseRepository.createPurchase(purchase);
 }
-async function createPurchase(id) {
-    return await purchaseRepository.createPurchase(id);
-}
-
 
 async function deletePurchase(id) {
     return await purchaseRepository.deletePurchase(id);
+}
+
+async function updatePurchase(purchase) {
+    return await purchaseRepository.updatePurchase(purchase);
 }
 
 export default {

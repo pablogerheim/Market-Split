@@ -19,30 +19,29 @@ function UpdadeProd() {
   const [part, setPart] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchUser();
+    const fetchUser = async () => setParticipants(await api.getUser());
     EventBus.on('setId', async (id) => {
       let prod = await api.getbyid(id)
       setId(id)
       setName(prod?.name)
       setPrice(prod?.price)
       setQuantity(prod?.quantity)
-      setPart(prod?.participants)
+      setPart(prod?.participants.split(','))
     });
+    fetchUser();
   }, []);
 
   useEffect(() => {
     EventBus.remove('setId', () => { });
   }, []);
 
-  const fetchUser = async () => setParticipants(await api.getUser());
-
   const updateProd = () => {
     api.updateProduct({
       productId: id,
       name: name,
       price: price,
-      participants: part,
-      quantity: quantity
+      participants: part.toString(),
+      quantity: quantity,
     })
     navegat('/session');
   }

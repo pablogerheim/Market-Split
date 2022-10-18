@@ -4,6 +4,7 @@ import purchaseController from '../controllers/purchase.controller.js';
 const router = express.Router();
 
 router.get('/', purchaseController.getPurchases);
+router.get('/:id', purchaseController.getPurchases);
 router.post('/', purchaseController.createPurchase);
 router.put('/', purchaseController.updatePurchase);
 router.delete('/:id', purchaseController.deletePurchase);

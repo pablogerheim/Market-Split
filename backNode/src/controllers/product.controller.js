@@ -2,9 +2,6 @@ import productsService from '../service/product.service.js';
 
 async function getProducts(req, res, next) {
     try {
-        if (!req.params.purchase) {
-            res.status(200).json({ msg: 'purchase is requered!' });
-        }
         const data = await productsService.getProducts(req.params);
         res.status(200).send(data);
         logger.info('GET /Products - All products');
@@ -28,10 +25,10 @@ async function patchProducts(req, res, next) {
 
 async function deleteProduct(req, res, next) {
     try {
-        if (!req.params.purchase) {
-            res.status(200).json({ msg: 'purchase is requered!' });
+        if (!req.params.id) {
+            res.status(200).json({ msg: 'id is requered!' });
         }
-        await productsService.deleteProduct(req.params);
+        await productsService.deleteProduct(req.params.id);
         res.status(200).json({ msg: 'Deletion performed successfully!' });
         logger.info(`DELETE /Product- ID ${req.params.id}`);
     } catch (err) {
@@ -68,8 +65,8 @@ async function createProduct(req, res, next) {
 
 async function updateProduct(req, res, next) {
     try {
-        const { name, participants, quantity, price, productId, purchase } = req.body;
-        if (name == null || participants == null || quantity == null || price == null || productId == null || purchase == null) {
+        const { name, participants, quantity, price, productId } = req.body;
+        if (name == null || participants == null || quantity == null || price == null || productId == null) {
             return res.status(422).json({
                 msg: 'The Name, Participants, Quantity, Price and id are required!',
             });

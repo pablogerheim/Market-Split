@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { user, product } from '../types/types';
+import { user, productapi, purchase } from '../types/types';
 
 export async function loggedToken() {
   const loggedInUser = await localStorage.getItem('authToken');
@@ -41,6 +41,16 @@ const apiAccessOut = axios.create({
 
 const apiProduct = axios.create({
   baseURL: 'http://localhost:3002/product',
+  timeout: 1000,
+  headers: {
+    'Content-Type': 'application/json; charset = utf-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+  },
+});
+
+const apiPurchase = axios.create({
+  baseURL: 'http://localhost:3002/purchase',
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
@@ -96,19 +106,19 @@ export const useApi = (storeToken?: string) => ({
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  getProduct: async () => {
-    const data = await apiProduct.get('/', {
+  getProduct: async (purchase:number) => {
+    const data = await apiProduct.get(`/purchase/${purchase}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
     return data.data;
   },
   getbyid: async (id: number) => {
-    const data = await apiProduct.get(`/${id}`, {
+    const data = await apiProduct.get(`/id/${id}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
     return data.data;
   },
-  updateProduct: async (product: product) => {
+  updateProduct: async (product: productapi) => {
     await apiProduct.put('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
@@ -118,19 +128,46 @@ export const useApi = (storeToken?: string) => ({
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  createProduct: async (product: product) => {
+  createProduct: async (product: productapi) => {
     await apiProduct.post('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  updateQuantity: async (product: product) => {
+  updateQuantity: async (product: productapi) => {
     await apiProduct.patch('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  clearTable: async () => {
-    await apiProduct.delete('/clear', {
+  clearTable: async (purchase:number) => {
+    await apiProduct.delete(`/clear/${purchase}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
+  getPurchase: async () => {
+    const data = await apiPurchase.get(`/`, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
+    return data.data;
+  },
+  getPurchasebyid: async (id: number) => {
+    const data = await apiPurchase.get(`/${id}`, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
+    return data.data;
+  },
+  updatePurchase: async (purchase: purchase) => {
+    await apiPurchase.put('/', purchase, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
+  },
+  deletePurchase: async (id: number) => {
+    await apiPurchase.delete(`/${id}`, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
+  },
+  createPurchase: async (purchase: purchase) => {
+    await apiPurchase.post('/', purchase, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
+  }
 });

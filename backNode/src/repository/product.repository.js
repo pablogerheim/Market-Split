@@ -4,8 +4,7 @@ async function getProducts(params) {
     try {
         if (params.id) {
             return await Products.findByPk(params.id);
-        }
-        return await Products.findAll({ where: { purchase: params.purchase } });
+        } else { return await Products.findAll({ where: { purchase: params.purchase } }); }
     } catch (err) {
         throw err;
     }
@@ -23,11 +22,11 @@ async function patchProduct({ productId, quantity }) {
     }
 }
 
-async function deleteProduct(params) {
+async function deleteProduct(id) {
     try {
         return await Products.destroy({
             where: {
-                productId: params.id,
+                productId: id,
             },
         });
     } catch (err) {

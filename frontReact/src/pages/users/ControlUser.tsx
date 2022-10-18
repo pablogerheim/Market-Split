@@ -1,5 +1,5 @@
 import '../../css/helper.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { UsersByAdm } from '../../componentes/UsersByAdm';
 import { UsersByUsers } from '../../componentes/UsersByUsers';
 import { useNavigate } from 'react-router-dom';

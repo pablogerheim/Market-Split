@@ -61,7 +61,6 @@ async function logout(token) {
     blackList.blacktokens.push(blacktoken);
 
     await accessRepository.updateBlackList(blackList);
-    console.log("sevice LOgout -token-deslogado", token)
 }
 
 async function getWhiteLists(token) {

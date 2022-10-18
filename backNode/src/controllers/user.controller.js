@@ -27,7 +27,6 @@ async function updateUser(req, res, next) {
 
 
 async function deleteUser(req, res, next) {
-    console.log("delete", req.params.id)
     try {
         const data = await usersService.deleteUser(req.params.id);
         res.status(200).send({ msg: "deleted sussesfull" });

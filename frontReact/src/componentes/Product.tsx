@@ -1,19 +1,25 @@
-import { useApi, loggedToken} from '../data/api';
-import {  product } from "../types/types";
+import { useApi, loggedToken } from '../data/api';
+import { product } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import EventBus from '../helper/EventBus';
+import { AuthContext } from '../contexts/Auth/AuthContext';
 
 function Product() {
   const navegat = useNavigate();
   const token = loggedToken()
   const api = useApi(token.toString())
+  const auth = useContext(AuthContext)
   const [prods, setProds] = useState<product[]>();
 
   useEffect(() => { fetchProduct() }, []);
 
-  const fetchProduct = async () => setProds(await api.getProduct());
+  const fetchProduct = async () => {
+    if (auth.purchase !== null && auth.purchase.purchaseId !== undefined) {
+      setProds(await api.getProduct(auth.purchase.purchaseId))
+    }
+  }
 
   function updadeProd(id: number) {
     setTimeout(() => {

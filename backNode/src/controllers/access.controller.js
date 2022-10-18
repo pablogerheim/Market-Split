@@ -55,12 +55,9 @@ async function login(req, res, next) {
 }
 
 async function logout(req, res, next) {
-
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
-    console.log(authHeader)
     try {
-        console.log(" Controller Token", token)
         if (!token || token === 'undefined' || token === false) {
             throw new Error('token missing');
         }
@@ -77,15 +74,11 @@ async function checkToken(req, res, next) {
     try {
         const authHeader = req.headers.authorization;
         const token = authHeader && authHeader.split(' ')[1];
-        console.log("controller checkToken", token)
-
         const user = await accessService.getWhiteLists(token);
         if (!user) {
             return res.status(422).json({ msg: "Token not found" });
         }
-        console.log("White list", user[0][0])
         res.status(200).json({ msg: "User created successfully!", user: user[0][0] });
-
         logger.info(`CheckToken / - ${JSON.stringify(user[0][0])}`);
     } catch (err) {
         res.status(500).json({ msg: " error" });
