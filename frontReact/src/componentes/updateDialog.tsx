@@ -3,11 +3,12 @@ import { useApi,loggedToken} from '../data/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
+import {  dialog} from "../types/types";
 
 function UpdateDialog({
   userId,
   setClose
-}:any) {
+}:dialog) {
     const navegat = useNavigate()
     const token = loggedToken()
     const api = useApi(token.toString())
@@ -23,7 +24,6 @@ function UpdateDialog({
       } 
       startUpdate()
     }, [])
-
   
     const update = async () => {
     await api.updateUser({

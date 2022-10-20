@@ -1,4 +1,5 @@
 export type User = {
+user_id:number;
 access: string;
 token: string;
 user: user;
@@ -50,4 +51,9 @@ export interface user {
   password?: string;
   access?: string;
   timestamp?:string;
+}
+
+export interface dialog {
+  userId: number;
+  setClose: (prop:boolean)=> void
 }

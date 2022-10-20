@@ -1,7 +1,7 @@
 import '../css/helper.css';
 import { useApi, loggedToken } from '../data/api';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
 import { BiArrowBack } from 'react-icons/Bi';
 
 function NewPurchaseDialog({
