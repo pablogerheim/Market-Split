@@ -17,8 +17,6 @@ function ControlUser() {
 
 if(!user){return <p> "Loading..."</p>}
 
-console.log(user.user_id)
-
   return (
     <>
     {close || <UpdateDialog setClose={setClose} userId={user.user_id} />}
@@ -32,7 +30,7 @@ console.log(user.user_id)
         </button>
         <button
           onClick={() => navegat('/user/create')}
-          className='start px-8 py-1 rounded-md mt-1 text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
+          className='start px-8 py-1 rounded-md mt-1 mx-3 text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
         >
           Add User
         </button>

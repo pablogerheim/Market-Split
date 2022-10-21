@@ -49,7 +49,7 @@ function Home() {
           Add Users
         </button>
         <div className='purchase-board h-[66%] '>
-          {purchases?.map(p => <button key={p.purchaseId} onClick={() => handlepurchase(p.purchaseId)} className='start max-w-[275px] "border-gray-300 border-solid border-b-4 bg-indigo-300 px-16 py-2 rounded-md mt-5 text-3xl'>
+          {purchases?.map(p => <button key={p.purchaseId} onClick={() => handlepurchase(p.purchaseId)} className='start min-w-[83%] max-w-[275px] "border-gray-300 border-solid border-b-4 bg-indigo-300 px-16 py-2 rounded-md mt-5 text-3xl'>
             <h2>{p.name}</h2>
             <p className='text-xl'>{p.timestamp}</p>
           </button>)}
