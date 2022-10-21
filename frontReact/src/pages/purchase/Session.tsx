@@ -3,14 +3,14 @@ import { People } from '../../componentes/People';
 import { Product } from '../../componentes/Product';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApi ,loggedToken} from '../../data/api';
+import { useApi } from '../../data/api';
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { BiArrowBack } from 'react-icons/Bi';
 
 function Session() {
   const navegat = useNavigate();
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
   const [page, setPage] = useState<boolean>(true);
   const [name, setName] = useState<string|undefined>(auth.purchase?.name)

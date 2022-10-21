@@ -1,5 +1,5 @@
 import '../../css/helper.css';
-import { useApi, loggedToken } from "../../data/api";
+import { useApi} from "../../data/api";
 import { participant } from "../../types/types";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,8 @@ import { AuthContext } from '../../contexts/Auth/AuthContext';
 
 function CreateProd() {
   const navegat = useNavigate()
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
   const [participants, setParticipants] = useState<participant[]>([])
   const [name, setName] = useState<string>('');

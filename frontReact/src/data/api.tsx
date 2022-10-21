@@ -1,14 +1,6 @@
 import axios from 'axios';
 import { user, productapi, purchase } from '../types/types';
 
-export async function loggedToken() {
-  const loggedInUser = await localStorage.getItem('authToken');
-  if (loggedInUser) {
-    return loggedInUser;
-  }
-  return undefined;
-}
-
 const apiUser = axios.create({
   baseURL: 'http://localhost:3002/user',
   timeout: 1000,
@@ -60,7 +52,7 @@ const apiPurchase = axios.create({
 });
 
 export const useApi = (storeToken?: string) => ({
-  validateToken: async (storeToken: string) => {
+  validateToken: async () => {
     const response = await apiAccessOut.get('/checkToken', {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
@@ -73,7 +65,7 @@ export const useApi = (storeToken?: string) => ({
     });
     return response;
   },
-  logout: async (storeToken: string) => {
+  logout: async () => {
     const response = await apiAccessOut.post('/access/logout', {}, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });

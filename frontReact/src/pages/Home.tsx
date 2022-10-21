@@ -2,15 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import '../css/helper.css';
 import { AuthContext } from "../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState } from 'react';
-import { useApi, loggedToken } from "../data/api";
+import { useApi} from "../data/api";
 import { purchaseu } from "../types/types";
 import { NewPurchaseDialog } from "../componentes/newPurchaseDialog";
 
 function Home() {
   const navegat = useNavigate();
   const auth = useContext(AuthContext)
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  console.log(token)
+  const api = useApi(token?.toString())
   const [purchases, setPurchases] = useState<purchaseu[]>()
   const [close, setClose] = useState(true)
   const logoutApp = async () => {
@@ -47,13 +48,12 @@ function Home() {
         >
           Add Users
         </button>
-        <div className='role h-[66%] '>
+        <div className='purchase-board h-[66%] '>
           {purchases?.map(p => <button key={p.purchaseId} onClick={() => handlepurchase(p.purchaseId)} className='start max-w-[275px] "border-gray-300 border-solid border-b-4 bg-indigo-300 px-16 py-2 rounded-md mt-5 text-3xl'>
             <h2>{p.name}</h2>
             <p className='text-xl'>{p.timestamp}</p>
           </button>)}
         </div>
-        <div className='z-10 h-12 bg-white'> brancokgeorgoweirgoenwqirgoieqngeonqigroqenirgoqe</div>
         <button
           type="submit"
           onClick={logoutApp}

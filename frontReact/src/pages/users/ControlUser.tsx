@@ -17,6 +17,8 @@ function ControlUser() {
 
 if(!user){return <p> "Loading..."</p>}
 
+console.log(user.user_id)
+
   return (
     <>
     {close || <UpdateDialog setClose={setClose} userId={user.user_id} />}

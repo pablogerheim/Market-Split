@@ -51,9 +51,31 @@ async function getWhiteLists(token) {
     }
 }
 
+async function getwhiteListByUserId(id) {
+    try {
+        return await WhiteList.findAll({
+            where: {
+                user_id: id
+            }
+        });
+    } catch (err) {
+        throw err;
+    }
+}
+
 async function createWhiteList(whiteUser) {
     try {
         return await WhiteList.create(whiteUser)
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function updateWhiteList(whiteUser) {
+    try {
+        return await WhiteList.update(whiteUser, {
+            where: { user_id: whiteUser.user_id }
+        }, { raw: true })
     } catch (err) {
         throw err;
     }
@@ -77,5 +99,7 @@ export default {
     updateBlackList,
     getWhiteLists,
     createWhiteList,
-    deleteWhiteList
+    deleteWhiteList,
+    getwhiteListByUserId,
+    updateWhiteList
 };

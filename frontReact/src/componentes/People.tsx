@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
-import { useApi, loggedToken } from '../data/api';
+import { useApi} from '../data/api';
 import { participant, product } from "../types/types";
 import { isEquivalent } from "../helper/helperFunctions";
 import { v4 } from 'uuid';
 import { AuthContext } from '../contexts/Auth/AuthContext';
 
 function People() {
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
   const [products, setProduct] = useState<product[]>([])
   const [participants, setParticipants] = useState<participant[]>([])

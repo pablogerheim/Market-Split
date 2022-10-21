@@ -48,7 +48,6 @@ function Login() {
             />
           </label>
           {err ? erro : ''}
-
           <button
             className='start px-8 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-green-400'
             onClick={submit}

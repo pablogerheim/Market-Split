@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useApi, loggedToken } from '../data/api';
+import { useApi} from '../data/api';
 import { participant } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { v4 } from 'uuid';
 import { UpdateDialog } from "../componentes/updateDialog";
 
 function UsersByAdm() {
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const [participants, setParticipants] = useState<participant[]>([])
   const [close, setClose] = useState(true)
   const [id, setId] = useState<number>(0)

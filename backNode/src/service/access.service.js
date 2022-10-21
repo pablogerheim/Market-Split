@@ -61,6 +61,7 @@ async function logout(token) {
     blackList.blacktokens.push(blacktoken);
 
     await accessRepository.updateBlackList(blackList);
+    await accessRepository.deleteWhiteList(token)
 }
 
 async function getWhiteLists(token) {
@@ -68,7 +69,14 @@ async function getWhiteLists(token) {
 }
 
 async function createWhiteList(whiteUser) {
-    await accessRepository.createWhiteList(whiteUser)
+
+    const witheItem = await accessRepository.getwhiteListByUserId(whiteUser.user_id)
+
+    if (witheItem[0]) {
+        if (whiteUser.user_id === witheItem[0].user_id) {
+            await accessRepository.updateWhiteList(whiteUser)
+        } else { await accessRepository.createWhiteList(whiteUser) }
+    } else { await accessRepository.createWhiteList(whiteUser) }
 }
 
 async function deleteWhiteList(token) {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useApi,loggedToken} from '../data/api';
+import { useApi} from '../data/api';
 import { participant } from "../types/types";
 import { v4 } from 'uuid';
 
 function UsersByUsers() {
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const [participants, setParticipants] = useState<participant[]>([])
 
   useEffect(() => {

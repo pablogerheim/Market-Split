@@ -1,14 +1,13 @@
 import '../css/helper.css';
-import { useApi, loggedToken } from '../data/api';
+import { useApi} from '../data/api';
 import { useState } from 'react';
-
 import { BiArrowBack } from 'react-icons/Bi';
 
 function NewPurchaseDialog({
   setClose
 }: any) {
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const [name, setName] = useState<string>('');
 
   const create = async () => {

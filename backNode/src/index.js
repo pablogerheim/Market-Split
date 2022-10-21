@@ -48,9 +48,9 @@ app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/access', accessRoute);
-app.use('/user', userRoute);
-app.use('/product', productRoute);
-app.use('/purchase', purchaseRoute);
+app.use('/user', checkToken, userRoute);
+app.use('/product', checkToken, productRoute);
+app.use('/purchase', checkToken, purchaseRoute);
 app.use('/checkToken', checkToken, accessController.checkToken);
 
 async function checkToken(req, res, next) {
@@ -58,8 +58,10 @@ async function checkToken(req, res, next) {
     if (!authHeader) { return res.status(401).json({ msg: 'Acesso negado!' }, false); }
 
     const token = authHeader && authHeader.split(' ')[1];
-    if (!token) {
-        return res.status(401).json({ msg: 'Acesso negado!' }, token);
+
+    console.log("token", token)
+    if (!token || token === "undefined") {
+        return res.status(401).json({ msg: 'Acesso negado!', token });
     }
 
     const blackList = await accessRepository.getBlackList();

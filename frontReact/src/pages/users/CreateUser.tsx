@@ -1,13 +1,13 @@
 import '../../css/helper.css';
-import { useApi,loggedToken} from "../../data/api";
+import { useApi} from "../../data/api";
 import {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
 
 
 function CreateUser() {
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const navegat = useNavigate()
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');

@@ -62,7 +62,6 @@ async function logout(req, res, next) {
             throw new Error('token missing');
         }
         await accessService.logout(token)
-        await accessService.deleteWhiteList(token)
         res.status(200).json({ msg: ' successfully logged out ' });
         logger.info(' Logout ');
     } catch (err) {

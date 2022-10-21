@@ -1,4 +1,4 @@
-import { useApi, loggedToken } from '../data/api';
+import { useApi} from '../data/api';
 import { product } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,8 @@ import { AuthContext } from '../contexts/Auth/AuthContext';
 
 function Product() {
   const navegat = useNavigate();
-  const token = loggedToken()
-  const api = useApi(token.toString())
+  const token = localStorage.getItem('authToken')
+  const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
   const [prods, setProds] = useState<product[]>();
 

@@ -1,5 +1,5 @@
 import '../css/helper.css';
-import { useApi,loggedToken} from '../data/api';
+import { useApi} from '../data/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
@@ -10,8 +10,8 @@ function UpdateDialog({
   setClose
 }:dialog) {
     const navegat = useNavigate()
-    const token = loggedToken()
-    const api = useApi(token.toString())
+    const token = localStorage.getItem('authToken')
+     const api = useApi(token?.toString())
     const [name, setName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [access, setAccess] = useState<string>('');
