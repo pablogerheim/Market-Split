@@ -1,14 +1,18 @@
 import '../../css/helper.css';
 import { useApi} from "../../data/api";
-import {  useState } from 'react';
+import {  useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
+import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { User } from '../../types/types';
 
 
 function CreateUser() {
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
   const navegat = useNavigate()
+  const auth = useContext(AuthContext)
+  const [user, ] = useState<User|null>(auth.user);
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [access, setAccess] = useState<string>('User');
@@ -64,7 +68,7 @@ function CreateUser() {
             onChange={(e) => setAccess(e.target.value)}
             className="bg-white p-2 shadow-bot m-2 mt-3 w-[80%]">
             <option value="User">User</option>
-            <option value="Adm">Adm</option>
+            <option value={user?.access === "Adm"?"Adm":"User"}>{user?.access === "Adm"? "Adm": "Only Adm access"}</option>
           </select>
         </label>
 

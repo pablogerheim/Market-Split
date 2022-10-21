@@ -2,7 +2,15 @@ import accessService from '../service/access.service.js';
 
 async function register(req, res, next) {
     try {
+        const authHeader = req.headers.authorization;
+        const token = authHeader && authHeader.split(' ')[1];
         const { name, password, access } = req.body;
+
+        if (!token || token === 'undefined' || token === false) {
+            // adicionar verificação para saber se tem autorização de criar usuario
+            access = "User"
+        }
+
         if (!access || !password || !name) {
             return res.status(422).json({ msg: "The Assess, Password and Name are required!" });
         }
