@@ -59,7 +59,6 @@ async function checkToken(req, res, next) {
 
     const token = authHeader && authHeader.split(' ')[1];
 
-    console.log("token", token)
     if (!token || token === "undefined") {
         return res.status(401).json({ msg: 'Acesso negado!', token });
     }

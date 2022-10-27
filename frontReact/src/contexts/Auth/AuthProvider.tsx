@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     const validateToken = async () => {
-      const storeToken = await localStorage.getItem('authToken');
+      const storeToken = localStorage.getItem('authToken');
       if (storeToken) {
         const data = await api.validateToken();
         if (!data) {

@@ -1,9 +1,10 @@
 import '../css/helper.css';
 import { useApi} from '../data/api';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
-import {  dialog} from "../types/types";
+import {  dialog, User} from "../types/types";
+import { AuthContext } from '../contexts/Auth/AuthContext';
 
 function UpdateDialog({
   userId,
@@ -12,6 +13,8 @@ function UpdateDialog({
     const navegat = useNavigate()
     const token = localStorage.getItem('authToken')
      const api = useApi(token?.toString())
+     const auth = useContext(AuthContext)
+     const [user, ] = useState<User|null>(auth.user);
     const [name, setName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [access, setAccess] = useState<string>('');
@@ -69,16 +72,21 @@ function UpdateDialog({
             className="bg-white p-2 shadow-bot m-2 mt-3 w-[80%]"
           />
         </label>
+
         <label className="flex flex-col items-start p-1 m-1 ">
           Access
-
-          <select
+          {user?.access === "User"?<select
+            value={access}
+            onChange={(e) => setAccess(e.target.value)}
+            className="bg-white p-2 shadow-bot m-2 mt-3 w-[80%]">
+            <option>User</option>
+          </select>:           <select
             value={access}
             onChange={(e) => setAccess(e.target.value)}
             className="bg-white p-2 shadow-bot m-2 mt-3 w-[80%]">
             <option>User</option>
             <option>Adm</option>
-          </select>
+          </select> }
         </label>
 
       </div>

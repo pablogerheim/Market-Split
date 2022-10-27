@@ -16,7 +16,6 @@ export async function checkAccess(req, res, next) {
     const token = authHeader && authHeader.split(' ')[1];
     const user = await accessService.getWhiteLists(token);
 
-    console.log("req params", req.params.id, "req body", req.body.userId, "user whitelist", user[0][0])
     try {
         if (!user.access === 'Adm') {
 

@@ -26,10 +26,10 @@ function UsersByAdm() {
     <div className={` ${close || 'opacity-20'}`}>
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 show-sm">
-          Users: 2
+          Users: 4
         </p>
         <p className="text-xl m-2 p-2 show-sm">
-          Adms: 1
+          Adms: 2
         </p>
       </div>
       <div className="p-2">
