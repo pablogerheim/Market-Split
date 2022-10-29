@@ -5,7 +5,7 @@ import { UsersByUsers } from '../../componentes/UsersByUsers';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
 import { useContext } from 'react';
-import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import { User } from '../../types/types';
 import { UpdateDialog } from "../../componentes/updateDialog";
 

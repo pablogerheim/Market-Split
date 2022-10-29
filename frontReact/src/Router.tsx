@@ -12,7 +12,7 @@ import { ControlUser } from "./pages/users/ControlUser";
 import { CreateUser } from "./pages/users/CreateUser";
 import { Login } from './pages/Login'
 import { useContext } from 'react';
-import { AuthContext } from './contexts/Auth/AuthContext';
+import { AuthContext } from './contexts/AuthContext';
 
 function Router() {
  const auth = useContext(AuthContext);

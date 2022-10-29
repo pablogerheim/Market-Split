@@ -3,7 +3,7 @@ import { useApi} from '../data/api';
 import { participant, product } from "../types/types";
 import { isEquivalent } from "../helper/helperFunctions";
 import { v4 } from 'uuid';
-import { AuthContext } from '../contexts/Auth/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 function People() {
   const token = localStorage.getItem('authToken')

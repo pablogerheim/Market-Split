@@ -4,7 +4,7 @@ import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import EventBus from '../helper/EventBus';
-import { AuthContext } from '../contexts/Auth/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 function Product() {
   const navegat = useNavigate();

@@ -1,4 +1,4 @@
-import { product } from "../data/api";
+import { product } from "../types/types";
 function isEquivalent(a:product[], b:product[]) {
 
     // Create arrays of property names

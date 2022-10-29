@@ -4,7 +4,7 @@ import { Product } from '../../componentes/Product';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../data/api';
-import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import { BiArrowBack } from 'react-icons/Bi';
 
 function Session() {

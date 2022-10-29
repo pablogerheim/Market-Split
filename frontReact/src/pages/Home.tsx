@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/helper.css';
-import { AuthContext } from "../contexts/Auth/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 import { useContext, useEffect, useState } from 'react';
 import { useApi} from "../data/api";
 import { purchaseu } from "../types/types";

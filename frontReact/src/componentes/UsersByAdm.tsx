@@ -26,10 +26,10 @@ function UsersByAdm() {
     <div className={` ${close || 'opacity-20'}`}>
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 show-sm">
-          Users: 4
+          Users: {participants.map(p => p.access === "User" ? 1 : 0.00001).reduce((p,c) => p + c, 0).toFixed(0)}
         </p>
         <p className="text-xl m-2 p-2 show-sm">
-          Adms: 2
+          Adms: {participants.map(p => p.access === "Adm" ? 1 : 0.00001).reduce((p,c) => p + c, 0).toFixed(0)}
         </p>
       </div>
       <div className="p-2">

@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
 import {  dialog, User} from "../types/types";
-import { AuthContext } from '../contexts/Auth/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 function UpdateDialog({
   userId,

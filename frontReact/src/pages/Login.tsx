@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import '../css/helper.css';
-import { AuthContext } from '../contexts/Auth/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 function Login() {
   const auth = useContext(AuthContext);

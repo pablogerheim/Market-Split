@@ -3,7 +3,7 @@ import { useApi} from "../../data/api";
 import {  useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/Bi';
-import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import { User } from '../../types/types';
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useApi } from '../../data/api';
-import { User, purchase } from '../../types/types';
+import { useApi } from '../data/api';
+import { User, purchase } from '../types/types';
 import { AuthContext } from './AuthContext';
 
 
