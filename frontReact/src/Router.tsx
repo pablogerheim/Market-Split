@@ -13,6 +13,7 @@ import { CreateUser } from "./pages/users/CreateUser";
 import { Login } from './pages/Login'
 import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContext';
+import { CreateGroup } from "./pages/group/CreateGroup";
 
 function Router() {
  const auth = useContext(AuthContext);
@@ -23,6 +24,7 @@ function Router() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/createGroup" element={<CreateGroup />} />
           <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       </BrowserRouter>

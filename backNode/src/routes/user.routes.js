@@ -15,12 +15,11 @@ export async function checkAccess(req, res, next) {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
     const user = await accessService.getWhiteLists(token);
-
     try {
         if (!user.access === 'Adm') {
 
             if (user.user_id !== req.params.id && !req.body.userId !== user.user_id) {
-                return res.status(401).json({ msg: 'Acesso negado!' });
+                return res.status(401).json({ msg: 'Access refused!' });
             }
         }
         next();

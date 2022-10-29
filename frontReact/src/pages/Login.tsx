@@ -1,13 +1,15 @@
 import { useContext, useState } from 'react';
 import '../css/helper.css';
 import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const auth = useContext(AuthContext);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
-
+  const navegat = useNavigate();
+  
   async function submit() {
     event?.preventDefault();
     const userInfo = await auth.login(name, password);
@@ -53,6 +55,13 @@ function Login() {
             onClick={submit}
           >
             Submit
+          </button>
+          <button
+          type='button'
+            className='start px-4 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
+           onClick={()=>navegat('/createGroup')}
+          >
+            Create Accont
           </button>
         </form>
       </div>
