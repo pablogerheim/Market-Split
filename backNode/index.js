@@ -2,14 +2,14 @@ import express from 'express';
 import winston from 'winston';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import { swaggerDocument } from './doc.js';
-import userRoute from './routes/user.routes.js';
-import productRoute from './routes/product.routes.js';
-import accessRoute from './routes/access.routes.js';
-import purchaseRoute from './routes/purchase.routes.js';
+import { swaggerDocument } from './src/doc.js';
+import userRoute from './src/routes/user.routes.js';
+import productRoute from './src/routes/product.routes.js';
+import accessRoute from './src/routes/access.routes.js';
+import purchaseRoute from './src/routes/purchase.routes.js';
 import jwt from 'jsonwebtoken';
-import accessRepository from './repository/access.repository.js';
-import accessController from "./controllers/access.controller.js";
+import accessRepository from './src/repository/access.repository.js';
+import accessController from "./src/controllers/access.controller.js";
 import { promises } from 'fs';
 
 
