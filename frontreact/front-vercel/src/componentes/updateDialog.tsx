@@ -2,7 +2,7 @@ import '../css/helper.css';
 import { useApi} from '../data/api';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BiArrowBack } from 'react-icons/Bi';
+import { BiArrowBack } from 'react-icons/bi';
 import {  dialog, User} from "../types/types";
 import { AuthContext } from '../contexts/AuthContext';
 import React from 'react';

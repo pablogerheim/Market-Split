@@ -2,10 +2,10 @@ import '../../css/helper.css';
 import { useApi} from "../../data/api";
 import {  useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BiArrowBack } from 'react-icons/Bi';
+import { BiArrowBack } from 'react-icons/bi';
 import { AuthContext } from '../../contexts/AuthContext';
 import { User } from '../../types/types';
-
+import React from 'react';
 
 function CreateUser() {
   const token = localStorage.getItem('authToken')

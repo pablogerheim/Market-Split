@@ -1,7 +1,8 @@
 import '../css/helper.css';
 import { useApi} from '../data/api';
 import { useState } from 'react';
-import { BiArrowBack } from 'react-icons/Bi';
+import { BiArrowBack } from 'react-icons/bi';
+import React from 'react';
 
 function NewPurchaseDialog({
   setClose

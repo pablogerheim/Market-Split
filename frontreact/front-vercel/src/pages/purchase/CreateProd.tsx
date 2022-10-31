@@ -3,8 +3,9 @@ import { useApi} from "../../data/api";
 import { participant } from "../../types/types";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BiArrowBack } from 'react-icons/Bi';
+import { BiArrowBack } from 'react-icons/bi';
 import { AuthContext } from '../../contexts/AuthContext';
+import React from 'react';
 
 function CreateProd() {
   const navegat = useNavigate()

@@ -3,9 +3,10 @@ import { useApi} from '../../data/api';
 import { participant } from '../../types/types';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BiArrowBack } from 'react-icons/Bi';
+import { BiArrowBack } from 'react-icons/bi';
 import EventBus from '../../helper/EventBus';
 import {v4} from 'uuid'
+import React from 'react';
 
 function UpdadeProd() {
   const navegat = useNavigate();

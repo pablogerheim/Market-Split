@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { UsersByAdm } from '../../componentes/UsersByAdm';
 import { UsersByUsers } from '../../componentes/UsersByUsers';
 import { useNavigate } from 'react-router-dom';
-import { BiArrowBack } from 'react-icons/Bi';
+import { BiArrowBack } from 'react-icons/bi';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { User } from '../../types/types';
+import React from 'react';
 import { UpdateDialog } from "../../componentes/updateDialog";
 
 function ControlUser() {
