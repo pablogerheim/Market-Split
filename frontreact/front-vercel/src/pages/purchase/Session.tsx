@@ -5,7 +5,8 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../data/api';
 import { AuthContext } from "../../contexts/AuthContext";
-import { BiArrowBack } from 'react-icons/Bi';
+import { BiArrowBack } from 'react-icons/bi';
+import React from 'react';
 
 function Session() {
   const navegat = useNavigate();
