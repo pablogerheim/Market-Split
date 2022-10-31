@@ -3,7 +3,7 @@ import { useApi} from '../data/api';
 import { participant } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { v4 } from 'uuid';
-import { UpdateDialog } from "../componentes/updateDialog";
+import { UpdateDialog } from "./updateDialog";
 
 function UsersByAdm() {
   const token = localStorage.getItem('authToken')
