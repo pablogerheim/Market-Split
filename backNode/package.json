@@ -7,8 +7,8 @@
         "node": "14.x"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
         "startx": "npx nodemon --inspect src/index.js",
         "eslint": "npx eslint --fix src --ext .js"
     },
