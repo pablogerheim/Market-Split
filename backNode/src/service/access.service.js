@@ -4,6 +4,9 @@ import { promises } from 'fs';
 import accessRepository from "../repository/access.repository.js"
 import userRepository from "../repository/user.repository.js";
 import validate from "../helper/helperList.js";
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const { readFile } = promises;
 
@@ -32,7 +35,8 @@ async function compareUser(user, password) {
 }
 
 async function createToken(user) {
-    const privateKey = await readFile('./private.key', 'utf-8');
+    const privateKey = process.env.JWT_SECRET_PRIVATE_KEY
+    console.log("private", privateKey)
 
     const token = jwt.sign({ id: user._id }, privateKey, {
         expiresIn: 3600,

@@ -73,7 +73,9 @@ async function checkToken(req, res, next) {
     }
 
     try {
-        const publicKey = await readFile('./public.key', 'utf-8');
+        const publicKey = process.env.JWT_SECRET_PUBLIC_KEY
+
+        console.log("public", publicKey)
 
         jwt.verify(token, publicKey, { algorithms: ['RS256'] });
         next();

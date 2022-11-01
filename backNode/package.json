@@ -9,7 +9,7 @@
     "scripts": {
         "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "startx": "npx nodemon --inspect src/index.js",
+        "startx": "npx nodemon --inspect index.js",
         "eslint": "npx eslint --fix src --ext .js"
     },
     "keywords": [],
