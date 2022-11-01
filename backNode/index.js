@@ -10,10 +10,9 @@ import purchaseRoute from './src/routes/purchase.routes.js';
 import jwt from 'jsonwebtoken';
 import accessRepository from './src/repository/access.repository.js';
 import accessController from "./src/controllers/access.controller.js";
-import { promises } from 'fs';
+import * as dotenv from 'dotenv';
 
-
-const { readFile } = promises;
+dotenv.config();
 
 const {
     combine,
@@ -73,8 +72,7 @@ async function checkToken(req, res, next) {
     }
 
     try {
-        const publicKey = process.env.JWT_SECRET_PUBLIC_KEY
-
+        const { publicKey } = JSON.parse(process.env.JWT_SECRET_PUBLIC_KEY || '{ publicKey: null }')
         console.log("public", publicKey)
 
         jwt.verify(token, publicKey, { algorithms: ['RS256'] });

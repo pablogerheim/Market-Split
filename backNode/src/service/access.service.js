@@ -1,14 +1,11 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from '../../bcrypt/bcrypt.js';
-import { promises } from 'fs';
 import accessRepository from "../repository/access.repository.js"
 import userRepository from "../repository/user.repository.js";
 import validate from "../helper/helperList.js";
 import * as dotenv from 'dotenv';
 
 dotenv.config();
-
-const { readFile } = promises;
 
 async function findUser(name) {
     const users = await userRepository.getUsers()
@@ -35,7 +32,7 @@ async function compareUser(user, password) {
 }
 
 async function createToken(user) {
-    const privateKey = process.env.JWT_SECRET_PRIVATE_KEY
+    const { privateKey } = JSON.parse(process.env.JWT_SECRET_PRIVATE_KEY || '{ privateKey: null }')
     console.log("private", privateKey)
 
     const token = jwt.sign({ id: user._id }, privateKey, {
