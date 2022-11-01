@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from '../../bcrypt/bcrypt.js';
 import { promises } from 'fs';
 import accessRepository from "../repository/access.repository.js"
 import userRepository from "../repository/user.repository.js";
