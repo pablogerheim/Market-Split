@@ -80,12 +80,13 @@ async function checkToken(req, res, next) {
         next(err);
     }
 }
+const port = process.env.PORT
 
 app.use((err, req, res, next) => {
     logger.error(`${req.method} ${req.baseUrl} - ${err.message}`);
     res.status(400).send({ error: err.message });
 });
 
-app.listen(3000, async() => {
-    logger.info('API Started!');
+app.listen(port, async() => {
+    logger.info(`API Started! ${port}`);
 });
