@@ -73,7 +73,6 @@ async function checkToken(req, res, next) {
 
     try {
         const { publicKey } = JSON.parse(process.env.JWT_SECRET_PUBLIC_KEY || '{ publicKey: null }')
-        console.log("public", publicKey)
 
         jwt.verify(token, publicKey, { algorithms: ['RS256'] });
         next();

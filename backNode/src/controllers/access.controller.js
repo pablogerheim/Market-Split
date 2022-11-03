@@ -1,6 +1,7 @@
 import accessService from '../service/access.service.js';
 
 async function register(req, res, next) {
+    console.log("register")
     try {
         const authHeader = req.headers.authorization;
         const token = authHeader && authHeader.split(' ')[1];
