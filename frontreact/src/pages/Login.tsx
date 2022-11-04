@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const auth = useContext(AuthContext);
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('admin');
+  const [password, setPassword] = useState('admin');
   const [err, setErr] = useState(false);
   const navegat = useNavigate();
   
@@ -56,13 +56,8 @@ function Login() {
           >
             Submit
           </button>
-          <button
-          type='button'
-            className='start px-4 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
-           onClick={()=>navegat('/createGroup')}
-          >
-            Create Accont
-          </button>
+          <p className=' mt-8 '> utilize "admin" - "admin" para testar o aplicativo como administrador </p>
+          <p className=' mt-2 '> utiliza "user" - "user" para testar o aplicativo como usuario </p>
         </form>
       </div>
     </div>
