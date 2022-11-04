@@ -47,9 +47,9 @@ app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/access', accessRoute);
-app.use('/user', userRoute);
-app.use('/product', productRoute);
-app.use('/purchase', purchaseRoute);
+app.use('/user', checkToken, userRoute);
+app.use('/product', checkToken, productRoute);
+app.use('/purchase', checkToken, purchaseRoute);
 app.use('/checkToken', checkToken, accessController.checkToken);
 
 async function checkToken(req, res, next) {
