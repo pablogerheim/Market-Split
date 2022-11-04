@@ -3,6 +3,12 @@ import { user, productapi, purchase } from '../types/types';
 
 const BASEurl= 'https://market-split-development.up.railway.app'
 
+fetch('https://market-split-development.up.railway.app', {
+  method: "POST",
+  body: JSON.stringify({name:"admin",password:'admin'}),
+  headers: {"Content-type": "application/json; charset=UTF-8"}
+})
+
 const apiUser = axios.create({
   baseURL: `${BASEurl}/user`,
   timeout: 1000,
