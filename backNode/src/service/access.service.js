@@ -33,7 +33,6 @@ async function compareUser(user, password) {
 
 async function createToken(user) {
     const { privateKey } = JSON.parse(process.env.JWT_SECRET_PRIVATE_KEY || '{ privateKey: null }')
-    console.log("private", privateKey)
 
     const token = jwt.sign({ id: user._id }, privateKey, {
         expiresIn: 3600,
