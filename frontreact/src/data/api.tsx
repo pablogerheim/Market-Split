@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { user, productapi, purchase } from '../types/types';
 
-const BASEurl= 'http://localhost:3000'
+const BASEurl= 'https://market-split-development.up.railway.app'
 
 const apiUser = axios.create({
   baseURL: `${BASEurl}/user`,
