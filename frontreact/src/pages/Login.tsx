@@ -57,7 +57,7 @@ function Login() {
 
           <button
             className='start px-8 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-red-400'
-            onClick={()=>{ console.log("lokalStorage",localStorage.getItem('authToken'),console.log(async () => {fetch('https://market-split-development.up.railway.app', {
+            onClick={()=>{ console.log("lokalStorage",localStorage.getItem('authToken'),console.log(async () => {fetch('https://market-split-development.up.railway.app/access/login', {
               method: "POST",
               body: JSON.stringify({name:"admin",password:'admin'}),
               headers: {"Content-type": "application/json; charset=UTF-8"}
