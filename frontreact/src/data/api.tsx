@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { user, productapi, purchase } from '../types/types';
 
+const BASEurl= 'http://localhost:3000'
+
 const apiUser = axios.create({
-  baseURL: 'http://localhost:3002/user',
+  baseURL: `${BASEurl}/user`,
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
@@ -11,8 +13,8 @@ const apiUser = axios.create({
   },
 });
 
-const apiAccessIn = axios.create({
-  baseURL: 'http://localhost:3002',
+const apiAccess = axios.create({
+  baseURL: `${BASEurl}`,
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
@@ -21,18 +23,9 @@ const apiAccessIn = axios.create({
   },
 });
 
-const apiAccessOut = axios.create({
-  baseURL: 'http://localhost:3002',
-  timeout: 1000,
-  headers: {
-    'Content-Type': 'application/json; charset = utf-8',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': 'true',
-  },
-});
 
 const apiProduct = axios.create({
-  baseURL: 'http://localhost:3002/product',
+  baseURL: `${BASEurl}/product`,
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
@@ -42,7 +35,7 @@ const apiProduct = axios.create({
 });
 
 const apiPurchase = axios.create({
-  baseURL: 'http://localhost:3002/purchase',
+  baseURL: `${BASEurl}/purchase`,
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
@@ -53,26 +46,26 @@ const apiPurchase = axios.create({
 
 export const useApi = (storeToken?: string) => ({
   validateToken: async () => {
-    const response = await apiAccessOut.get('/checkToken', {
+    const response = await apiAccess.get('/checkToken', {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
     return response.data;
   },
   login: async (name: string, password: string) => {
-    const response = await apiAccessIn.post('/access/login', {
+    const response = await apiAccess.post('/access/login', {
       name,
       password,
     });
     return response;
   },
   logout: async () => {
-    const response = await apiAccessOut.post('/access/logout', {}, {
+    const response = await apiAccess.post('/access/logout', {}, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
     return response.data;
   },
   createUser: async (user: user) => {
-    await apiAccessOut.post('/access/register', user, {
+    await apiAccess.post('/access/register', user, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
