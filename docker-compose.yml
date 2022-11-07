@@ -16,6 +16,6 @@ services:
   react-app:
     build: ./frontreact
     ports:
-      - "3000:3000"
+      - "5173:5173"
     environment:
       - CHOKIDAR_USEPOLLING=true
