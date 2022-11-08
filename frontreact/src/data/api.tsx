@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { user, productapi, purchase } from '../types/types';
 
-const BASEurl= 'http://localhost:3002'
+const BASEurl= 'https://market-split-production.up.railway.app'
 
 const apiUser = axios.create({
   baseURL: `${BASEurl}/user`,
-  timeout: 5000,
+  timeout: 9000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -15,7 +15,7 @@ const apiUser = axios.create({
 
 const apiAccess = axios.create({
   baseURL: `${BASEurl}`,
-  timeout: 5000,
+  timeout: 9000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -26,7 +26,7 @@ const apiAccess = axios.create({
 
 const apiProduct = axios.create({
   baseURL: `${BASEurl}/product`,
-  timeout: 5000,
+  timeout: 9000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -36,7 +36,7 @@ const apiProduct = axios.create({
 
 const apiPurchase = axios.create({
   baseURL: `${BASEurl}/purchase`,
-  timeout: 5000,
+  timeout: 9000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
