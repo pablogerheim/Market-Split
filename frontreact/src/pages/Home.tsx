@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useApi} from "../data/api";
 import { purchaseu } from "../types/types";
 import { NewPurchaseDialog } from "../componentes/newPurchaseDialog";
+import React from "react";
 
 function Home() {
   const navegat = useNavigate();

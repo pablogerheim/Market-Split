@@ -5,7 +5,7 @@ const BASEurl= 'http://localhost:3002'
 
 const apiUser = axios.create({
   baseURL: `${BASEurl}/user`,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -15,7 +15,7 @@ const apiUser = axios.create({
 
 const apiAccess = axios.create({
   baseURL: `${BASEurl}`,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -26,7 +26,7 @@ const apiAccess = axios.create({
 
 const apiProduct = axios.create({
   baseURL: `${BASEurl}/product`,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -36,7 +36,7 @@ const apiProduct = axios.create({
 
 const apiPurchase = axios.create({
   baseURL: `${BASEurl}/purchase`,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',

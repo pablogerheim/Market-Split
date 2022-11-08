@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useApi } from '../data/api';
 import { User, purchase } from '../types/types';
 import { AuthContext } from './AuthContext';
-
+import React from "react";
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const [user, setUser] = useState<User | null>(null);
