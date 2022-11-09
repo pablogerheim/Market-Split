@@ -14,7 +14,7 @@ async function createPurchase(body) {
         timestamp: dateTime,
         active: false,
         summary: {},
-        group: body.group
+        group_member: body.group_member
     }
 
     return await purchaseRepository.createPurchase(purchase);
@@ -35,7 +35,7 @@ async function makePurchaseHistory(purchaseId) {
         name: purchase.name,
         active: true,
         summary: [...product],
-        group: purchase.group
+        group_member: purchase.group_member
     }
 
     const history = await purchaseRepository.makePurchaseHistory(historyPurchase);

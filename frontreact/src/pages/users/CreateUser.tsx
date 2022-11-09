@@ -4,7 +4,7 @@ import {  useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import { AuthContext } from '../../contexts/AuthContext';
-import { User } from '../../types/types';
+import { IuserAPI } from '../../types/types';
 import React from 'react';
 
 function CreateUser() {
@@ -12,20 +12,26 @@ function CreateUser() {
   const api = useApi(token?.toString())
   const navegat = useNavigate()
   const auth = useContext(AuthContext)
-  const [user, ] = useState<User|null>(auth.user);
+  const [user, ] = useState<IuserAPI|null>(auth.user);
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [access, setAccess] = useState<string>('User');
+  const [erro, setErro] = useState<boolean>(false)
 
  async function createNewUser(){
-  await api.createUser({
+  if (!user) {
+    setErro(true)    
+  } else{
+ const resp = await api.createUser({
     name: name,
     password: password,
     access: access,
+    group_member:user.group_member
   });
-    navegat('/user/');
+  console.log("create user resp",resp)
+  resp.status === 200? navegat('/user/'): setErro(true)
   }
-
+}
   return (
     <div className="p-5 bg-white mt-1 w-[90%] border-8 ">
       <div className=" flex items-center justify-around gap-6 p-3">

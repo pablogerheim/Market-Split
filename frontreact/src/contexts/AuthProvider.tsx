@@ -1,24 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useApi } from '../data/api';
-import { User, purchase } from '../types/types';
+import { Ipurchase, IuserAPI } from '../types/types';
 import { AuthContext } from './AuthContext';
 import React from 'react'
 
-
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [purchase, setPurchase] = useState<purchase | null>(null)
+  const [user, setUser] = useState<IuserAPI | null>(null);
+  const [purchase, setPurchase] = useState<Ipurchase | null>(null)
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
 
   useEffect(() => {
     const validateToken = async () => {
-      const storeToken = localStorage.getItem('authToken');
-      if (storeToken) {
+      if (token) {
         const data = await api.validateToken();
         if (!data) {
           setUser(null);
-        } else { setUser(data.user) }
+        } else { setUser(data.data.user) }
       }
     };
     validateToken();
@@ -28,7 +26,9 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     const data = await api.login(name, password);
 
     if (data.data.token && data.data.user) {
-      setUser(data.data.user);
+      const helperUser = data.data.user
+      helperUser.token = data.data.token
+      setUser(helperUser);
       setToken(data.data.token);
       return true;
     }
@@ -46,10 +46,8 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     localStorage.setItem('authToken', token);
   };
 
-  const getPurchasebyid = async (id: number) => {
-    const data = await api.getPurchasebyid(id);
-    setPurchase(data)
-    return data
+  const getPurchasebyid = async (purchase: Ipurchase) => {
+  setPurchase(purchase)
   };
 
   return (

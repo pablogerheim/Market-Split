@@ -2,26 +2,21 @@ import { useContext, useState } from 'react';
 import '../css/helper.css';
 import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 function Login() {
   const auth = useContext(AuthContext);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [err, setErr] = useState(false);
+  const [erro, setErro] = useState<string>()
   const navegat = useNavigate();
   
   async function submit() {
     event?.preventDefault();
-    const userInfo = await auth.login(name, password);
-
-    if (!userInfo) {
-      setErr(true);
-    } else {
-      setErr(false);
-    }
+    await auth.login(name, password)
+    .catch(onrejected => setErro(onrejected.response.data.msg));
   }
 
-  const erro = <p className="text-red-500"> Campo não preenchido </p>;
   return (
     <div className="screen flex justify-center w-full h-screen">
       <div className=" flex justify-center pt-2 bg-white w-[90%] h-[85%]">
@@ -49,7 +44,7 @@ function Login() {
               onChange={e => setPassword(e.target.value)}
             />
           </label>
-          {err ? erro : ''}
+          <p className="text-red-500">{erro && erro } </p>
           <button
             className='start px-8 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-green-400'
             onClick={submit}
@@ -59,7 +54,7 @@ function Login() {
           <button
           type='button'
             className='start px-4 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
-           onClick={()=>navegat('/createGroup')}
+           onClick={()=>navegat('/creategroup_member')}
           >
             Create Accont
           </button>

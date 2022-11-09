@@ -1,11 +1,10 @@
 import axios from 'axios';
-import { user, productapi, purchase } from '../types/types';
+import { Iuser, IproductSend, IpurchaseSend, Iregister, Ipurchase } from '../types/types';
 
-const BASEurl= 'http://localhost:3002'
+const BASEurl = 'http://localhost:3002'
 
 const apiUser = axios.create({
   baseURL: `${BASEurl}/user`,
-  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -15,7 +14,6 @@ const apiUser = axios.create({
 
 const apiAccess = axios.create({
   baseURL: `${BASEurl}`,
-  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -26,7 +24,6 @@ const apiAccess = axios.create({
 
 const apiProduct = axios.create({
   baseURL: `${BASEurl}/product`,
-  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -36,7 +33,6 @@ const apiProduct = axios.create({
 
 const apiPurchase = axios.create({
   baseURL: `${BASEurl}/purchase`,
-  timeout: 5000,
   headers: {
     'Content-Type': 'application/json; charset = utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -49,7 +45,7 @@ export const useApi = (storeToken?: string) => ({
     const response = await apiAccess.get('/checkToken', {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
-    return response.data;
+    return response;
   },
   login: async (name: string, password: string) => {
     const response = await apiAccess.post('/access/login', {
@@ -64,13 +60,19 @@ export const useApi = (storeToken?: string) => ({
     });
     return response.data;
   },
-  createUser: async (user: user) => {
-    await apiAccess.post('/access/register', user, {
+  register: async (user: Iregister) => {
+    const response = await apiAccess.post('/access/register', user, {
+      headers: { 'Authorization': `Bearer ${storeToken}`, },
+    });
+    return response
+  },
+  createUser: async (user: Iuser) => {
+    return await apiUser.post('/', user, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  getUser: async () => {
-    const user = await apiUser.get('/', {
+  getUser: async (group_member: string) => {
+    const user = await apiUser.get(`/${group_member}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
     return user.data;
@@ -81,8 +83,8 @@ export const useApi = (storeToken?: string) => ({
     });
     return user.data;
   },
-  updateUser: async (user: user) => {
-    await apiUser.put('/', user, {
+  updateUser: async (user: Iuser) => {
+    return await apiUser.put('/', user, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
@@ -91,7 +93,7 @@ export const useApi = (storeToken?: string) => ({
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  getProduct: async (purchase:number) => {
+  getProduct: async (purchase: number) => {
     const data = await apiProduct.get(`/purchase/${purchase}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
@@ -103,7 +105,7 @@ export const useApi = (storeToken?: string) => ({
     });
     return data.data;
   },
-  updateProduct: async (product: productapi) => {
+  updateProduct: async (product: IproductSend) => {
     await apiProduct.put('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
@@ -113,46 +115,46 @@ export const useApi = (storeToken?: string) => ({
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  createProduct: async (product: productapi) => {
+  createProduct: async (product: IproductSend) => {
     await apiProduct.post('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  updateQuantity: async (product: productapi) => {
+  updateQuantity: async (product: IproductSend) => {
     await apiProduct.patch('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  clearTable: async (purchase:number) => {
+  clearTable: async (purchase: number) => {
     await apiProduct.delete(`/clear/${purchase}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  getPurchase: async () => {
-    const data = await apiPurchase.get(`/`, {
+  getPurchase: async (group_member: string) => {
+    const data = await apiPurchase.get(`/${group_member}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
-    return data.data;
+    return data;
   },
   getPurchasebyid: async (id: number) => {
     const data = await apiPurchase.get(`/${id}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
-    return data.data;
+    return data;
   },
-  updatePurchase: async (purchase: purchase) => {
-    await apiPurchase.put('/', purchase, {
+  updatePurchase: async (purchase: Ipurchase) => {
+    return await apiPurchase.put('/', purchase, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
   deletePurchase: async (id: number) => {
-    await apiPurchase.delete(`/${id}`, {
+    return await apiPurchase.delete(`/${id}`, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
-  createPurchase: async (purchase: purchase) => {
-    await apiPurchase.post('/', purchase, {
+  createPurchase: async (purchase: IpurchaseSend) => {
+    return await apiPurchase.post('/', purchase, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   }
-});
+})

@@ -3,22 +3,24 @@ import { useApi} from '../data/api';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
-import {  dialog, User} from "../types/types";
+import { Idialog, IuserAPI} from "../types/types";
 import { AuthContext } from '../contexts/AuthContext';
 import React from 'react';
+import { setDefaultResultOrder } from 'dns/promises';
 
 function UpdateDialog({
   userId,
   setClose
-}:dialog) {
+}:Idialog) {
     const navegat = useNavigate()
     const token = localStorage.getItem('authToken')
-     const api = useApi(token?.toString())
-     const auth = useContext(AuthContext)
-     const [user, ] = useState<User|null>(auth.user);
+    const api = useApi(token?.toString())
+    const auth = useContext(AuthContext)
+    const [user] = useState<IuserAPI|null>(auth.user);
     const [name, setName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [access, setAccess] = useState<string>('');
+    const [erro, setErro] = useState<string>()
 
     useEffect(() => {
       const startUpdate = async () => {
@@ -30,14 +32,15 @@ function UpdateDialog({
     }, [])
   
     const update = async () => {
-    await api.updateUser({
+      if (user) {
+        const resp =  await api.updateUser({
         userId: userId,
         password: password,
         name: name,
         access: access,
-      })
-      navegat('/user/s')
-    }
+        group_member: user.group_member
+      }).catch(onabort => console.log(onabort.response))
+      resp ? navegat('/user/s') : setErro("Loading... something seems wrong")}}
 
     return (
       <div className="dialogStyles">

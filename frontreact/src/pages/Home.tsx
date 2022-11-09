@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import '../css/helper.css';
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext, useEffect, useState } from 'react';
-import { useApi} from "../data/api";
-import { purchaseu } from "../types/types";
+import { useApi } from "../data/api";
+import { Ipurchase } from "../types/types";
 import { NewPurchaseDialog } from "../componentes/newPurchaseDialog";
 import React from "react";
 
@@ -12,24 +12,31 @@ function Home() {
   const auth = useContext(AuthContext)
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
-  const [purchases, setPurchases] = useState<purchaseu[]>()
+  const [purchases, setPurchases] = useState<Ipurchase[]>()
   const [close, setClose] = useState(true)
+  const [erro, setErro] = useState<string>()
+  const [user] = useState(auth.user)
+
   const logoutApp = async () => {
     await auth.signout();
     window.location.href = window.location.href;
   };
 
   useEffect(() => {
-    const getPurchases = async () => {
-      const data = await api.getPurchase()
-      setPurchases(data)
-    }
-    getPurchases()
+    !user?.group_member && setErro("Missing group_member please reload")
+      if (user) {
+       const getPurchases = async () => {
+        const data = await api.getPurchase(user?.group_member).catch(onrejected => 
+          console.log("descrição do erro", onrejected))
+        setPurchases(data?.data)
+      }
+      getPurchases() 
+    } else setErro("session expired")
   }, [])
 
-  const handlepurchase = async (id: number) => {
-    await auth.getPurchasebyid(id)
-    navegat('/session')
+  const handlepurchase = async (id: number, name:string) => {
+   auth.getPurchasebyid({purchaseId: id, name})
+   navegat('/session')
   }
 
   return (<>
@@ -48,12 +55,16 @@ function Home() {
         >
           Add Users
         </button>
-        <div className='purchase-board h-[66%] '>
-          {purchases?.map(p => <button key={p.purchaseId} onClick={() => handlepurchase(p.purchaseId)} 
-          className='start flex flex-col w-[275px] max-w-[275px] mx-4 "border-gray-300 border-solid border-b-4 bg-indigo-300 px-16 py-2 rounded-md mt-5 text-3xl'>
+        <p className="text-red-500 mt-2">{erro && erro} </p>
+        <div className='purchase-board h-[66%] mt-4 min-w-[300px]'>
+          {purchases?.map(p => <button key={p.purchaseId} onClick={() => handlepurchase(p.purchaseId,p.name)}
+            className='start flex flex-col w-[275px] max-w-[275px] mx-4 "border-gray-300 border-solid border-b-4 bg-indigo-300 px-16 py-2 rounded-md mt-5 text-3xl'>
             <h2>{p.name}</h2>
             <p className='text-xl'>{p.timestamp}</p>
-          </button>)}
+          </button>)
+          }
+          {purchases?.length === 0 && <p className='mt-5'> Create your first purchase </p>}
+          
         </div>
         <button
           type="submit"

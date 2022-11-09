@@ -29,8 +29,12 @@ const handleDelete = async() => {
   }
 
   const handleSave = async() => {
-   name && await api.updatePurchase({name:name, purchaseId:auth.purchase?.purchaseId})
-    navegat('/home');
+    if(name !== '' && auth.purchase )
+   name && await api.updatePurchase({
+    name:name, 
+    purchaseId:auth.purchase.purchaseId
+  })
+  navegat('/home');
   }
 
   return (

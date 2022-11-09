@@ -1,8 +1,8 @@
 import userRepository from '../repository/user.repository.js';
 import bcrypt from 'bcrypt';
 
-async function getUsers(id) {
-    return await userRepository.getUsers(id);
+async function getUsers(params) {
+    return await userRepository.getUsers(params);
 }
 
 async function createUser(user) {

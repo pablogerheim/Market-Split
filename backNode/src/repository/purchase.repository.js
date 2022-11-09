@@ -1,13 +1,13 @@
 import Purchase from "../models/purchase.model.js";
 
-async function getPurchases({id, group}) {
+async function getPurchases({ id, group_member }) {
   try {
     if (id) {
       return await Purchase.findByPk(id);
     }
     return await Purchase.findAll({
       where: {
-        group: group,
+        group_member: group_member,
       },
     });
   } catch (err) {
@@ -37,7 +37,7 @@ async function deletePurchase(id) {
 
 async function updatePurchase(purchase) {
   try {
-    await Purchase.update(purchase, {
+    return await Purchase.update(purchase, {
       where: {
         purchaseId: purchase.purchaseId,
       },

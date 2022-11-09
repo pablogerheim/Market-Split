@@ -50,10 +50,11 @@ async function clearProduct(req, res, next) {
 }
 
 async function createProduct(req, res, next) {
+    console.log(req.body)
     try {
-        const { name, participants, quantity, price, purchase, group } = req.body;
-        if (name == null || participants == null || quantity == null || price == null || purchase == null || group == null) {
-            res.status(422).json({ msg: 'The Name, Participants, Quantity and Price are required!' });
+        const { name, participants, quantity, price, purchase, group_member } = req.body;
+        if (name == null || participants == null || quantity == null || price == null || purchase == null || group_member == null) {
+           return res.status(422).json({ msg: 'The Name, Participants, Quantity, Group_member and Price are required!' });
         }
         const product = await productsService.createProduct(req.body);
         res.status(200).json({ msg: 'Creation successful!', product, });

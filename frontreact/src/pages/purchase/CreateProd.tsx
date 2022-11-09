@@ -1,6 +1,6 @@
 import '../../css/helper.css';
 import { useApi} from "../../data/api";
-import { participant } from "../../types/types";
+import { Iparticipant } from "../../types/types";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
@@ -12,26 +12,32 @@ function CreateProd() {
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
-  const [participants, setParticipants] = useState<participant[]>([])
+  const [participants, setParticipants] = useState<Iparticipant[]>([])
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [quantity, setQuantity] = useState<string>('');
   const [part, setPart] = useState<string[]>([]);
+  const [user] = useState(auth.user)
 
   useEffect(() => {
-    const fetchUser = async () => setParticipants(await api.getUser());
-    fetchUser()
+    if (user!== null) {
+      const fetchUser = async () => setParticipants(await api.getUser(user.group_member));
+      fetchUser()
+    }
   }, [])
 
+  console.log(auth)
 
   function createProd(): void {
-    api.createProduct({
+    if(auth.purchase?.purchaseId && auth.user ){
+     api.createProduct({
       name: name,
       price: price,
       participants: part.toString(),
       quantity: quantity,
-      purchase: auth.purchase?.purchaseId
-    })
+      purchase: auth.purchase.purchaseId,
+      group_member:auth.user.group_member
+    })}
     navegat('/session');
   }
 

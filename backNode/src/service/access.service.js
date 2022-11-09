@@ -10,8 +10,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 async function findUser(name) {
-    const users = await userRepository.getUsers()
-
+    const users = await userRepository.findUser()
     return users.find(user => user.dataValues.name === name);
 }
 
@@ -19,14 +18,12 @@ async function register(user) {
 
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(user.password, salt);
-    const group = await groupRepository.createGroup()
+    const group_member = await groupRepository.creategroup_member()
 
     const newUser = user
     newUser.password = passwordHash
     newUser.access = 'Adm'
-    newUser.group = group
-
-    console.log("service User", newUser)
+    newUser.group_member = group_member.dataValues.group_memberId
 
     await userRepository.createUser(newUser)
 
@@ -67,7 +64,7 @@ async function logout(token) {
     blackList.blacktokens.push(blacktoken);
 
     await blackListRepository.updateBlackList(blackList);
-    await whiteListRepository.deleteWhiteList(token)
+  return await whiteListRepository.deleteWhiteList(token)
 }
 
 async function getWhiteLists(token) {
@@ -86,7 +83,7 @@ async function createWhiteList(whiteUser) {
 }
 
 async function deleteWhiteList(token) {
-    await whiteListRepository.deleteWhiteList(token)
+  return await whiteListRepository.deleteWhiteList(token)
 }
 
 

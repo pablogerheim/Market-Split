@@ -3,7 +3,7 @@ import purchaseController from '../controllers/purchase.controller.js';
 
 const router = express.Router();
 
-router.get('/', purchaseController.getPurchases);
+router.get('/:group_member', purchaseController.getPurchases);
 router.get('/:id', purchaseController.getPurchases);
 router.patch('/', purchaseController.makePurchaseHistory);
 router.post('/', purchaseController.createPurchase);

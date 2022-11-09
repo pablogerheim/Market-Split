@@ -4,7 +4,7 @@ async function register(req, res, next) {
     try {
         const { name, password } = req.body;
         if ( !password || !name) {
-            return res.status(422).json({ msg: "The Password and Name are required!" });
+           return res.status(422).send({ msg: "The Password and Name are required!" });
         }
         const user = await accessService.findUser(name);
         if (user) {
@@ -20,22 +20,26 @@ async function register(req, res, next) {
 }
 
 async function login(req, res, next) {
+    console.log(req.body)
     try {
+       
         const { name, password } = req.body;
         if (!name || !password) {
             return res.status(422).json({ msg: 'The Password and Name are required!' });
         }
 
         const user = await accessService.findUser(name);
-
+        console.log("test")
         if (!user) {
             return res.status(404).json({ msg: 'User not found!' });
         }
         const checkPassword = await accessService.compareUser(user, password);
-
+        
         if (!checkPassword) {
             return res.status(401).json({ msg: 'password invalid' });
         }
+
+
 
         const token = await accessService.createToken(user);
         if (!token) {
@@ -43,6 +47,8 @@ async function login(req, res, next) {
         }
 
         const account = { token, user: user.dataValues };
+
+        console.log(account)
 
         await accessService.createWhiteList({ token, user_id: user.dataValues.userId })
 

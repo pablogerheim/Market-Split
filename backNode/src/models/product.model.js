@@ -30,7 +30,7 @@ const Product = connect.define(
       type: sequelize.STRING,
       allowNull: false,
     },
-    group: {
+    group_member: {
       type: sequelize.STRING,
       allowNull: false,
     },

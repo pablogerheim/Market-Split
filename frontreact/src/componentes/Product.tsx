@@ -1,5 +1,5 @@
 import { useApi} from '../data/api';
-import { product } from "../types/types";
+import { IproductReq } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
@@ -12,12 +12,12 @@ function Product() {
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
-  const [prods, setProds] = useState<product[]>();
+  const [prods, setProds] = useState<IproductReq[]>();
 
   useEffect(() => { fetchProduct() }, []);
 
   const fetchProduct = async () => {
-    if (auth.purchase !== null && auth.purchase.purchaseId !== undefined) {
+    if (auth.purchase ) {
       setProds(await api.getProduct(auth.purchase.purchaseId))
     }
   }
@@ -30,6 +30,8 @@ function Product() {
   }
 
   const deleteProd = async (id: number) => { await api.deleteProduct(id); fetchProduct(); }
+
+  console.log("prod", prods)
 
   if (!prods) { return <p>Loading...</p> }
   return (

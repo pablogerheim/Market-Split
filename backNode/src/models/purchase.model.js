@@ -25,7 +25,7 @@ const Purchase = connect.define(
     summary: {
       type: sequelize.ABSTRACT,
     },
-    group: {
+    group_member: {
       type: sequelize.STRING,
       allowNull: false,
     },

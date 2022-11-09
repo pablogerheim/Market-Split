@@ -13,7 +13,7 @@ import { CreateUser } from "./pages/users/CreateUser";
 import { Login } from './pages/Login'
 import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContext';
-import { CreateGroup } from "./pages/group/CreateGroup";
+import { CreateGroup } from "./pages/Group/CreateGroup";
 import React from 'react';
 
 function Router() {

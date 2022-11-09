@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { User } from '../../types/types';
+import { IuserAPI } from '../../types/types';
 import React from 'react';
 import { UpdateDialog } from "../../componentes/updateDialog";
 
 function ControlUser() {
   const navegat = useNavigate();
   const auth = useContext(AuthContext)
-  const [user, ] = useState<User|null>(auth.user);
+  const [user] = useState<IuserAPI|null>(auth.user);
   const [close, setClose] = useState(true)
 
 if(!user){return <p> "Loading..."</p>}

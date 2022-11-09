@@ -1,6 +1,6 @@
 import Group from '../models/group.model.js';
 
-async function getGroups(id) {
+async function getgroup_members(id) {
     try {
         if (id) {
             return await Group.findByPk(id);
@@ -11,19 +11,19 @@ async function getGroups(id) {
     }
 }
 
-async function createGroup(group) {
+async function creategroup_member(group_member) {
     try {
-        return await Group.create(group)
+        return await Group.create(group_member)
     } catch (err) {
         throw err;
     }
 }
 
-async function deleteGroup(id) {
+async function deletegroup_member(id) {
     try {
         return await Group.destroy({
             where: {
-                groupId: id,
+                group_id: id,
             },
         });
     } catch (err) {
@@ -33,7 +33,7 @@ async function deleteGroup(id) {
 
 
 export default {
-    getGroups,
-    deleteGroup,
-    createGroup
+    getgroup_members,
+    deletegroup_member,
+    creategroup_member
 };

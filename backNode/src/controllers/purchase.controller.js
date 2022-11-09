@@ -2,10 +2,11 @@ import purchasesService from '../service/purchase.service.js';
 
 async function getPurchases(req, res, next) {
     try {
-        if (!req.params.group) {
-            return res.status(422).json({ msg: "The Group is required!" });
+        if (!req.params.group_member) {
+            return res.status(422).json({ msg: "The group_member is required!" });
         }
         const data = await purchasesService.getPurchases(req.params);
+
         res.status(200).send(data);
         logger.info('GET /Purchases - All purchases', data);
     } catch (err) {
@@ -15,10 +16,10 @@ async function getPurchases(req, res, next) {
 
 async function createPurchase(req, res, next) {
     try {
-        const { name, group } = req.body;
+        const { name, group_member } = req.body;
 
-        if (!name || !group) {
-            return res.status(422).json({ msg: "The Id and Name are required!" });
+        if (!name || !group_member) {
+            return res.status(422).json({ msg: "The Group_member and Name are required!" });
         }
         const data = await purchasesService.createPurchase(req.body);
         res.status(200).send(data);

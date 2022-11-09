@@ -1,20 +1,32 @@
 import '../css/helper.css';
-import { useApi} from '../data/api';
-import { useState } from 'react';
+import { useApi } from '../data/api';
+import { useContext, useState } from 'react';
 import { BiArrowBack } from 'react-icons/bi';
 import React from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 function NewPurchaseDialog({
   setClose
 }: any) {
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
+  const auth = useContext(AuthContext)
   const [name, setName] = useState<string>('');
+  const [erro, setErro] = useState<string>()
+  const [user] = useState(auth.user)
 
   const create = async () => {
-    await api.createPurchase({ name:name })
-    setClose(true)
-    window.location.href = window.location.href;
+    if (user) {
+      const resp = await api.createPurchase({
+        name: name,
+        group_member: user.group_member
+      }).catch(onrejected => console.log(onrejected.response.data.msg));
+      name === '' && setErro("The Name is required!")
+      if (resp?.status === 200) {
+        setClose(true)
+        window.location.href = window.location.href;
+      }
+    }
   }
 
   return (
@@ -42,8 +54,8 @@ function NewPurchaseDialog({
             className="bg-white p-2 shadow-bot m-2"
           />
         </label>
-
       </div>
+      <p className="text-red-500">{erro && erro} </p>
     </div>
   );
 }
