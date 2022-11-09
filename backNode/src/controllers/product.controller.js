@@ -17,7 +17,7 @@ async function patchProducts(req, res, next) {
             throw new Error('ID and quantity are required');
         }
         const data = await productsService.patchProducts(req.body);
-        res.send(JSON.stringify(data));
+        res.status(200).send(JSON.stringify(data));
     } catch (err) {
         next(err);
     }
@@ -51,8 +51,8 @@ async function clearProduct(req, res, next) {
 
 async function createProduct(req, res, next) {
     try {
-        const { name, participants, quantity, price, purchase } = req.body;
-        if (name == null || participants == null || quantity == null || price == null || purchase == null) {
+        const { name, participants, quantity, price, purchase, group } = req.body;
+        if (name == null || participants == null || quantity == null || price == null || purchase == null || group == null) {
             res.status(422).json({ msg: 'The Name, Participants, Quantity and Price are required!' });
         }
         const product = await productsService.createProduct(req.body);

@@ -8,7 +8,7 @@ import productRoute from './src/routes/product.routes.js';
 import accessRoute from './src/routes/access.routes.js';
 import purchaseRoute from './src/routes/purchase.routes.js';
 import jwt from 'jsonwebtoken';
-import accessRepository from './src/repository/access.repository.js';
+import blackListRepository from './src/repository/blacklist.repository.js';
 import accessController from "./src/controllers/access.controller.js";
 import * as dotenv from 'dotenv';
 
@@ -62,7 +62,7 @@ async function checkToken(req, res, next) {
         return res.status(401).json({ msg: 'Acesso negado!', token });
     }
 
-    const blackList = await accessRepository.getBlackList();
+    const blackList = await blackListRepository.getBlackList();
 
     const blacktoken = blackList.blacktokens.find(t => t.token === token);
     if (blacktoken) {

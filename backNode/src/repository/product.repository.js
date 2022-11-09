@@ -1,10 +1,10 @@
 import Products from '../models/product.model.js';
 
-async function getProducts(params) {
+async function getProducts({id, purchase}) {
     try {
-        if (params.id) {
-            return await Products.findByPk(params.id);
-        } else { return await Products.findAll({ where: { purchase: params.purchase } }); }
+        if (id) {
+            return await Products.findByPk(id);
+        } else { return await Products.findAll({ where: { purchase: purchase } }); }
     } catch (err) {
         throw err;
     }

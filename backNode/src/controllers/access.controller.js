@@ -1,30 +1,21 @@
 import accessService from '../service/access.service.js';
 
 async function register(req, res, next) {
-    console.log("register")
     try {
-        const authHeader = req.headers.authorization;
-        const token = authHeader && authHeader.split(' ')[1];
-        const { name, password, access } = req.body;
-
-        if (!token || token === 'undefined' || token === false) {
-            // adicionar verificação para saber se tem autorização de criar usuario
-            access = "User"
-        }
-
-        if (!access || !password || !name) {
-            return res.status(422).json({ msg: "The Assess, Password and Name are required!" });
+        const { name, password } = req.body;
+        if ( !password || !name) {
+            return res.status(422).json({ msg: "The Password and Name are required!" });
         }
         const user = await accessService.findUser(name);
         if (user) {
             return res.status(422).json({ msg: "This name is already being used" });
         }
-        const criatedUser = await accessService.controlUser(req.body)
+        const criatedUser = await accessService.register(req.body)
         res.status(200).json({ msg: "User created successfully!" });
 
         logger.info(`POST /creat account - ${JSON.stringify(criatedUser)}`);
     } catch (err) {
-        res.status(500).json({ msg: " error" });
+        next(err);
     }
 }
 
@@ -89,7 +80,7 @@ async function checkToken(req, res, next) {
         res.status(200).json({ msg: "User created successfully!", user: user[0][0] });
         logger.info(`CheckToken / - ${JSON.stringify(user[0][0])}`);
     } catch (err) {
-        res.status(500).json({ msg: " error" });
+        next(err);
     }
 }
 
