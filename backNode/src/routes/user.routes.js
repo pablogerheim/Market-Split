@@ -4,8 +4,9 @@ import accessService from "../service/access.service.js";
 
 const router = express.Router();
 
-router.get('/', userController.getUsers);
+router.get('/:group_member', userController.getUsers);
 router.get('/:id', userController.getUsers);
+router.post('/', checkAccess, userController.createUser);
 router.put('/', checkAccess, userController.updateUser);
 router.delete('/:id', checkAccess, userController.deleteUser);
 

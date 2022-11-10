@@ -1,5 +1,5 @@
 import { useApi} from '../data/api';
-import { product } from "../types/types";
+import { IproductReq } from "../types/types";
 import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
@@ -12,12 +12,12 @@ function Product() {
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
-  const [prods, setProds] = useState<product[]>();
+  const [prods, setProds] = useState<IproductReq[]>();
 
   useEffect(() => { fetchProduct() }, []);
 
   const fetchProduct = async () => {
-    if (auth.purchase !== null && auth.purchase.purchaseId !== undefined) {
+    if (auth.purchase ) {
       setProds(await api.getProduct(auth.purchase.purchaseId))
     }
   }
@@ -31,9 +31,11 @@ function Product() {
 
   const deleteProd = async (id: number) => { await api.deleteProduct(id); fetchProduct(); }
 
+  console.log("prod", prods)
+
   if (!prods) { return <p>Loading...</p> }
   return (
-    <div className="">
+    <div >
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 px-5 show-sm">
           Products: {prods.length}
@@ -51,7 +53,7 @@ function Product() {
           <p className="text-xl m-3 ">{p.name}</p>
           <div className="flex justify-between items-center shadow-bot">
             <p className="text-xl m-3 border-l-2 border-solid border-gray-400 pl-2">
-              By: {p.participants.length}
+              By: {p.participants.toString().split(',').length}
             </p>
             <p className="text-xl m-3 ">
               R$: {(parseInt(p.price) * parseInt(p.quantity)).toFixed(2).replace('.', ',')}

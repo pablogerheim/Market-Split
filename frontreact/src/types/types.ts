@@ -1,59 +1,70 @@
-export type User = {
-user_id:number;
-access: string;
-token: string;
-user: user;
-}
+export interface IuserAPI {
+  user_id: number;
+  access: string;
+  token: string;
+  name: string;
+  password?: string;
+  group_member: string;
+};
 
-export interface purchaseu {
-  purchaseId: number;
-  name:string;
-  timestamp?:string;
-  active?:boolean;
-  summary?:object;
-}
-
-export interface purchase {
+export interface IpurchaseSend {
   purchaseId?: number;
-  name:string;
-  timestamp?:string;
-  active?:boolean;
-  summary?:object;
+  name: string;
+  timestamp?: string;
+  active?: boolean;
+  summary?: object;
+  group_member: string;
 }
 
-export interface participant {
+export interface Ipurchase{
+  purchaseId: number;
+  name: string;
+  timestamp?: string;
+  active?: boolean;
+  summary?: object;
+  group_member?: string;
+}
+
+export interface Iparticipant {
   userId: number;
   name: string;
   access: string;
 }
 
-export interface product {
+export interface IproductReq {
   productId: number;
   name: string;
   price: string;
   participants: string[];
   quantity: string;
   purchase?: number;
+  group_member: string;
 }
 
-export interface productapi {
+export interface IproductSend{
   productId?: number;
   name: string;
   price: string;
   participants: string;
   quantity: string;
-  purchase?: number;
+  purchase: number;
+  group_member?: string;
 }
 
-export interface user {
+export interface Iuser {
   userId?: number;
   name: string;
   password?: string;
   access?: string;
-  timestamp?:string;
+  group_member: string;
 }
 
-export interface dialog {
+export interface Iregister {
+  name: string;
+  password: string;
+}
+
+export interface Idialog {
   userId: number;
-  setClose: (prop:boolean)=> void
+  setClose: (prop: boolean) => void;
 }

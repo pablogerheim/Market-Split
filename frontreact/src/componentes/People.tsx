@@ -1,23 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
 import { useApi} from '../data/api';
-import { participant, product } from "../types/types";
+import { Iparticipant, IproductReq } from "../types/types";
 import { isEquivalent } from "../helper/helperFunctions";
 import { v4 } from 'uuid';
 import { AuthContext } from '../contexts/AuthContext';
-import React from "react";
+import React from 'react';
 
 function People() {
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
-  const [products, setProduct] = useState<product[]>([])
-  const [participants, setParticipants] = useState<participant[]>([])
+  const [products, setProduct] = useState<IproductReq[]>([])
+  const [participants, setParticipants] = useState<Iparticipant[]>([])
+  const [user]= useState(auth.user)
 
   useEffect(() => {
-    const fetchUser = async () => setParticipants(await api.getUser());
+    if(user){
+    const fetchUser = async () => setParticipants(await api.getUser(user.group_member));
     fetchUser();
     fetchProduct();
-    activeMembers();
+    activeMembers();}
   }, [])
 
   useEffect(() => {
@@ -58,7 +60,7 @@ function People() {
 
   if (!participants || !products) {    return <p>Loading...</p>  }
   return (
-    <div className=" ">
+    <div>
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 show-sm">
           Participants: {activeMembers()}

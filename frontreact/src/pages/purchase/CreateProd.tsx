@@ -1,6 +1,6 @@
 import '../../css/helper.css';
 import { useApi} from "../../data/api";
-import { participant } from "../../types/types";
+import { Iparticipant, Ipurchase } from "../../types/types";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
@@ -12,27 +12,38 @@ function CreateProd() {
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
   const auth = useContext(AuthContext)
-  const [participants, setParticipants] = useState<participant[]>([])
-  const [name, setName] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
-  const [quantity, setQuantity] = useState<string>('');
+  const [participants, setParticipants] = useState<Iparticipant[]>([])
+  const [name, setName] = useState<string>();
+  const [price, setPrice] = useState<string>();
+  const [quantity, setQuantity] = useState<string>();
   const [part, setPart] = useState<string[]>([]);
+  const [user] = useState(auth.user)
+  const [purchase] = useState(auth.purchase)
+  const [erro, setErro] = useState<string>()
 
   useEffect(() => {
-    const fetchUser = async () => setParticipants(await api.getUser());
-    fetchUser()
+    if (user!== null) {
+      const fetchUser = async () => setParticipants(await api.getUser(user.group_member));
+      fetchUser()
+    }
   }, [])
 
+  console.log(auth)
 
-  function createProd(): void {
-    api.createProduct({
+async function createProd() {
+  event?.preventDefault()
+    if(purchase && auth.user && name && price && quantity){
+    const resp = await api.createProduct({
       name: name,
       price: price,
       participants: part.toString(),
       quantity: quantity,
-      purchase: auth.purchase?.purchaseId
-    })
-    navegat('/session');
+      purchase: purchase.purchaseId,
+      group_member:auth.user.group_member
+    }).catch(onrejected => 
+      console.log("descrição do erro", onrejected));
+    resp && navegat('/session');
+  }else { setErro("User missing please login")}
   }
 
   const handlePart = (p: string) => {
@@ -47,9 +58,10 @@ function CreateProd() {
   if (!participants) { return <p>Loading...</p> }
 
   return (
-    <div className="p-5 bg-white mt-1 w-[90%] border-8 ">
+    <form className="p-5 bg-white mt-1 w-[90%] border-8 ">
       <div className=" flex items-center justify-around gap-6 p-3">
         <button
+          type='button'
           onClick={() => navegat('/session')}
           className='start px-6 py-2 rounded-md text-3xl "border-gray-300 border-solid border-b-4 bg-orange-300'
         >
@@ -67,6 +79,7 @@ function CreateProd() {
           <label className="flex flex-col items-start p-1 m-1 ">
             Product Name
             <input
+              required
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -74,6 +87,7 @@ function CreateProd() {
             />
           </label>
           <button
+            type='button'
             className='start px-2 my-2 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-blue-400'
             onClick={selecAll}
           >
@@ -84,6 +98,7 @@ function CreateProd() {
           <label className="flex flex-col items-start p-1 m-1 w-[45%]">
             Product Price
             <input
+            required
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -93,6 +108,7 @@ function CreateProd() {
           <label className="flex flex-col items-start p-1 m-1 w-[45%]">
             Number Prod
             <input
+            required
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
@@ -100,6 +116,7 @@ function CreateProd() {
             />
           </label>
         </div>
+        <p className="text-red-500 mt-2">{erro && erro} </p>
       </div>
       <div className="flex justify-around "></div>
       <div className="flex justify-evenly"></div>
@@ -116,7 +133,7 @@ function CreateProd() {
             Will Partcipate
           </label>
         </div>)}</div>
-    </div>
+    </form>
   );
 }
 

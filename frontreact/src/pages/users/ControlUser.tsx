@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { User } from '../../types/types';
+import { IuserAPI } from '../../types/types';
 import React from 'react';
 import { UpdateDialog } from "../../componentes/updateDialog";
 
 function ControlUser() {
   const navegat = useNavigate();
   const auth = useContext(AuthContext)
-  const [user, ] = useState<User|null>(auth.user);
+  const [user] = useState<IuserAPI|null>(auth.user);
   const [close, setClose] = useState(true)
 
 if(!user){return <p> "Loading..."</p>}
@@ -22,7 +22,7 @@ if(!user){return <p> "Loading..."</p>}
     <>
     {close || <UpdateDialog setClose={setClose} userId={user.user_id} />}
     <div className={`p-5 bg-white mt-1 w-[90%] border-8 ${close || 'opacity-20'}`} >
-      <div className=" flex items-center justify-center gap-6 p-3">
+      <div className=" flex items-center justify-center p-3">
         <button
           onClick={() => navegat('/home')}
           className='start px-4 py-2 rounded-md text-3xl "border-gray-300 border-solid border-b-4 bg-orange-300'
@@ -42,7 +42,7 @@ if(!user){return <p> "Loading..."</p>}
           Update 
         </button>:''}
       </div>
-      <div className="p-2 mt-4">{user.access === "Adm"? <UsersByAdm /> : <UsersByUsers />}</div>
+      <div className="p-2 mt-4 flex flex-col">{user.access === "Adm"? <UsersByAdm /> : <UsersByUsers />}</div>
     </div>
     </> );
 }

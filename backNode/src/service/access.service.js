@@ -1,28 +1,31 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import accessRepository from "../repository/access.repository.js"
+import blackListRepository from "../repository/blacklist.repository.js"
+import whiteListRepository from "../repository/whitelist.repository.js";
 import userRepository from "../repository/user.repository.js";
+import groupRepository from "../repository/group.repository.js";
 import validate from "../helper/helperList.js";
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
 async function findUser(name) {
-    const users = await userRepository.getUsers()
-
+    const users = await userRepository.findUser()
     return users.find(user => user.dataValues.name === name);
 }
 
-async function controlUser(user, bool = true) {
+async function register(user) {
 
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(user.password, salt);
+    const group_member = await groupRepository.creategroup_member()
 
     const newUser = user
     newUser.password = passwordHash
-    newUser.timestamp = new Date
+    newUser.access = 'Adm'
+    newUser.group_member = group_member.dataValues.groupId
 
-    bool && await userRepository.createUser(newUser)
+    await userRepository.createUser(newUser)
 
     return newUser
 }
@@ -44,7 +47,7 @@ async function createToken(user) {
 
 async function logout(token) {
 
-    const blackList = await accessRepository.getBlackList();
+    const blackList = await blackListRepository.getBlackList();
     let dateTime = new Date();
     dateTime = JSON.parse(JSON.stringify(dateTime));
     const blacktoken = { token, dateT: dateTime };
@@ -60,33 +63,33 @@ async function logout(token) {
     blackList.blacktokens = currentTokens;
     blackList.blacktokens.push(blacktoken);
 
-    await accessRepository.updateBlackList(blackList);
-    await accessRepository.deleteWhiteList(token)
+    await blackListRepository.updateBlackList(blackList);
+  return await whiteListRepository.deleteWhiteList(token)
 }
 
 async function getWhiteLists(token) {
-    return await accessRepository.getWhiteLists(token)
+    return await whiteListRepository.getWhiteLists(token)
 }
 
 async function createWhiteList(whiteUser) {
 
-    const witheItem = await accessRepository.getwhiteListByUserId(whiteUser.user_id)
+    const witheItem = await whiteListRepository.getwhiteListByUserId(whiteUser.user_id)
 
     if (witheItem[0]) {
         if (whiteUser.user_id === witheItem[0].user_id) {
-            await accessRepository.updateWhiteList(whiteUser)
-        } else { await accessRepository.createWhiteList(whiteUser) }
-    } else { await accessRepository.createWhiteList(whiteUser) }
+            await whiteListRepository.updateWhiteList(whiteUser)
+        } else { await whiteListRepository.createWhiteList(whiteUser) }
+    } else { await whiteListRepository.createWhiteList(whiteUser) }
 }
 
 async function deleteWhiteList(token) {
-    await accessRepository.deleteWhiteList(token)
+  return await whiteListRepository.deleteWhiteList(token)
 }
 
 
 export default {
     findUser,
-    controlUser,
+    register,
     compareUser,
     createToken,
     logout,
