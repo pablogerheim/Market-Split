@@ -18,8 +18,8 @@ function Home() {
   const [user] = useState(auth.user)
 
   const logoutApp = async () => {
-    await auth.signout();
-    window.location.href = "https://market-split.vercel.app/"
+     auth.signout();
+   // window.location.href = "https://market-split.vercel.app/"
   };
 
   useEffect(() => {
