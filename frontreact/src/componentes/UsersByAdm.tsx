@@ -38,7 +38,7 @@ function UsersByAdm() {
   if (!participants) { return <p>Loading...</p> }
   return (<>
     {close || <UpdateDialog setClose={setClose} userId={id} />}
-    <div className={` ${close || 'opacity-20'}`}>
+    <div className={`items-center ${close || 'opacity-20'}`}>
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 show-sm">
           Users: {participants.map(p => p.access === "User" ? 1 : 0.00001).reduce((p, c) => p + c, 0).toFixed(0)}
@@ -48,7 +48,6 @@ function UsersByAdm() {
         </p>
       </div>
       <p className="text-red-500 mt-2">{erro && erro} </p>
-      <div className="p-2">
         {participants.map(p =>
           <div
             key={v4()}
@@ -70,7 +69,6 @@ function UsersByAdm() {
             </button>
           </div>
         )}
-      </div>
     </div>
   </>);
 }

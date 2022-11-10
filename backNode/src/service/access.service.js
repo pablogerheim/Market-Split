@@ -23,7 +23,7 @@ async function register(user) {
     const newUser = user
     newUser.password = passwordHash
     newUser.access = 'Adm'
-    newUser.group_member = group_member.dataValues.group_memberId
+    newUser.group_member = group_member.dataValues.groupId
 
     await userRepository.createUser(newUser)
 

@@ -106,7 +106,7 @@ export const useApi = (storeToken?: string) => ({
     return data.data;
   },
   updateProduct: async (product: IproductSend) => {
-    await apiProduct.put('/', product, {
+    return await apiProduct.put('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },
@@ -116,7 +116,7 @@ export const useApi = (storeToken?: string) => ({
     });
   },
   createProduct: async (product: IproductSend) => {
-    await apiProduct.post('/', product, {
+    return await apiProduct.post('/', product, {
       headers: { 'Authorization': `Bearer ${storeToken}`, },
     });
   },

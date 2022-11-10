@@ -23,7 +23,7 @@ function Home() {
   };
 
   useEffect(() => {
-    !user?.group_member && setErro("Missing group_member please reload")
+    !user?.group_member && setErro(" User missing please reload")
       if (user) {
        const getPurchases = async () => {
         const data = await api.getPurchase(user?.group_member).catch(onrejected => 
@@ -56,7 +56,7 @@ function Home() {
           Add Users
         </button>
         <p className="text-red-500 mt-2">{erro && erro} </p>
-        <div className='purchase-board h-[66%] mt-4 min-w-[300px]'>
+        <div className='overflow-board h-[66%] mt-4 min-w-[300px]'>
           {purchases?.map(p => <button key={p.purchaseId} onClick={() => handlepurchase(p.purchaseId,p.name)}
             className='start flex flex-col w-[275px] max-w-[275px] mx-4 "border-gray-300 border-solid border-b-4 bg-indigo-300 px-16 py-2 rounded-md mt-5 text-3xl'>
             <h2>{p.name}</h2>

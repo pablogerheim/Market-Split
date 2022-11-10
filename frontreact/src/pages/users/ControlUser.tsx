@@ -22,7 +22,7 @@ if(!user){return <p> "Loading..."</p>}
     <>
     {close || <UpdateDialog setClose={setClose} userId={user.user_id} />}
     <div className={`p-5 bg-white mt-1 w-[90%] border-8 ${close || 'opacity-20'}`} >
-      <div className=" flex items-center justify-center gap-6 p-3">
+      <div className=" flex items-center justify-center p-3">
         <button
           onClick={() => navegat('/home')}
           className='start px-4 py-2 rounded-md text-3xl "border-gray-300 border-solid border-b-4 bg-orange-300'
@@ -42,7 +42,7 @@ if(!user){return <p> "Loading..."</p>}
           Update 
         </button>:''}
       </div>
-      <div className="p-2 mt-4">{user.access === "Adm"? <UsersByAdm /> : <UsersByUsers />}</div>
+      <div className="p-2 mt-4 flex flex-col">{user.access === "Adm"? <UsersByAdm /> : <UsersByUsers />}</div>
     </div>
     </> );
 }

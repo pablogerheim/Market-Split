@@ -35,11 +35,11 @@ function CreateGroup() {
           className='start px-6 py-2 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-green-400'
           onClick={createNewUser}
         >
-          Create group_member
+          Create Group
         </button>
       </div>
       <h2>
-      MASTER ADM NEW group_member
+      MASTER ADM NEW GROUP
       </h2>
       <div>
         <label className="flex flex-col items-start p-1 m-1 ">

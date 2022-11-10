@@ -43,7 +43,7 @@ function UpdateDialog({
       resp ? navegat('/user/s') : setErro("Loading... something seems wrong")}}
 
     return (
-      <div className="dialogStyles">
+      <div className="dialogStyles min-h-[420px] ">
         <div className=" flex items-center justify-around gap-6 p-3">
         <button
           onClick={()=>setClose(true)}
@@ -92,7 +92,7 @@ function UpdateDialog({
             <option>Adm</option>
           </select> }
         </label>
-
+        <p className="text-red-500 mt-2">{erro && erro} </p>
       </div>
       </div>
     );

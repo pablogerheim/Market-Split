@@ -1,26 +1,33 @@
 import '../../css/helper.css';
 import { useApi} from '../../data/api';
-import { participant } from '../../types/types';
-import { useState, useEffect } from 'react';
+import { Iparticipant } from '../../types/types';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import EventBus from '../../helper/EventBus';
 import {v4} from 'uuid'
 import React from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function UpdadeProd() {
   const navegat = useNavigate();
   const token = localStorage.getItem('authToken')
   const api = useApi(token?.toString())
-  const [participants, setParticipants] = useState<participant[]>();
+  const auth = useContext(AuthContext)
+  const [participants, setParticipants] = useState<Iparticipant[]>();
   const [id, setId] = useState<number>(0);
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [quantity, setQuantity] = useState<string>('');
   const [part, setPart] = useState<string[]>([]);
+  const [erro, setErro] = useState<string>()
+  const [user] = useState(auth.user)
+  const [purchase] =useState(auth.purchase)
 
   useEffect(() => {
-    const fetchUser = async () => setParticipants(await api.getUser());
+    if (user) {
+    const fetchUser = async () => setParticipants(await api.getUser(user.group_member).catch(onrejected => 
+    console.log("descrição do erro", onrejected)));
     EventBus.on('setId', async (id) => {
       let prod = await api.getbyid(id)
       setId(id)
@@ -30,21 +37,26 @@ function UpdadeProd() {
       setPart(prod?.participants.split(','))
     });
     fetchUser();
+  }
   }, []);
 
   useEffect(() => {
     EventBus.remove('setId', () => { });
   }, []);
 
-  const updateProd = () => {
-    api.updateProduct({
+  const updateProd =  async () => {
+    if (purchase) {
+  const resp = await api.updateProduct({
       productId: id,
       name: name,
       price: price,
       participants: part.toString(),
       quantity: quantity,
-    })
-    navegat('/session');
+      purchase: purchase.purchaseId
+    }).catch(onrejected => 
+      console.log("descrição do erro", onrejected));
+   resp && navegat('/session');
+  } else{ setErro("User missing please login")}
   }
 
   const handlePart = (p: string) => {
@@ -122,6 +134,7 @@ function UpdadeProd() {
             </div>
           )}
       </div>
+      <p className="text-red-500 mt-2">{erro && erro} </p>
     </div>
   );
 }

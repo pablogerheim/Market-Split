@@ -54,7 +54,7 @@ function Login() {
           <button
           type='button'
             className='start px-4 py-2 mt-5 rounded-md text-2xl "border-gray-300 border-solid border-b-4 bg-sky-300'
-           onClick={()=>navegat('/creategroup_member')}
+           onClick={()=>navegat('/createGroup')}
           >
             Create Accont
           </button>

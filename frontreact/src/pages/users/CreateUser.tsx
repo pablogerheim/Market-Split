@@ -16,7 +16,7 @@ function CreateUser() {
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [access, setAccess] = useState<string>('User');
-  const [erro, setErro] = useState<boolean>(false)
+  const [erro, setErro] = useState(false)
 
  async function createNewUser(){
   if (!user) {
@@ -27,9 +27,10 @@ function CreateUser() {
     password: password,
     access: access,
     group_member:user.group_member
-  });
-  console.log("create user resp",resp)
-  resp.status === 200? navegat('/user/'): setErro(true)
+  }).catch(onrejected => {console.log("descrição do erro", onrejected);
+   setErro(onrejected.request.response)});
+  console.log("create user resp", resp)
+  resp && navegat('/user/')
   }
 }
   return (
@@ -77,7 +78,7 @@ function CreateUser() {
             <option value={user?.access === "Adm"?"Adm":"User"}>{user?.access === "Adm"? "Adm": "Only Adm access"}</option>
           </select>
         </label>
-
+        <p className="text-red-500 mt-2">{erro && erro} </p>
       </div>
     </div>
   );

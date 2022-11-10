@@ -35,7 +35,7 @@ function Product() {
 
   if (!prods) { return <p>Loading...</p> }
   return (
-    <div className="">
+    <div >
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 px-5 show-sm">
           Products: {prods.length}
@@ -53,7 +53,7 @@ function Product() {
           <p className="text-xl m-3 ">{p.name}</p>
           <div className="flex justify-between items-center shadow-bot">
             <p className="text-xl m-3 border-l-2 border-solid border-gray-400 pl-2">
-              By: {p.participants.length}
+              By: {p.participants.toString().split(',').length}
             </p>
             <p className="text-xl m-3 ">
               R$: {(parseInt(p.price) * parseInt(p.quantity)).toFixed(2).replace('.', ',')}

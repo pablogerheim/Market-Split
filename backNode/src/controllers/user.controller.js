@@ -15,7 +15,6 @@ async function getUsers(req, res, next) {
 }
 
 async function createUser(req, res, next) {
-  console.log(req.body)
   try {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(" ")[1];
@@ -26,11 +25,11 @@ async function createUser(req, res, next) {
     }
 
     if (!access || !password || !name || !group_member) {
-      return res.status(422).json({msg: "The Assess, Password, group_member and Name are required!"});
+      return res.status(422).json("The Assess, Password, group_member and Name are required!");
     }
     const user = await accessService.findUser(name);
     if (user) {
-      return res.status(422).json({ msg: "This name is already being used" });
+      return res.status(422).json("This name is already being used");
     }
     const criatedUser = await usersService.createUser(req.body);
     res.status(200).json({ msg: "User created successfully!" });

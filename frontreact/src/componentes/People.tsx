@@ -60,7 +60,7 @@ function People() {
 
   if (!participants || !products) {    return <p>Loading...</p>  }
   return (
-    <div className=" ">
+    <div>
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 show-sm">
           Participants: {activeMembers()}

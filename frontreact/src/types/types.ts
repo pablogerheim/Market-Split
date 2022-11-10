@@ -48,7 +48,7 @@ export interface IproductSend{
   participants: string;
   quantity: string;
   purchase: number;
-  group_member: string;
+  group_member?: string;
 }
 
 export interface Iuser {

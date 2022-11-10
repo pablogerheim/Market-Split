@@ -29,7 +29,7 @@ function UsersByUsers() {
     return <p>Loading...</p>
   }
   return (
-    <div className=" ">
+    <div >
       <div className="grid grid-cols-2 gap-1 mt-1 ">
         <p className="text-xl m-2 p-2 show-sm">
           Users: 2
@@ -39,7 +39,7 @@ function UsersByUsers() {
         </p>
       </div>
       <p className="text-red-500 mt-2">{erro && erro} </p>
-      <div className="p-2">
+      <div className="p-2 ">
         {participants.map(p =>
             <div
               key={v4()}
