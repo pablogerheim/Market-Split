@@ -20,7 +20,6 @@ function Router() {
  const auth = useContext(AuthContext);
 
   if (!auth.user) {
-
     return (
       <BrowserRouter>
         <Routes>
