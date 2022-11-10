@@ -1,5 +1,5 @@
-import { product } from "../types/types";
-function isEquivalent(a:product[], b:product[]) {
+import { IproductReq } from "../types/types";
+function isEquivalent(a:IproductReq[], b:IproductReq[]) {
 
     // Create arrays of property names
     const aProps = Object.getOwnPropertyNames(a);

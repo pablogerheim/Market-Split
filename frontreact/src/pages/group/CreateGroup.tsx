@@ -1,30 +1,25 @@
 import '../../css/helper.css';
 import { useApi} from "../../data/api";
-import {  useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
-import { AuthContext } from '../../contexts/AuthContext';
-import { User } from '../../types/types';
 import React from 'react';
 
-
 function CreateGroup() {
-  const token = localStorage.getItem('authToken');
-  const api = useApi(token?.toString());
+  const api = useApi();
   const navegat = useNavigate();
-  const auth = useContext(AuthContext);
-  const [user] = useState<User | null>(auth.user);
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [access, setAccess] = useState<string>('User');
+  const [erro, setErro] = useState<string>()
 
   async function createNewUser() {
-    await api.createUser({
+
+    const resp = await api.register({
       name: name,
-      password: password,
-      access: access,
-    });
-    navegat('/login');
+      password: password
+    }).catch(onrejected => setErro(onrejected.response.data.msg))
+
+   resp?.status === 200 && navegat('/login')
   }
 
   return (
@@ -65,6 +60,7 @@ function CreateGroup() {
           />
         </label>
       </div>
+      <p className='text-red-500'>{erro && erro}</p>
     </div>
   );
 }
