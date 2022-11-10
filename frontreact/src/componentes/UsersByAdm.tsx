@@ -24,17 +24,17 @@ function UsersByAdm() {
   const fetchUser = async () => {
     if (user) {
       const resp = await api.getUser(user.group_member)
-      .catch(onrejected => 
-        console.log("descrição do erro", onrejected))
+        .catch(onrejected =>
+          console.log("descrição do erro", onrejected))
 
-      resp ? setParticipants(resp): setErro("Missing group_member please reload")
-    } 
+      resp ? setParticipants(resp) : setErro("Missing group_member please reload")
+    }
 
   };
   const updateUser = (idu: number) => { setId(idu); setClose(false) }
   const deleteUserFunc = async (id: number) => { await api.deleteUser(id), await fetchUser() }
 
-   if (!participants) { return <p>Loading...</p> }
+  if (!participants) { return <p>Loading...</p> }
   return (<>
     {close || <UpdateDialog setClose={setClose} userId={id} />}
     <div className={`items-center ${close || 'opacity-20'}`}>
@@ -47,27 +47,28 @@ function UsersByAdm() {
         </p>
       </div>
       <p className="text-red-500 mt-2">{erro && erro} </p>
-        {participants.map(p =>
-          <div
-            key={v4()}
-            className="flex justify-between items-center shadow-bot"
+      {participants.length === 0 && <p>Loading...</p>}
+      {participants.map(p =>
+        <div
+          key={v4()}
+          className="flex justify-between items-center shadow-bot"
+        >
+          <p className="text-xl m-3 ml-5 ">{p.name}</p>
+          <p className="text-xl m-3 ml-5 ">{p.access}</p>
+          <button
+            onClick={() => updateUser(p.userId)}
+            className="bg-yellow-300 p-1 m-1 rounded shadow-hover"
           >
-            <p className="text-xl m-3 ml-5 ">{p.name}</p>
-            <p className="text-xl m-3 ml-5 ">{p.access}</p>
-            <button
-              onClick={() => updateUser(p.userId)}
-              className="bg-yellow-300 p-1 m-1 rounded shadow-hover"
-            >
-              <AiOutlineEdit className="h-6 w-6" />
-            </button>
-            <button
-              onClick={() => deleteUserFunc(p.userId)}
-              className="bg-red-300 p-1 m-1 rounded shadow-hover"
-            >
-              <AiOutlineClose className="h-6 w-6" />
-            </button>
-          </div>
-        )}
+            <AiOutlineEdit className="h-6 w-6" />
+          </button>
+          <button
+            onClick={() => deleteUserFunc(p.userId)}
+            className="bg-red-300 p-1 m-1 rounded shadow-hover"
+          >
+            <AiOutlineClose className="h-6 w-6" />
+          </button>
+        </div>
+      )}
     </div>
   </>);
 }

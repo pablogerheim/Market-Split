@@ -42,6 +42,7 @@ function UsersByUsers() {
       </div>
       <p className="text-red-500 mt-2">{erro && erro} </p>
       <div className="p-2 ">
+      {participants.length === 0 && <p>Loading...</p>}
         {participants.map(p =>
             <div
               key={v4()}

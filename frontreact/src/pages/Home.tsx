@@ -57,6 +57,7 @@ function Home() {
         </button>
         <p className="text-red-500 mt-2">{erro && erro} </p>
         <div className='overflow-board h-[66%] mt-4 min-w-[300px]'>
+        {!purchases && <p className='mt-5'> Loading...</p>}
           {purchases?.map(p => <button key={p.purchaseId} onClick={() => handlepurchase(p.purchaseId,p.name)}
             className='start flex flex-col w-[275px] max-w-[275px] mx-4 "border-gray-300 border-solid border-b-4 bg-indigo-300 px-16 py-2 rounded-md mt-5 text-3xl'>
             <h2>{p.name}</h2>
@@ -64,7 +65,6 @@ function Home() {
           </button>)
           }
           {purchases?.length === 0 && <p className='mt-5'> Create your first purchase </p>}
-          
         </div>
         <button
           type="submit"
