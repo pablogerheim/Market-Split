@@ -33,9 +33,7 @@ function UsersByAdm() {
   const updateUser = (idu: number) => { setId(idu); setClose(false) }
   const deleteUserFunc = async (id: number) => { await api.deleteUser(id), await fetchUser() }
 
-  console.log("participants", participants)
-
-  if (!participants) { return <p>Loading...</p> }
+   if (!participants) { return <p>Loading...</p> }
   return (<>
     {close || <UpdateDialog setClose={setClose} userId={id} />}
     <div className={`items-center ${close || 'opacity-20'}`}>

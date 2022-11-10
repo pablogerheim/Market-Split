@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Iuser, IproductSend, IpurchaseSend, Iregister, Ipurchase } from '../types/types';
 
 const BASEurl = 'https://market-split-production.up.railway.app'
+               //https://market-split-production.up.railway.app/
 
 const apiUser = axios.create({
   baseURL: `${BASEurl}/user`,

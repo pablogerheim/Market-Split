@@ -1,5 +1,5 @@
 import '../../css/helper.css';
-import { useApi} from "../../data/api";
+import { useApi } from "../../data/api";
 import { Iparticipant, Ipurchase } from "../../types/types";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ function CreateProd() {
   const [erro, setErro] = useState<string>()
 
   useEffect(() => {
-    if (user!== null) {
+    if (user !== null) {
       const fetchUser = async () => setParticipants(await api.getUser(user.group_member));
       fetchUser()
     }
@@ -30,20 +30,20 @@ function CreateProd() {
 
   console.log(auth)
 
-async function createProd() {
-  event?.preventDefault()
-    if(purchase && auth.user && name && price && quantity){
-    const resp = await api.createProduct({
-      name: name,
-      price: price,
-      participants: part.toString(),
-      quantity: quantity,
-      purchase: purchase.purchaseId,
-      group_member:auth.user.group_member
-    }).catch(onrejected => 
-      console.log("descrição do erro", onrejected));
-    resp && navegat('/session');
-  }else { setErro("User missing please login")}
+  async function createProd() {
+    event?.preventDefault()
+    if (purchase && auth.user && name && price && quantity) {
+      const resp = await api.createProduct({
+        name: name,
+        price: price,
+        participants: part.toString(),
+        quantity: quantity,
+        purchase: purchase.purchaseId,
+        group_member: auth.user.group_member
+      }).catch(onrejected =>
+        console.log("descrição do erro", onrejected));
+      resp && navegat('/session');
+    } else { setErro("User missing please login") }
   }
 
   const handlePart = (p: string) => {
@@ -98,7 +98,7 @@ async function createProd() {
           <label className="flex flex-col items-start p-1 m-1 w-[45%]">
             Product Price
             <input
-            required
+              required
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -108,7 +108,7 @@ async function createProd() {
           <label className="flex flex-col items-start p-1 m-1 w-[45%]">
             Number Prod
             <input
-            required
+              required
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
@@ -120,19 +120,21 @@ async function createProd() {
       </div>
       <div className="flex justify-around "></div>
       <div className="flex justify-evenly"></div>
-      <div className="p-2">{participants.map(p =>
-        <div key={p.name + "part"} className="flex justify-between items-center shadow-bot">
-          <p className='text-xl m-3 ml-5 '>{p.name}</p>
-          <label className='mr-5'>
-            <input
-              className='m-2 h-5 w-5 text-fuchsia-400'
-              type="checkbox"
-              checked={part.includes(p.name)}
-              onChange={() => handlePart(p.name)}
-            />
-            Will Partcipate
-          </label>
-        </div>)}</div>
+      <div className="p-2">
+        {participants.length === 0 && <p>Loading...</p>}
+        {participants.map(p =>
+          <div key={p.name + "part"} className="flex justify-between items-center shadow-bot">
+            <p className='text-xl m-3 ml-5 '>{p.name}</p>
+            <label className='mr-5'>
+              <input
+                className='m-2 h-5 w-5 text-fuchsia-400'
+                type="checkbox"
+                checked={part.includes(p.name)}
+                onChange={() => handlePart(p.name)}
+              />
+              Will Partcipate
+            </label>
+          </div>)}</div>
     </form>
   );
 }

@@ -13,6 +13,7 @@ function People() {
   const [products, setProduct] = useState<IproductReq[]>([])
   const [participants, setParticipants] = useState<Iparticipant[]>([])
   const [user]= useState(auth.user)
+  const [loading, setLoading] = useState<Boolean>(true)
 
   useEffect(() => {
     if(user){
@@ -34,6 +35,7 @@ function People() {
   const fetchProduct = async () => {
     if (auth.purchase !== null && auth.purchase.purchaseId !== undefined) {
       let data = await api.getProduct(auth.purchase.purchaseId)
+      data && setLoading(false)
       setProduct(data.map((p:any) =>{ p.participants = p.participants.split(','); return p}))
     }
   }
@@ -58,7 +60,7 @@ function People() {
       .reduce((pv, cv) => pv + cv, 0).toFixed(2).replace('.', ',')
   }
 
-  if (!participants || !products) {    return <p>Loading...</p>  }
+  if (loading) return <p>Loading...</p>
   return (
     <div>
       <div className="grid grid-cols-2 gap-1 mt-1 ">
