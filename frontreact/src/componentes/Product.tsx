@@ -18,7 +18,8 @@ function Product() {
 
   const fetchProduct = async () => {
     if (auth.purchase ) {
-      setProds(await api.getProduct(auth.purchase.purchaseId))
+      setProds(await api.getProduct(auth.purchase.purchaseId).catch(onrejected => 
+        console.log("descrição do erro", onrejected)))
     }
   }
 
@@ -30,8 +31,6 @@ function Product() {
   }
 
   const deleteProd = async (id: number) => { await api.deleteProduct(id); fetchProduct(); }
-
-  console.log("prod", prods)
 
   if (!prods) { return <p>Loading...</p> }
   return (

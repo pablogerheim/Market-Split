@@ -6,7 +6,6 @@ import { BiArrowBack } from 'react-icons/bi';
 import { Idialog, IuserAPI} from "../types/types";
 import { AuthContext } from '../contexts/AuthContext';
 import React from 'react';
-import { setDefaultResultOrder } from 'dns/promises';
 
 function UpdateDialog({
   userId,
@@ -24,7 +23,8 @@ function UpdateDialog({
 
     useEffect(() => {
       const startUpdate = async () => {
-        let prod = await api.getUserById(userId)
+        let prod = await api.getUserById(userId).catch(onrejected => 
+          console.log("descrição do erro", onrejected))
         setName(prod?.name)
         setAccess(prod?.access)
       } 

@@ -23,7 +23,8 @@ function CreateProd() {
 
   useEffect(() => {
     if (user !== null) {
-      const fetchUser = async () => setParticipants(await api.getUser(user.group_member));
+      const fetchUser = async () => setParticipants(await api.getUser(user.group_member).catch(onrejected => 
+        console.log("descrição do erro", onrejected)));
       fetchUser()
     }
   }, [])

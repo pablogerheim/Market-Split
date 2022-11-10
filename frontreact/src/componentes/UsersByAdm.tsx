@@ -24,7 +24,8 @@ function UsersByAdm() {
   const fetchUser = async () => {
     if (user) {
       const resp = await api.getUser(user.group_member)
-        .catch(onabort => console.log(onabort.response))
+      .catch(onrejected => 
+        console.log("descrição do erro", onrejected))
 
       resp ? setParticipants(resp): setErro("Missing group_member please reload")
     } 

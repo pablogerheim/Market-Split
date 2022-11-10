@@ -17,7 +17,8 @@ function People() {
 
   useEffect(() => {
     if(user){
-    const fetchUser = async () => setParticipants(await api.getUser(user.group_member));
+    const fetchUser = async () => setParticipants(await api.getUser(user.group_member).catch(onrejected => 
+      console.log("descrição do erro", onrejected)));
     fetchUser();
     fetchProduct();
     activeMembers();}
@@ -26,7 +27,8 @@ function People() {
   useEffect(() => {
     (async () => {
       if (auth.purchase !== null && auth.purchase.purchaseId !== undefined) {
-        const helper = await api.getProduct(auth.purchase.purchaseId)
+        const helper = await api.getProduct(auth.purchase.purchaseId).catch(onrejected => 
+          console.log("descrição do erro", onrejected))
         if (isEquivalent(products, helper) ) { fetchProduct() }
       };
     })()
@@ -34,7 +36,8 @@ function People() {
 
   const fetchProduct = async () => {
     if (auth.purchase !== null && auth.purchase.purchaseId !== undefined) {
-      let data = await api.getProduct(auth.purchase.purchaseId)
+      let data = await api.getProduct(auth.purchase.purchaseId).catch(onrejected => 
+        console.log("descrição do erro", onrejected))
       data && setLoading(false)
       setProduct(data.map((p:any) =>{ p.participants = p.participants.split(','); return p}))
     }

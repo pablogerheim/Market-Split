@@ -33,7 +33,8 @@ const handleDelete = async() => {
    name && await api.updatePurchase({
     name:name, 
     purchaseId:auth.purchase.purchaseId
-  })
+  }).catch(onrejected => 
+    console.log("descrição do erro", onrejected))
   navegat('/home');
   }
 
