@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Iuser, IproductSend, IpurchaseSend, Iregister, Ipurchase } from '../types/types';
 
-const BASEurl = 'https://market-split-production.up.railway.app'
+const BASEurl = 'http://localhost:3002'
                //https://market-split-production.up.railway.app/
 
 const apiUser = axios.create({
