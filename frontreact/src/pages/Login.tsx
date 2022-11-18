@@ -14,7 +14,8 @@ function Login() {
   async function submit() {
     event?.preventDefault();
     await auth.login(name, password)
-    .catch(onrejected => setErro(onrejected));
+    .catch(onrejected =>{console.log("descrição do erro?",onrejected);
+    setErro("Password or username incorrect")});
   }
 
   return (

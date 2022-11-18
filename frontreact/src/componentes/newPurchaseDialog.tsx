@@ -24,7 +24,6 @@ function NewPurchaseDialog({
       name === '' && setErro("The Name is required!")
       if (resp?.status === 200) {
         setClose(true)
-        window.location.href = window.location.href;
       }
     }
   }

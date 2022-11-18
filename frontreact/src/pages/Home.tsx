@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/helper.css';
 import { AuthContext } from "../contexts/AuthContext";
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useApi } from "../data/api";
 import { Ipurchase } from "../types/types";
 import { NewPurchaseDialog } from "../componentes/newPurchaseDialog";
@@ -23,17 +23,17 @@ function Home() {
     setOpacity(true)
   };
 
-  useEffect(() => {
+  const getPurchases = async () => {
     !user?.group_member && setErro(" User missing please reload")
     if (user) {
-      const getPurchases = async () => {
-        const data = await api.getPurchase(user?.group_member).catch(onrejected =>
-          console.log("descrição do erro", onrejected))
-        setPurchases(data?.data)
-      }
-      getPurchases()
-    } else setErro("session expired")
-  }, [])
+    const data = await api.getPurchase(user?.group_member).catch(onrejected =>
+      console.log("descrição do erro", onrejected))
+    setPurchases(data?.data)
+    }else setErro("session expired")
+  }
+  
+  useMemo(()=>{ close && getPurchases() },[close])
+  useEffect(() => { user && getPurchases() }, [])
 
   const handlepurchase = async (id: number, name: string) => {
     auth.getPurchasebyid({ purchaseId: id, name })
