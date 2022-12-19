@@ -11,6 +11,9 @@ Funções:
 Objetivo do aplicativo:
 - Esse aplicativo tem como objetivo, ajudar na divisão de valores a ser pago por cada participante de um grupo, durante um compra de mercado, bar ou qualquer tipo de evento onde há de se dividir o valor para vários participantes posteriormente.
 
+A baixo é apresentado uma imagen com todas as telas que o aplicativo oferece.
+
+![Ilustrando](https://user-images.githubusercontent.com/90703690/208474325-72c254f0-c72e-4100-81c2-dfe9874c2074.png)
 
 ## 🚧 Em Desenvolvimento
 
@@ -32,7 +35,7 @@ Terminal 2:
 
 - `Cd front`
 - `Npm i`
-- `Npm start`
+- `Npm run dev`
 
 ### 📋 Pré-requisitos
 
@@ -49,6 +52,7 @@ Front
 * [React](https://pt-br.reactjs.org/) - Framework 
 * [Tailwind](https://tailwindcss.com/) - Estilização
 * [Axios](https://axios-http.com/ptbr/docs/intro) - API
+* [Vite](https://vitejs.dev/) - Frontend Tooling
 
 Back
 * [Node](https://nodejs.org/en/) - Framework 
