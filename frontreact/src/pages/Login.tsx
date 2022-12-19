@@ -14,7 +14,8 @@ function Login() {
   async function submit() {
     event?.preventDefault();
     await auth.login(name, password)
-    .catch(onrejected => setErro(onrejected.response.data.msg));
+    .catch(onrejected =>{console.log("descrição do erro?",onrejected);
+    setErro("Password or username incorrect")});
   }
 
   return (
@@ -58,8 +59,6 @@ function Login() {
           >
             Create Accont
           </button>
-          <p className=' mt-8 '> utilize "admin" - "admin" testar como administrador </p>
-          <p className=' mt-2 '> utiliza "user" - "user" testar como usuario </p>
         </form>
       </div>
     </div>
