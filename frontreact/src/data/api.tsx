@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Iuser, IproductSend, IpurchaseSend, Iregister, Ipurchase } from '../types/types';
 
-const BASEurl = 'http://localhost:3002'
+const BASEurl = 'https://c342-2804-2484-8515-1f00-9038-43fe-5b10-253f.sa.ngrok.io/'
                //https://market-split-production.up.railway.app/
 
 const apiUser = axios.create({
