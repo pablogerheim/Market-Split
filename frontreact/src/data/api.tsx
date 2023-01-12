@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Iuser, IproductSend, IpurchaseSend, Iregister, Ipurchase } from '../types/types';
 
-const BASEurl = 'https://msplit.loca.lt/'
+const BASEurl = 'https://msplits.loca.lt/'
                //https://market-split-production.up.railway.app/
 
 const apiUser = axios.create({
